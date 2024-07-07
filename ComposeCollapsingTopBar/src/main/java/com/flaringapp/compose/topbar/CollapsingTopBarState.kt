@@ -34,7 +34,7 @@ import kotlin.math.min
 fun rememberCollapsingTopBarState(
     isExpanded: Boolean = true,
 ): CollapsingTopBarState {
-    return rememberSaveable(isExpanded, saver = CollapsingTopBarState.Saver) {
+    return rememberSaveable(saver = CollapsingTopBarState.Saver) {
         CollapsingTopBarState(
             isExpanded = isExpanded,
         )

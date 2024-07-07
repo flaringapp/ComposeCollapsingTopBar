@@ -37,7 +37,7 @@ import kotlin.math.min
 fun rememberCollapsingTopBarExitState(
     isExited: Boolean = false,
 ): CollapsingTopBarExitState {
-    return rememberSaveable(isExited, saver = CollapsingTopBarExitState.Saver) {
+    return rememberSaveable(saver = CollapsingTopBarExitState.Saver) {
         CollapsingTopBarExitState(
             isExited = isExited,
         )

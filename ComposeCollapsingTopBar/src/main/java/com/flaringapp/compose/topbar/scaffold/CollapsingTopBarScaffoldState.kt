@@ -32,7 +32,7 @@ import com.flaringapp.compose.topbar.snap.CollapsingTopBarSnapScope
 fun rememberCollapsingTopBarScaffoldState(
     isExpanded: Boolean = true,
 ): CollapsingTopBarScaffoldState {
-    return rememberSaveable(isExpanded, saver = CollapsingTopBarScaffoldState.Saver) {
+    return rememberSaveable(saver = CollapsingTopBarScaffoldState.Saver) {
         CollapsingTopBarScaffoldState(
             topBarState = CollapsingTopBarState(isExpanded = isExpanded),
             exitState = CollapsingTopBarExitState(isExited = !isExpanded),
