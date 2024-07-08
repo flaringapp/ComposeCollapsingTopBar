@@ -19,7 +19,11 @@ package com.flaringapp.compose.topbar.nestedcollapse
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.remember
+import com.flaringapp.compose.topbar.CollapsingTopBar
 
+/**
+ * Creates a [CollapsingTopBarNestedCollapseState] that is remembered across compositions.
+ */
 @Composable
 fun rememberCollapsingTopBarNestedCollapseState(): CollapsingTopBarNestedCollapseState {
     return remember {
@@ -28,20 +32,34 @@ fun rememberCollapsingTopBarNestedCollapseState(): CollapsingTopBarNestedCollaps
 }
 
 /**
- * A contract for parent (collapsing top bar) to access child's measured min height
+ * A contract for any top bar [CollapsingTopBar] nested collapse element to provide its own
+ * minimum height. Used in [CollapsingTopBar] to determine ultimate minimum top bar height.
+ *
+ * @see CollapsingTopBar
+ * @see CollapsingTopBarColumn
  */
 @Stable
 interface CollapsingTopBarNestedCollapseElement {
 
+    /**
+     * The minimum height of this nested collapse element.
+     */
     val minHeight: Int
 }
 
 /**
- * Implementation of [CollapsingTopBarNestedCollapseElement] for child to update measured
- * min height
+ * A mutable implementation of [CollapsingTopBarNestedCollapseElement] for nested collapse element
+ * to update. Must be updated in measurement phase.
+ *
+ * In most cases, this will be created via [rememberCollapsingTopBarNestedCollapseState].
  */
 @Stable
 class CollapsingTopBarNestedCollapseState : CollapsingTopBarNestedCollapseElement {
 
+    /**
+     * The minimum height of this nested collapse element. Must be updated in measurement phase.
+     * Not a state because hosting [CollapsingTopBar] is remeasured every time after this element,
+     * therefore reads up to date value anyways.
+     */
     override var minHeight: Int = 0
 }
