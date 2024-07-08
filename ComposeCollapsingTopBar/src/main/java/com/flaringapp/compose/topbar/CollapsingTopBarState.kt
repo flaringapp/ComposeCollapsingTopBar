@@ -187,6 +187,9 @@ class CollapsingTopBarState internal constructor(
 
     companion object {
 
+        /**
+         * The default [Saver] implementation for [CollapsingTopBarState].
+         */
         val Saver: Saver<CollapsingTopBarState, Float> = Saver(
             save = { it.layoutInfo.height },
             restore = { CollapsingTopBarState(initialHeight = it) },
