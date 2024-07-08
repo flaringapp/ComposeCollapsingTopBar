@@ -22,9 +22,9 @@ import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 import androidx.compose.ui.unit.Velocity
 
 /**
- * A [NestedScrollConnection] implementation that delegates callbacks to [delegates] respecting
- * their order in FIFO manner. Each subsequent delegate will receive values respecting previous
- * delegate consumption.
+ * A [NestedScrollConnection] implementation that delegates nested scroll callbacks to [delegates]
+ * while respecting their order: each subsequent delegate will receive available scroll minus
+ * the amount consumed by all previous delegates.
  */
 class MultiNestedScrollConnection(
     private val delegates: List<NestedScrollConnection>,

@@ -21,11 +21,29 @@ import androidx.compose.foundation.gestures.ScrollableState
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 import androidx.compose.ui.unit.Velocity
+import com.flaringapp.compose.topbar.nestedscroll.CollapsingTopBarNestedScrollExpand.Always
+import com.flaringapp.compose.topbar.nestedscroll.CollapsingTopBarNestedScrollExpand.AtTop
 
+/**
+ * An origin class that encapsulates expand scroll handling logic.
+ *
+ * Expanding in terms of this handler means dispatching scroll to [state], which is in its turn
+ * responsible for further processing.
+ *
+ * @see Always
+ * @see AtTop
+ */
 abstract class CollapsingTopBarNestedScrollExpand : CollapsingTopBarNestedScrollHandler {
 
     companion object {
 
+        /**
+         * Creates one of [Always], [AtTop] scroll handlers based on [enterAlways] flag.
+         *
+         * @param state the scrollable top bar state that expands.
+         * @param flingBehavior the fling behavior to be used for animating [state] fling.
+         * @param enterAlways the flag to create [Always] handler if true, or [AtTop] if false.
+         */
         fun of(
             state: ScrollableState,
             flingBehavior: FlingBehavior,
@@ -48,6 +66,13 @@ abstract class CollapsingTopBarNestedScrollExpand : CollapsingTopBarNestedScroll
     abstract val state: ScrollableState
     abstract val flingBehavior: FlingBehavior
 
+    /**
+     * Dispatch [available] offset to [state] if it's downward.
+     *
+     * @param available the offset to be dispatched.
+     *
+     * @return the amount of offset consumed.
+     */
     protected fun expand(available: Offset): Offset {
         val dy = available.y
         if (dy <= 0) {
@@ -58,6 +83,13 @@ abstract class CollapsingTopBarNestedScrollExpand : CollapsingTopBarNestedScroll
         return Offset(0f, consume)
     }
 
+    /**
+     * Dispatch [available] velocity to [state] with [flingBehavior] if it's downward.
+     *
+     * @param available the velocity to be dispatched.
+     *
+     * @return the amount of velocity consumed.
+     */
     protected suspend fun expand(available: Velocity): Velocity {
         val dy = available.y
         if (dy <= 0) {
@@ -68,6 +100,13 @@ abstract class CollapsingTopBarNestedScrollExpand : CollapsingTopBarNestedScroll
         return Velocity(x = 0f, y = consume)
     }
 
+    /**
+     * A top bar nested scroll handler that expands [state] while receiving pre- scroll and fling.
+     * Consumes available scroll before children, so that top bar expands anywhere.
+     *
+     * @param state the scrollable top bar state that expands.
+     * @param flingBehavior the fling behavior to be used for animating [state] fling.
+     */
     class Always(
         override val state: ScrollableState,
         override val flingBehavior: FlingBehavior,
@@ -82,6 +121,14 @@ abstract class CollapsingTopBarNestedScrollExpand : CollapsingTopBarNestedScroll
         }
     }
 
+    /**
+     * A top bar nested scroll handler that expands [state] while receiving post- scroll and fling.
+     * Consumes available scroll after children, so that top bar expands only when scrollable
+     * children no longer consume downward scroll (are at top).
+     *
+     * @param state the scrollable top bar state that expands.
+     * @param flingBehavior the fling behavior to be used for animating [state] fling.
+     */
     class AtTop(
         override val state: ScrollableState,
         override val flingBehavior: FlingBehavior,
