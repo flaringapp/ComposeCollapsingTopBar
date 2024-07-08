@@ -16,6 +16,7 @@
 
 package com.flaringapp.compose.topbar.scaffold
 
+import android.annotation.SuppressLint
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
@@ -66,6 +67,7 @@ import kotlin.math.max
  *
  * @see CollapsingTopBar
  */
+@SuppressLint("ComposeParameterOrder")
 @Composable
 fun CollapsingTopBarScaffold(
     state: CollapsingTopBarScaffoldState,
