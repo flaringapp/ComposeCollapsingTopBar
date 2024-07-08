@@ -94,7 +94,7 @@ private fun CollapsingColumn() {
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(500.dp)
-                        .background(Color.Yellow)
+                        .background(Color.Yellow),
                 )
             }
 
@@ -169,7 +169,7 @@ private fun CollapsingColumn() {
                     Text(it.toString())
                 }
             }
-        }
+        },
     )
 }
 
@@ -183,7 +183,7 @@ private fun SampleItem(
             repeat(50) {
                 append("Hello $it")
             }
-        }
+        },
     )
 }
 

@@ -36,7 +36,7 @@ class MultiNestedScrollConnection(
     ): Offset = delegates.fold(Offset.Zero) { delegatesConsumed, delegate ->
         delegate.onPreScroll(
             available = available - delegatesConsumed,
-            source = source
+            source = source,
         ) + delegatesConsumed
     }
 

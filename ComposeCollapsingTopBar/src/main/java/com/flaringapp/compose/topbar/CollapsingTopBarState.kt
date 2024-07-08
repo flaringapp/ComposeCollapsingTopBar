@@ -68,7 +68,7 @@ class CollapsingTopBarState internal constructor(
     constructor(
         isExpanded: Boolean = true,
     ) : this(
-        initialHeight = if (isExpanded) Float.MAX_VALUE else 0f
+        initialHeight = if (isExpanded) Float.MAX_VALUE else 0f,
     )
 
     /**
@@ -87,7 +87,7 @@ class CollapsingTopBarState internal constructor(
             height = initialHeight,
             collapsedHeight = 0,
             expandedHeight = Int.MAX_VALUE,
-        )
+        ),
     )
 
     //region Scrolling
@@ -121,7 +121,7 @@ class CollapsingTopBarState internal constructor(
         if (canConsumeDelta == 0f) return 0f
 
         layoutInfoState.value = layoutInfo.copy(
-            height = layoutInfo.height + canConsumeDelta
+            height = layoutInfo.height + canConsumeDelta,
         )
         return canConsumeDelta
     }
