@@ -55,7 +55,7 @@ fun <STATE> CollapsingTopBarNestedScrollStrategy<STATE>.rememberNestedScrollConn
                 state = state,
                 flingBehavior = flingBehavior,
                 snapBehavior = snapBehavior,
-            )
+            ),
         )
     }
 }

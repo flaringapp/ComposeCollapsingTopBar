@@ -129,8 +129,8 @@ fun CollapsingTopBarScaffold(
                     Modifier.nestedScroll(nestedScrollConnection)
                 } else {
                     Modifier
-                }
-            )
+                },
+            ),
     ) { measurables, constraints ->
         val topBarConstraints = constraints.copy(minWidth = 0, minHeight = 0)
         val topBarPlaceable = measurables[0].measure(topBarConstraints)
