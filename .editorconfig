@@ -1,0 +1,72 @@
+[*]
+charset = utf-8
+end_of_line = lf
+
+max_line_length = 100
+
+indent_style = space
+indent_size = 4
+ij_continuation_indent_size = 8
+tab_width = 4
+
+trim_trailing_whitespace = true
+insert_final_newline = true
+
+[.editorconfig]
+ij_editorconfig_space_after_comma = false
+ij_editorconfig_space_before_comma = false
+
+[*.xml]
+ij_continuation_indent_size = 4
+
+[*.java]
+ij_java_class_count_to_use_import_on_demand = 2147483647
+ij_java_names_count_to_use_import_on_demand = 2147483647
+ij_java_use_single_class_imports = true
+ij_java_packages_to_use_import_on_demand = unset
+ij_java_layout_static_imports_separately = true
+
+ij_java_imports_layout = $android.**,$androidx.**,$com.**,$junit.**,$kotlin.**,$kotlinx.**,$net.**,$org.**,$java.**,$javax.**,$*,|,android.**,|,androidx.**,|,com.**,|,junit.**,|,kotlin.**,|,kotlinx.**,|,net.**,|,org.**,|,java.**,|,javax.**,|,*,|
+
+[*.{kt,kts}]
+ij_kotlin_code_style_defaults = KOTLIN_OFFICIAL
+
+# https://youtrack.jetbrains.com/issue/KTIJ-17907
+ij_continuation_indent_size = 4
+
+# Trailing comma
+ij_kotlin_allow_trailing_comma_on_call_site = true
+ij_kotlin_allow_trailing_comma = true
+
+# Blank lines
+ij_kotlin_keep_blank_lines_before_right_brace = 0
+ij_kotlin_keep_blank_lines_in_code = 1
+ij_kotlin_keep_blank_lines_in_declarations = 1
+ij_kotlin_blank_lines_after_class_header = 0
+ij_kotlin_blank_lines_around_block_when_branches = 1
+ij_kotlin_blank_lines_before_declaration_with_comment_or_annotation_on_separate_line = 1
+
+# Misc wrapping
+ij_kotlin_assignment_wrap = on_every_item
+ij_kotlin_call_parameters_wrap = on_every_item
+ij_kotlin_enum_constants_wrap = on_every_item
+ij_kotlin_extends_list_wrap = on_every_item
+ij_kotlin_method_call_chain_wrap = on_every_item
+ij_kotlin_method_parameters_wrap = on_every_item
+
+# Annotation wrapping
+ij_kotlin_class_annotation_wrap = split_into_lines
+ij_kotlin_field_annotation_wrap = split_into_lines
+ij_kotlin_method_annotation_wrap = split_into_lines
+ij_kotlin_parameter_annotation_wrap = on_every_item
+ij_kotlin_variable_annotation_wrap = split_into_lines
+
+# Imports
+ij_kotlin_name_count_to_use_star_import = 2147483647
+ij_kotlin_name_count_to_use_star_import_for_members = 2147483647
+ij_kotlin_packages_to_use_import_on_demand = unset
+ij_kotlin_imports_layout = *,java.**,javax.**,kotlin.**,kotlinx.**,org.junit.**,^
+
+[*.{yml,yaml}]
+indent_size = 2
+tab_width = 2
