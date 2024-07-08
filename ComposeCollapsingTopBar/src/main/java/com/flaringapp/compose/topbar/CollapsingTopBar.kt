@@ -38,6 +38,29 @@ import com.flaringapp.compose.topbar.nestedcollapse.CollapsingTopBarNestedCollap
 import kotlin.math.max
 import kotlin.math.roundToInt
 
+/**
+ * A basic container for collapsing content. Places its children like a Box, on top of each other.
+ * Top bar always occupies maximum (expanded) height while hoisting variable collapsing height in
+ * [state]. Minimum (collapsed) height is always equal to the smallest child height.
+ *
+ * Visual collapsing is achieved by [clipToBounds], although additional layout mechanism is likely
+ * to be handy, e.g. [com.flaringapp.compose.topbar.scaffold.CollapsingTopBarScaffold].
+ *
+ * Each child may actively participate in collapsing process with [CollapsingTopBarScope] modifiers.
+ *
+ * Advanced collapsing techniques can be achieved using:
+ * - transformations based on [CollapsingTopBarState.layoutInfo]
+ * - custom layout logic with [CollapsingTopBarNestedCollapseElement]
+ *
+ * @param state the state that manages this top bar.
+ * @param modifier the [Modifier] to be applied to this top bar.
+ * @param clipToBounds the flag whether or not to automatically clip top bar [content] to the
+ * actual collapse height.
+ *
+ * @see CollapsingTopBarScope
+ * @see com.flaringapp.compose.topbar.scaffold.CollapsingTopBarScaffold
+ * @see com.flaringapp.compose.topbar.nestedcollapse.CollapsingTopBarColumn
+ */
 @Composable
 fun CollapsingTopBar(
     state: CollapsingTopBarState,
@@ -140,14 +163,39 @@ private class CollapsingTopBarMeasurePolicy(
     }
 }
 
+/**
+ * Scope for the children of [CollapsingTopBar].
+ */
 @LayoutScopeMarker
 @Immutable
 interface CollapsingTopBarScope {
 
+    /**
+     * Registers a progress listener to be notified every time top bar collapse height changes.
+     * Only the last modifier in chain takes effect.
+     *
+     * @param listener The listener that gets notified of every collapse progress update.
+     *
+     * @see CollapsingTopBarProgressListener
+     */
     fun Modifier.progress(listener: CollapsingTopBarProgressListener): Modifier
 
+    /**
+     * Position the element dynamically while collapsing by offsetting up by [ratio] as a fraction
+     * of collapsible height. Value 0f means there is no parallax and the element simply sits in
+     * place while top bar is collapsing, whereas 1f will make the element follow the collapse
+     * motion.
+     */
     fun Modifier.parallax(ratio: Float): Modifier
 
+    /**
+     * Define an explicit minimum (collapsed) height nested collapse connection between the top bar
+     * and this element. The element is responsible for dispatching its own minimum height using
+     * [element] handle. This value is read by the top bar to calculate total minimum height
+     * among all children.
+     *
+     * @see [com.flaringapp.compose.topbar.nestedcollapse.CollapsingTopBarColumn]
+     */
     fun Modifier.nestedCollapse(element: CollapsingTopBarNestedCollapseElement): Modifier
 }
 

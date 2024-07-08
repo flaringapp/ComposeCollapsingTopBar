@@ -33,8 +33,39 @@ import com.flaringapp.compose.topbar.dependent.collapsingTopBarExitStateConnecti
 import com.flaringapp.compose.topbar.nestedscroll.rememberNestedScrollConnection
 import com.flaringapp.compose.topbar.snap.CollapsingTopBarNoSnapBehavior
 import com.flaringapp.compose.topbar.snap.CollapsingTopBarSnapBehavior
+import com.flaringapp.compose.topbar.snap.rememberCollapsingTopBarSnapBehavior
 import kotlin.math.max
 
+/**
+ * Collapsing top bar scaffold implements a common collapsing layout structure with
+ * [CollapsingTopBar] at top and scrollable content below. This is a crucial piece in collapsing
+ * mechanism as it links top bar and content together, and performs elements offsetting based
+ * on collapse progress.
+ *
+ * It's inspired by CoordinatorLayout approach of measuring content under top bar to its max height
+ * while sliding up and down as top bar collapses. In addition, [CollapsingTopBar] also measures
+ * itself to max height not to remeasure itself as its *collapsing height* changes. Thus we minimize
+ * measurement phase rescheduling, and all the heavy (actually, light :D) work is done in placement
+ * phase.
+ *
+ * @param state the state than manages this scaffold.
+ * @param scrollMode the strategy of handling nested scroll to collapse and expand top bar, and
+ * optionally exit and enter.
+ * @param modifier the [Modifier] to be applied to this scaffold.
+ * @param enabled the flag whether or not to enable nested scrolling. Top bar won't react to
+ * content scrolling if disabled.
+ * @param snapBehavior the behavior of top bar snapping after fling. Disabled by default. Can be
+ * enabled with [rememberCollapsingTopBarSnapBehavior].
+ * @param topBarModifier the [Modifier] to be applied to [CollapsingTopBar] - container of [topBar].
+ * @param topBarClipToBounds the flag whether or not to automatically clip top bar content [topBar]
+ * to the actual collapse height.
+ * @param topBar the content of [CollapsingTopBar].
+ * @param body the scrollable content under collapsing top bar. If you don't use any by default
+ * scrollable container (e.g. [androidx.compose.foundation.lazy.LazyList]), then make sure to
+ * apply custom [androidx.compose.foundation.verticalScroll] modifier.
+ *
+ * @see CollapsingTopBar
+ */
 @Composable
 fun CollapsingTopBarScaffold(
     state: CollapsingTopBarScaffoldState,

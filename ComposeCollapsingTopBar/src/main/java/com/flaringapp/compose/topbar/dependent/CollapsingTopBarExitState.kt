@@ -33,17 +33,36 @@ import com.flaringapp.compose.topbar.snap.CollapsingTopBarSnapScope
 import kotlin.math.max
 import kotlin.math.min
 
+/**
+ * Creates a [CollapsingTopBarExitState] that is remembered across compositions.
+ *
+ * Changes to the provided initial values will **not** result in the state being recreated or
+ * changed in any way if it has already been created. Consider using available controls of state
+ * object instead.
+ *
+ * @param isExited the initial state of top bar exit height being collapsed (exited).
+ */
 @Composable
 fun rememberCollapsingTopBarExitState(
     isExited: Boolean = false,
 ): CollapsingTopBarExitState {
-    return rememberSaveable(isExited, saver = CollapsingTopBarExitState.Saver) {
+    return rememberSaveable(saver = CollapsingTopBarExitState.Saver) {
         CollapsingTopBarExitState(
             isExited = isExited,
         )
     }
 }
 
+/**
+ * A Modifier for connecting [CollapsingTopBarExitState] to [CollapsingTopBarState] to keep track
+ * of top bar measurement updates.
+ *
+ * This modifier is required to make [CollapsingTopBarExitState] work.
+ *
+ * Must be applied on [com.flaringapp.compose.topbar.CollapsingTopBar].
+ *
+ * @see [collapsingTopBarDependentStateConnection]
+ */
 fun Modifier.collapsingTopBarExitStateConnection(
     topBarState: CollapsingTopBarState,
     exitState: CollapsingTopBarExitState,
@@ -53,6 +72,21 @@ fun Modifier.collapsingTopBarExitStateConnection(
     )
 }
 
+/**
+ * A state object that can be hoisted to control and observe top bar exiting.
+ *
+ * Exiting is a movement of collapsed top bar off screen. This mechanism is managed explicitly
+ * separately from collapsing not to interfere with collapse progress tracking.
+ *
+ * Exit offset [exitHeight] must be manually applied on collapsing top bar to take effect. State
+ * also requires to be supplied with top bar measurement updates via
+ * [collapsingTopBarExitStateConnection].
+ *
+ * This state also supports disabled mode (when it's always entered/expanded). It is disabled by
+ * default until measurement data is supplied. It can be disabled any time with [reset] method.
+ *
+ * In most cases, this will be created via [rememberCollapsingTopBarExitState].
+ */
 @Stable
 class CollapsingTopBarExitState internal constructor(
     initialExitHeight: Float,
@@ -60,24 +94,42 @@ class CollapsingTopBarExitState internal constructor(
     CollapsingTopBarControls,
     CollapsingTopBarSnapScope {
 
+    /**
+     * @param isExited the initial state of top bar exit height being collapsed (exited).
+     */
     constructor(
         isExited: Boolean = false,
     ) : this(
         initialExitHeight = if (isExited) INITIALLY_EXITED_HEIGHT else 0f,
     )
 
+    /**
+     * Indicates if state is currently enabled. State becomes enabled upon receiving first
+     * measurement update. Disabled state is always entered/expanded.
+     */
     val isEnabled: Boolean
         get() = collapsedHeight > 0
 
+    /**
+     * The amount of exited height. Value 0f means it's fully entered/expanded, and it can grow
+     * (positive) all the way to collapsed top bar height to become fully exited. Collapsed top bar
+     * height is updated in scope of measurement updates.
+     */
     val exitHeight: Float
         get() = packedExitHeightState.floatValue.coerceAtMost(collapsedHeight)
 
     private val collapsedHeight: Float
         get() = collapsedHeightState.floatValue
 
-    // Actual height or INITIALLY_EXITED_HEIGHT if initially exited until first updateLayoutInfo
+    /**
+     * Backing state for [exitHeight]. Can be set to actual exit height, or
+     * [INITIALLY_EXITED_HEIGHT] if it's initially exited until first [updateLayoutInfo].
+     */
     private val packedExitHeightState = mutableFloatStateOf(initialExitHeight)
 
+    /**
+     * Backing state for [collapsedHeight].
+     */
     private val collapsedHeightState = mutableFloatStateOf(0f)
 
     //region Scrolling
@@ -94,6 +146,13 @@ class CollapsingTopBarExitState internal constructor(
     override val isScrollInProgress: Boolean
         get() = scrollableState.isScrollInProgress
 
+    /**
+     * Handles ongoing scroll delta by updating current top bar exit height.
+     *
+     * @param delta the distance scrolled.
+     *
+     * @return the amount of scroll consumed.
+     */
     private fun onScroll(delta: Float): Float {
         val canConsumeDelta = if (delta < 0) {
             max(exitHeight - collapsedHeight, delta)
@@ -134,11 +193,27 @@ class CollapsingTopBarExitState internal constructor(
         action.invoke(this, progress)
     }
 
+    /**
+     * Disables this state and resets current exit height to entered/expanded.
+     */
     fun reset() {
         packedExitHeightState.floatValue = 0f
         collapsedHeightState.floatValue = 0f
     }
 
+    /**
+     * Applies new measurements from [CollapsingTopBarState].
+     *
+     * May update current exit height if:
+     * - state is initially exited, and receives its first measurements update. Then exit height
+     * is going to change from [INITIALLY_EXITED_HEIGHT] to top bar collapsed height.
+     * - state is fully exited, but top bar collapsed height has decreased. Then exit height is
+     * going to stay fully exited and change from previous to new collapsed height.
+     *
+     * @param collapsedHeight the current minimum/collapsed height of top bar.
+     *
+     * @see collapsingTopBarExitStateConnection
+     */
     internal fun updateLayoutInfo(collapsedHeight: Int) {
         val lastExitHeight: Float
         val lastCollapsedHeight: Float
@@ -157,8 +232,14 @@ class CollapsingTopBarExitState internal constructor(
 
     companion object {
 
+        /**
+         * An exit height state value to indicate fully exited height until first measurement update.
+         */
         private const val INITIALLY_EXITED_HEIGHT = Float.MAX_VALUE
 
+        /**
+         * The default [Saver] implementation for [CollapsingTopBarExitState].
+         */
         val Saver: Saver<CollapsingTopBarExitState, Float> = Saver(
             save = {
                 when {

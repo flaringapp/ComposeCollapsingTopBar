@@ -22,6 +22,16 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 import androidx.compose.ui.unit.Velocity
 
+/**
+ * A top bar nested scroll handler that collapses [state] while receiving pre- scroll and fling.
+ * Consumes available scroll before children, so that top bar collapses anywhere.
+ *
+ * Collapsing in terms of this handler means dispatching scroll to [state], which is in its turn
+ * responsible for further processing.
+ *
+ * @param state the scrollable top bar state that collapses.
+ * @param flingBehavior the fling behavior to be used for animating [state] fling.
+ */
 class CollapsingTopBarNestedScrollCollapse(
     private val state: ScrollableState,
     private val flingBehavior: FlingBehavior,

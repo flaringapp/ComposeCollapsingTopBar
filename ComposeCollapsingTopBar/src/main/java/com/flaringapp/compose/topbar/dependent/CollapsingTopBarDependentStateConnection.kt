@@ -23,6 +23,21 @@ import androidx.compose.ui.unit.IntOffset
 import com.flaringapp.compose.topbar.CollapsingTopBarLayoutInfo
 import com.flaringapp.compose.topbar.CollapsingTopBarState
 
+/**
+ * A Modifier that allows connecting custom derived top bar state to [CollapsingTopBarState] by
+ * receiving [CollapsingTopBarLayoutInfo] measurement updates. Useful to keep track of min/max
+ * height.
+ *
+ * It's recommended to use this modifier instead of direct [CollapsingTopBarState.layoutInfo]
+ * access (which is backed by state) to avoid unnecessary recompositions.
+ *
+ * **This modifier does not update on placement phase, therefore it will not keep track of
+ * top bar height.**
+ *
+ * @param state the top bar state to observe.
+ * @param update the action for updating custom derived state on re-measurement, when [state]
+ * layout info is updated.
+ */
 fun Modifier.collapsingTopBarDependentStateConnection(
     state: CollapsingTopBarState,
     update: (layoutInfo: CollapsingTopBarLayoutInfo) -> Unit,

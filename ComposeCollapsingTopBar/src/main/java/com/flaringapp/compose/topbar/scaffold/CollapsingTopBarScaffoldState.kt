@@ -28,11 +28,21 @@ import com.flaringapp.compose.topbar.CollapsingTopBarState
 import com.flaringapp.compose.topbar.dependent.CollapsingTopBarExitState
 import com.flaringapp.compose.topbar.snap.CollapsingTopBarSnapScope
 
+/**
+ * Creates a [CollapsingTopBarScaffoldState] that is remembered across compositions.
+ *
+ * Changes to the provided initial values will **not** result in the state being recreated or
+ * changed in any way if it has already been created. Consider using available controls of state
+ * object instead.
+ *
+ * @param isExpanded the initial state of top bar height being expanded. When false and used with
+ * [CollapsingTopBarScaffoldScrollMode] that may exit, then initially it's fully exited.
+ */
 @Composable
 fun rememberCollapsingTopBarScaffoldState(
     isExpanded: Boolean = true,
 ): CollapsingTopBarScaffoldState {
-    return rememberSaveable(isExpanded, saver = CollapsingTopBarScaffoldState.Saver) {
+    return rememberSaveable(saver = CollapsingTopBarScaffoldState.Saver) {
         CollapsingTopBarScaffoldState(
             topBarState = CollapsingTopBarState(isExpanded = isExpanded),
             exitState = CollapsingTopBarExitState(isExited = !isExpanded),
@@ -40,6 +50,14 @@ fun rememberCollapsingTopBarScaffoldState(
     }
 }
 
+/**
+ * A state object that can be hoisted to control and observe top bar scaffold collapsing.
+ *
+ * Encapsulates top bar state [topBarState] and exit state [exitState] (may be disabled depending
+ * on scroll mode used).
+ *
+ * In most cases, this will be created via [rememberCollapsingTopBarScaffoldState].
+ */
 @Stable
 class CollapsingTopBarScaffoldState internal constructor(
     val topBarState: CollapsingTopBarState,
@@ -47,7 +65,10 @@ class CollapsingTopBarScaffoldState internal constructor(
 ) : CollapsingTopBarControls,
     CollapsingTopBarSnapScope {
 
-    val totalHeight: Float
+    /**
+     * The current visual top bar height, either during collapse or exit.
+     */
+    val totalTopBarHeight: Float
         get() = topBarState.layoutInfo.height - exitState.exitHeight
 
     override suspend fun expand(animationSpec: AnimationSpec<Float>) {
@@ -66,6 +87,14 @@ class CollapsingTopBarScaffoldState internal constructor(
         }
     }
 
+    /**
+     * Perform scroll animation on top bar. If top bar can exit, then both [exitState] and
+     * [topBarState] scroll scopes are held while animation is running. Otherwise only
+     * [topBarState] scroll scope is used. This helps locking scroll access and properly handling
+     * cancellation in case animation is interrupted by user input.
+     *
+     * @see androidx.compose.foundation.gestures.ScrollableState.scroll
+     */
     private suspend inline fun animateScrollTo(
         animationSpec: AnimationSpec<Float>,
         targetValueProvider: (canExit: Boolean) -> Float,
@@ -81,7 +110,7 @@ class CollapsingTopBarScaffoldState internal constructor(
             return
         }
 
-        val offset = targetValue - totalHeight
+        val offset = targetValue - totalTopBarHeight
 
         topBarState.scroll topBarScrollScope@{
             exitState.scroll exitScrollScope@{
@@ -113,12 +142,15 @@ class CollapsingTopBarScaffoldState internal constructor(
         wasMovingUp: Boolean,
         action: suspend CollapsingTopBarControls.(progress: Float) -> Unit,
     ) {
-        val progress = totalHeight / topBarState.layoutInfo.expandedHeight
+        val progress = totalTopBarHeight / topBarState.layoutInfo.expandedHeight
         action.invoke(this, progress)
     }
 
     companion object {
 
+        /**
+         * The default [Saver] implementation for [CollapsingTopBarScaffoldState].
+         */
         val Saver: Saver<CollapsingTopBarScaffoldState, *> = listSaver(
             save = {
                 listOf(

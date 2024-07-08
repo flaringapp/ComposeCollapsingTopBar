@@ -20,6 +20,13 @@ import androidx.compose.ui.unit.Velocity
 import com.flaringapp.compose.topbar.snap.CollapsingTopBarSnapBehavior
 import com.flaringapp.compose.topbar.snap.CollapsingTopBarSnapScope
 
+/**
+ * A nested scroll handler that executes top bar snapping after fling has ended on scope
+ * [snapScope] with behavior [snapBehavior].
+ *
+ * @param snapBehavior the snap behavior to be used for snapping with [snapScope] after fling.
+ * @param snapScope the receiver scope to be used for executing snap animation with [snapBehavior].
+ */
 class CollapsingTopBarNestedScrollSnap(
     private val snapBehavior: CollapsingTopBarSnapBehavior,
     private val snapScope: CollapsingTopBarSnapScope,

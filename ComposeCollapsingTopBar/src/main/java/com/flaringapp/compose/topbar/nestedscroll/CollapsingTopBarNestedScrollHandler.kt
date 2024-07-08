@@ -20,6 +20,10 @@ import androidx.compose.foundation.gestures.FlingBehavior
 import androidx.compose.foundation.gestures.ScrollableState
 import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
 
+/**
+ * A contract for single top bar nested scroll handler responsible for processing single logical
+ * operation (e.g. expanding). A perfect place to define common extensions for all handlers.
+ */
 interface CollapsingTopBarNestedScrollHandler : NestedScrollConnection {
 
     suspend fun ScrollableState.fling(

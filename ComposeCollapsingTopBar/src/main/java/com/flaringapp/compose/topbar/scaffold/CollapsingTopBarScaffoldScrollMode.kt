@@ -24,9 +24,19 @@ import com.flaringapp.compose.topbar.nestedscroll.CollapsingTopBarNestedScrollEx
 import com.flaringapp.compose.topbar.nestedscroll.CollapsingTopBarNestedScrollHandler
 import com.flaringapp.compose.topbar.nestedscroll.CollapsingTopBarNestedScrollSnap
 import com.flaringapp.compose.topbar.nestedscroll.CollapsingTopBarNestedScrollStrategy
+import com.flaringapp.compose.topbar.scaffold.CollapsingTopBarScaffoldScrollMode.Companion.collapse
+import com.flaringapp.compose.topbar.scaffold.CollapsingTopBarScaffoldScrollMode.Companion.collapseAndExit
+import com.flaringapp.compose.topbar.scaffold.CollapsingTopBarScaffoldScrollMode.Companion.enterAlwaysCollapsed
 import com.flaringapp.compose.topbar.snap.CollapsingTopBarSnapBehavior
 import com.flaringapp.compose.topbar.snap.CollapsingTopBarSnapScope
 
+/**
+ * A set of common collapsing modes that define how top bar behaves on content scroll.
+ *
+ * @see collapse
+ * @see collapseAndExit
+ * @see enterAlwaysCollapsed
+ */
 data class CollapsingTopBarScaffoldScrollMode internal constructor(
     val expandAlways: Boolean,
     val exit: Exit? = null,
@@ -95,6 +105,12 @@ data class CollapsingTopBarScaffoldScrollMode internal constructor(
 
     companion object {
 
+        /**
+         * Create and remember scroll mode in which top bar just collapses, and never exits.
+         *
+         * @param expandAlways the flag to determine whether top bar can expand as soon as content
+         * scrolls upwards, or only when scrollable content underneath is fully scrolled to the top.
+         */
         @Composable
         fun collapse(
             expandAlways: Boolean,
@@ -104,6 +120,15 @@ data class CollapsingTopBarScaffoldScrollMode internal constructor(
             )
         }
 
+        /**
+         * Create and remember scroll mode in which top bar sequentially collapses and exits.
+         *
+         * While scrolling down, the motion is: `expanded -> collapsed -> exited`. While scrolling
+         * up, the motion is reversed: `exited -> collapsed -> expanded`.
+         *
+         * @param expandAlways the flag to determine whether top bar can expand as soon as content
+         * scrolls upwards, or only when scrollable content underneath is fully scrolled to the top.
+         */
         @Composable
         fun collapseAndExit(
             expandAlways: Boolean,
@@ -116,6 +141,14 @@ data class CollapsingTopBarScaffoldScrollMode internal constructor(
             )
         }
 
+        /**
+         * Create and remember scroll mode in which top bar sequentially collapses and exits,
+         * but may enter collapsed while content underneath is scrolling up, and expand at top.
+         *
+         * While scrolling down, the motion is: `expanded -> collapsed -> exited`. While scrolling
+         * up, the motion is reversed: `exited -> collapsed -> (content scrolls to the top) ->
+         * expanded`.
+         */
         @Composable
         fun enterAlwaysCollapsed(): CollapsingTopBarScaffoldScrollMode = remember {
             CollapsingTopBarScaffoldScrollMode(

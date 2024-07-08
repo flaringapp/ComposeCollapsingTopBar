@@ -32,11 +32,30 @@ import androidx.compose.ui.layout.ParentDataModifier
 import androidx.compose.ui.layout.Placeable
 import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.Density
+import com.flaringapp.compose.topbar.CollapsingTopBar
 import com.flaringapp.compose.topbar.CollapsingTopBarProgressListener
 import com.flaringapp.compose.topbar.CollapsingTopBarScope
 import com.flaringapp.compose.topbar.CollapsingTopBarState
 import kotlin.math.min
 
+/**
+ * A nested collapse container to be used inside [CollapsingTopBar]. Places its children just
+ * like [androidx.compose.foundation.layout.Column], but also implements staggered collapsing
+ * mechanism.
+ *
+ * Collapsing is performed bottom up: as soon as column starts collapsing, it pins the last child
+ * and pushes up by its height under the second last. The same logic is applied to all subsequent
+ * children. It also supports not collapsible elements with
+ * [CollapsingTopBarColumnScope.notCollapsible] modifier. Such elements remain pinned till the end
+ * of collapsing, and never collapse. If there are other collapsible elements above, they are
+ * simply pinned together with not collapsible until collapsed.
+ *
+ * The minimum (collapsed) height of the column is equal to sum of all not collapsible elements.
+ *
+ * @param state the state that manages this top bar column.
+ * @param modifier the [Modifier] to be applied to this top bar column.
+ * @param content the content of this top bar column.
+ */
 @Composable
 fun CollapsingTopBarScope.CollapsingTopBarColumn(
     state: CollapsingTopBarState,
@@ -153,12 +172,27 @@ private class CollapsingTopBarColumnMeasurePolicy(
     }
 }
 
+/**
+ * Scope for the children of [CollapsingTopBarColumn].
+ */
 @LayoutScopeMarker
 @Immutable
 interface CollapsingTopBarColumnScope {
 
+    /**
+     * Registers a progress listener to be notified every time top bar column collapse height
+     * changes. Only the last modifier in chain takes effect.
+     *
+     * @param listener the listener that gets notified of every collapse progress update.
+     *
+     * @see CollapsingTopBarProgressListener
+     */
     fun Modifier.columnProgress(listener: CollapsingTopBarProgressListener): Modifier
 
+    /**
+     * Prevent the element from collapsing and make it pin to the bottom of column as it collapses.
+     * The height of all not collapsible elements form a total minimum (collapsed) height of column.
+     */
     fun Modifier.notCollapsible(): Modifier
 }
 
