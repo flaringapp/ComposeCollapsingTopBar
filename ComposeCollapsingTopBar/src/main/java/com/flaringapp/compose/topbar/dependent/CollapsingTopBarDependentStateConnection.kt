@@ -31,7 +31,7 @@ import com.flaringapp.compose.topbar.CollapsingTopBarState
  * It's recommended to use this modifier instead of direct [CollapsingTopBarState.layoutInfo]
  * access (which is backed by state) to avoid unnecessary recompositions.
  *
- * **This modifier does not update on layout phase, therefore it will not keep track of
+ * **This modifier does not update on placement phase, therefore it will not keep track of
  * top bar height.**
  *
  * @param state the top bar state to observe.
