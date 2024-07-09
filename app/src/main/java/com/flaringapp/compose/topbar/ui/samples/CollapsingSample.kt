@@ -38,28 +38,60 @@ import com.flaringapp.compose.topbar.ui.theme.ComposeCollapsingTopBarTheme
 private const val SCRIM_START_FRACTION = 0.25f
 
 @Composable
-fun CollapsingAtTopSample(
+fun CollapsingExpandAtTopSample(
     onBack: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    CollapsingSample(
+        title = "Expand At Top",
+        modifier = modifier,
+        onBack = onBack,
+        expandAlways = false,
+    )
+}
+
+@Composable
+fun CollapsingExpandAlwaysSample(
+    onBack: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    CollapsingSample(
+        modifier = modifier,
+        title = "Expand Always",
+        onBack = onBack,
+        expandAlways = true,
+    )
+}
+
+@Composable
+fun CollapsingSample(
+    title: String,
+    onBack: () -> Unit,
+    expandAlways: Boolean,
     modifier: Modifier = Modifier,
 ) {
     Surface(
         modifier = modifier.fillMaxSize(),
     ) {
         CollapsingContent(
+            title = title,
             onBack = onBack,
+            expandAlways = expandAlways,
         )
     }
 }
 
 @Composable
 private fun CollapsingContent(
+    title: String,
     onBack: () -> Unit,
+    expandAlways: Boolean,
     modifier: Modifier = Modifier,
 ) {
     CollapsingTopBarScaffold(
         modifier = modifier,
         state = rememberCollapsingTopBarScaffoldState(),
-        scrollMode = CollapsingTopBarScaffoldScrollMode.collapse(expandAlways = false),
+        scrollMode = CollapsingTopBarScaffoldScrollMode.collapse(expandAlways = expandAlways),
         topBar = {
             var topBarColorProgress by remember { mutableFloatStateOf(1f) }
 
@@ -72,7 +104,7 @@ private fun CollapsingContent(
             )
 
             SampleTopAppBar(
-                title = "Collapsing At Top Sample",
+                title = title,
                 onBack = onBack,
                 containerColor = MaterialTheme.colorScheme.surface.copy(
                     alpha = lerp(1f, 0f, topBarColorProgress),
@@ -87,9 +119,19 @@ private fun CollapsingContent(
 
 @Preview
 @Composable
-private fun Preview() {
+private fun PreviewExpandAtTop() {
     ComposeCollapsingTopBarTheme {
-        CollapsingAtTopSample(
+        CollapsingExpandAtTopSample(
+            onBack = {},
+        )
+    }
+}
+
+@Preview
+@Composable
+private fun PreviewExpandAlways() {
+    ComposeCollapsingTopBarTheme {
+        CollapsingExpandAlwaysSample(
             onBack = {},
         )
     }
