@@ -195,7 +195,7 @@ private fun CollapsingColumn() {
             ) {
                 ContentHeader()
 
-                ScaffoldSampleControls(
+                ScaffoldStateControls(
                     state = scaffoldState,
                 )
 

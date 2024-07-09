@@ -44,7 +44,7 @@ import com.flaringapp.compose.topbar.scaffold.rememberCollapsingTopBarScaffoldSt
 import com.flaringapp.compose.topbar.ui.theme.ComposeCollapsingTopBarTheme
 
 @Composable
-fun ScaffoldSampleControls(
+fun ScaffoldStateControls(
     state: CollapsingTopBarScaffoldState,
     modifier: Modifier = Modifier,
 ) {
@@ -58,37 +58,48 @@ fun ScaffoldSampleControls(
             style = MaterialTheme.typography.titleLarge,
         )
 
-        Row(
+        ControlsContent(
             modifier = Modifier.padding(top = 16.dp),
-        ) {
-            ControlsItem(
-                modifier = Modifier.weight(1f),
-                state = state,
-                name = "Scaffold",
-                isExpanded = { it.isExpanded },
-                isCollapsed = { it.isCollapsed },
-            )
+            state = state,
+        )
+    }
+}
 
-            ControlsItem(
-                modifier = Modifier.weight(1f),
-                state = state.topBarState,
-                name = "Top Bar",
-                isExpanded = { it.layoutInfo.isExpanded },
-                isCollapsed = { it.layoutInfo.isCollapsed },
-            )
+@Composable
+private fun ControlsContent(
+    state: CollapsingTopBarScaffoldState,
+    modifier: Modifier = Modifier,
+) {
+    Row(
+        modifier = modifier,
+    ) {
+        ControlsItem(
+            modifier = Modifier.weight(1f),
+            state = state,
+            name = "Scaffold",
+            isExpanded = { it.isExpanded },
+            isCollapsed = { it.isCollapsed },
+        )
 
-            ControlsItem(
-                modifier = Modifier.weight(1f),
-                state = state.exitState,
-                name = "Exit",
-                isExpandedName = "Entered",
-                isCollapsedName = "Exited",
-                expandName = "Enter",
-                collapseName = "Exit",
-                isExpanded = { it.isFullyEntered },
-                isCollapsed = { it.isFullyExited },
-            )
-        }
+        ControlsItem(
+            modifier = Modifier.weight(1f),
+            state = state.topBarState,
+            name = "Top Bar",
+            isExpanded = { it.layoutInfo.isExpanded },
+            isCollapsed = { it.layoutInfo.isCollapsed },
+        )
+
+        ControlsItem(
+            modifier = Modifier.weight(1f),
+            state = state.exitState,
+            name = "Exit",
+            isExpandedName = "Entered",
+            isCollapsedName = "Exited",
+            expandName = "Enter",
+            collapseName = "Exit",
+            isExpanded = { it.isFullyEntered },
+            isCollapsed = { it.isFullyExited },
+        )
     }
 }
 
@@ -176,7 +187,7 @@ private fun formatStateText(
 @Composable
 private fun Preview() {
     ComposeCollapsingTopBarTheme {
-        ScaffoldSampleControls(
+        ScaffoldStateControls(
             state = rememberCollapsingTopBarScaffoldState(),
         )
     }
