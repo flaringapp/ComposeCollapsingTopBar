@@ -161,7 +161,7 @@ private class CollapsingTopBarMeasurePolicy(
                         x = 0,
                         y = -(collapsibleDistance * (1 - progress) * parallaxRatio).roundToInt(),
                     )
-                    return@layout
+                    return@forEach
                 }
 
                 placeable.placeRelative(0, 0)
