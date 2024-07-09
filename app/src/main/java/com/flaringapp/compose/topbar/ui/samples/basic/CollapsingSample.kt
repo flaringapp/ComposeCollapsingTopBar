@@ -17,25 +17,12 @@
 package com.flaringapp.compose.topbar.ui.samples.basic
 
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableFloatStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.util.lerp
-import com.flaringapp.compose.topbar.scaffold.CollapsingTopBarScaffold
 import com.flaringapp.compose.topbar.scaffold.CollapsingTopBarScaffoldScrollMode
-import com.flaringapp.compose.topbar.scaffold.rememberCollapsingTopBarScaffoldState
-import com.flaringapp.compose.topbar.ui.samples.common.SampleContent
-import com.flaringapp.compose.topbar.ui.samples.common.SampleTopAppBar
-import com.flaringapp.compose.topbar.ui.samples.common.SampleTopBarImage
 import com.flaringapp.compose.topbar.ui.theme.ComposeCollapsingTopBarTheme
-
-private const val SCRIM_START_FRACTION = 0.25f
 
 @Composable
 fun CollapsingExpandAtTopSample(
@@ -73,48 +60,12 @@ fun CollapsingSample(
     Surface(
         modifier = modifier.fillMaxSize(),
     ) {
-        CollapsingContent(
+        BasicScaffoldSample(
             title = title,
             onBack = onBack,
-            expandAlways = expandAlways,
+            scrollMode = CollapsingTopBarScaffoldScrollMode.collapse(expandAlways = expandAlways),
         )
     }
-}
-
-@Composable
-private fun CollapsingContent(
-    title: String,
-    onBack: () -> Unit,
-    expandAlways: Boolean,
-    modifier: Modifier = Modifier,
-) {
-    CollapsingTopBarScaffold(
-        modifier = modifier,
-        state = rememberCollapsingTopBarScaffoldState(),
-        scrollMode = CollapsingTopBarScaffoldScrollMode.collapse(expandAlways = expandAlways),
-        topBar = {
-            var topBarColorProgress by remember { mutableFloatStateOf(1f) }
-
-            SampleTopBarImage(
-                modifier = Modifier
-                    .progress { _, itemProgress ->
-                        topBarColorProgress =
-                            itemProgress.coerceAtMost(SCRIM_START_FRACTION) / SCRIM_START_FRACTION
-                    },
-            )
-
-            SampleTopAppBar(
-                title = title,
-                onBack = onBack,
-                containerColor = MaterialTheme.colorScheme.surface.copy(
-                    alpha = lerp(1f, 0f, topBarColorProgress),
-                ),
-            )
-        },
-        body = {
-            SampleContent()
-        },
-    )
 }
 
 @Preview
