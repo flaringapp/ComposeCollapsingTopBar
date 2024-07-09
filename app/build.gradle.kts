@@ -21,6 +21,9 @@ android {
         }
     }
 
+    buildFeatures {
+        compose = true
+    }
     buildTypes {
         release {
             isMinifyEnabled = false
