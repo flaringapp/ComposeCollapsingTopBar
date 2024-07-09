@@ -38,7 +38,7 @@ import com.flaringapp.compose.topbar.ui.theme.ComposeCollapsingTopBarTheme
 private const val SCRIM_START_FRACTION = 0.25f
 
 @Composable
-fun SimpleCollapsingSample(
+fun CollapsingAtTopSample(
     onBack: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -72,7 +72,7 @@ private fun CollapsingContent(
             )
 
             SampleTopAppBar(
-                title = "Simple Collapsing Sample",
+                title = "Collapsing At Top Sample",
                 onBack = onBack,
                 containerColor = MaterialTheme.colorScheme.surface.copy(
                     alpha = lerp(1f, 0f, topBarColorProgress),
@@ -89,7 +89,7 @@ private fun CollapsingContent(
 @Composable
 private fun Preview() {
     ComposeCollapsingTopBarTheme {
-        SimpleCollapsingSample(
+        CollapsingAtTopSample(
             onBack = {},
         )
     }
