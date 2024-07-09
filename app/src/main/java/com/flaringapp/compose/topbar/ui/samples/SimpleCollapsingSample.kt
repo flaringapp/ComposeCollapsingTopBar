@@ -72,7 +72,7 @@ private fun CollapsingContent(
                 title = "Simple Collapsing Sample",
                 onBack = onBack,
                 containerColor = MaterialTheme.colorScheme.surface.copy(
-                    alpha = lerp(1f, 0.2f, topBarColorProgress),
+                    alpha = lerp(1f, 0f, topBarColorProgress),
                 ),
             )
         },
