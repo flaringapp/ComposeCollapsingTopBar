@@ -18,6 +18,7 @@ package com.flaringapp.compose.topbar.ui.samples.common
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -26,6 +27,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.lerp
@@ -35,16 +37,19 @@ import androidx.compose.ui.unit.dp
 import com.flaringapp.compose.topbar.ui.theme.ComposeCollapsingTopBarTheme
 
 @Composable
-fun SampleContent(
+inline fun SampleContent(
     modifier: Modifier = Modifier,
+    before: ColumnScope.() -> Unit = {},
 ) {
     Column(
         modifier = modifier
             .fillMaxSize()
             .verticalScroll(rememberScrollState()),
     ) {
+        before()
+
         repeat(50) {
-            ContentItem(
+            SampleContentItem(
                 index = it,
             )
         }
@@ -52,7 +57,7 @@ fun SampleContent(
 }
 
 @Composable
-private fun ContentItem(
+fun SampleContentItem(
     index: Int,
     modifier: Modifier = Modifier,
 ) {
@@ -80,5 +85,21 @@ private fun ContentItem(
 private fun Preview() {
     ComposeCollapsingTopBarTheme {
         SampleContent()
+    }
+}
+
+@Preview
+@Composable
+private fun PreviewWithBefore() {
+    ComposeCollapsingTopBarTheme {
+        SampleContent {
+            Text(
+                modifier = Modifier
+                    .background(Color.Red)
+                    .padding(40.dp)
+                    .align(Alignment.CenterHorizontally),
+                text = "Something before",
+            )
+        }
     }
 }
