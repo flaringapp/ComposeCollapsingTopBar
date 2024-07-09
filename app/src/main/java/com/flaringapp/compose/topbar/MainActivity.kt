@@ -37,12 +37,20 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.KeyboardArrowDown
+import androidx.compose.material.icons.rounded.KeyboardArrowUp
 import androidx.compose.material3.Button
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -96,6 +104,22 @@ private fun CollapsingColumn() {
         mutableStateOf(true)
     }
 
+    var toggleExpandRequest: Boolean? by remember {
+        mutableStateOf(null)
+    }
+
+    LaunchedEffect(toggleExpandRequest) {
+        val expand = toggleExpandRequest ?: return@LaunchedEffect
+
+        if (expand) {
+            scaffoldState.expand()
+        } else {
+            scaffoldState.collapse()
+        }
+
+        toggleExpandRequest = null
+    }
+
     CollapsingTopBarScaffold(
         modifier = Modifier.fillMaxSize(),
         state = scaffoldState,
@@ -122,6 +146,11 @@ private fun CollapsingColumn() {
                     ) {
                         Text(text = "${if (showBox) "Hide" else "Show"} box")
                     }
+
+                    HeaderTopAppBar(
+                        isExpanded = !scaffoldState.isCollapsed,
+                        toggleExpand = { toggleExpandRequest = scaffoldState.isCollapsed },
+                    )
 
                     SampleItem(
                         modifier = Modifier
@@ -199,6 +228,35 @@ private fun SampleItem(
         text = buildString {
             repeat(50) {
                 append("Hello $it")
+            }
+        },
+    )
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun HeaderTopAppBar(
+    isExpanded: Boolean,
+    toggleExpand: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    val icon = if (isExpanded) {
+        Icons.Rounded.KeyboardArrowUp
+    } else {
+        Icons.Rounded.KeyboardArrowDown
+    }
+
+    TopAppBar(
+        modifier = modifier,
+        title = { Text("Regular top app bar") },
+        navigationIcon = {
+            IconButton(
+                onClick = toggleExpand,
+            ) {
+                Icon(
+                    imageVector = icon,
+                    contentDescription = null,
+                )
             }
         },
     )
