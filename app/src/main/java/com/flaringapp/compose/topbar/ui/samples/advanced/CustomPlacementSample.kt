@@ -66,16 +66,15 @@ private fun CollapsingContent(
         topBar = {
             SampleTopBarImage()
 
-            Box {
-                SampleTopAppBar(
-                    title = "Custom Placement Sample",
-                    onBack = onBack,
-                )
+            SampleTopAppBar(
+                title = "Custom Placement Sample",
+                onBack = onBack,
+            )
 
-                SlidingDot(
-                    state = state,
-                )
-            }
+            SlidingDot(
+                modifier = Modifier.floating(),
+                state = state,
+            )
         },
         body = {
             SampleContent()
