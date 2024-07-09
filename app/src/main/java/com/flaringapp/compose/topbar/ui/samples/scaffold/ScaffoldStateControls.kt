@@ -24,10 +24,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -41,6 +38,7 @@ import androidx.compose.ui.unit.dp
 import com.flaringapp.compose.topbar.CollapsingTopBarControls
 import com.flaringapp.compose.topbar.scaffold.CollapsingTopBarScaffoldState
 import com.flaringapp.compose.topbar.scaffold.rememberCollapsingTopBarScaffoldState
+import com.flaringapp.compose.topbar.ui.samples.common.rememberSampleExpandRequestHandler
 import com.flaringapp.compose.topbar.ui.theme.ComposeCollapsingTopBarTheme
 
 @Composable
@@ -115,21 +113,7 @@ private fun <State : CollapsingTopBarControls> ControlsItem(
     expandName: String = "Expand",
     collapseName: String = "Collapse",
 ) {
-    var toggleExpandRequest: Boolean? by remember {
-        mutableStateOf(null)
-    }
-
-    LaunchedEffect(toggleExpandRequest) {
-        val expand = toggleExpandRequest ?: return@LaunchedEffect
-
-        if (expand) {
-            state.expand()
-        } else {
-            state.collapse()
-        }
-
-        toggleExpandRequest = null
-    }
+    var expandRequest: Boolean? by rememberSampleExpandRequestHandler(state)
 
     Column(
         modifier = modifier,
@@ -159,13 +143,13 @@ private fun <State : CollapsingTopBarControls> ControlsItem(
         )
 
         TextButton(
-            onClick = { toggleExpandRequest = true },
+            onClick = { expandRequest = true },
         ) {
             Text(expandName)
         }
 
         TextButton(
-            onClick = { toggleExpandRequest = false },
+            onClick = { expandRequest = false },
         ) {
             Text(collapseName)
         }

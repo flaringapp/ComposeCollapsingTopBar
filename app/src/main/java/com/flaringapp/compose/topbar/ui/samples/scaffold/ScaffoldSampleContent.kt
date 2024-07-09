@@ -46,7 +46,6 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -63,6 +62,7 @@ import com.flaringapp.compose.topbar.scaffold.CollapsingTopBarScaffold
 import com.flaringapp.compose.topbar.scaffold.CollapsingTopBarScaffoldScrollMode
 import com.flaringapp.compose.topbar.scaffold.rememberCollapsingTopBarScaffoldState
 import com.flaringapp.compose.topbar.snap.rememberCollapsingTopBarSnapBehavior
+import com.flaringapp.compose.topbar.ui.samples.common.rememberSampleExpandRequestHandler
 import com.flaringapp.compose.topbar.ui.theme.ComposeCollapsingTopBarTheme
 
 @Composable
@@ -90,21 +90,7 @@ private fun CollapsingColumn() {
         mutableStateOf(true)
     }
 
-    var toggleExpandRequest: Boolean? by remember {
-        mutableStateOf(null)
-    }
-
-    LaunchedEffect(toggleExpandRequest) {
-        val expand = toggleExpandRequest ?: return@LaunchedEffect
-
-        if (expand) {
-            scaffoldState.expand()
-        } else {
-            scaffoldState.collapse()
-        }
-
-        toggleExpandRequest = null
-    }
+    var expandRequest: Boolean? by rememberSampleExpandRequestHandler(scaffoldState)
 
     CollapsingTopBarScaffold(
         modifier = Modifier.fillMaxSize(),
@@ -135,7 +121,7 @@ private fun CollapsingColumn() {
 
                     HeaderTopAppBar(
                         isExpanded = !scaffoldState.isCollapsed,
-                        toggleExpand = { toggleExpandRequest = scaffoldState.isCollapsed },
+                        toggleExpand = { expandRequest = scaffoldState.isCollapsed },
                     )
 
                     SampleItem(
