@@ -44,7 +44,6 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -62,7 +61,6 @@ import androidx.compose.ui.unit.dp
 import com.flaringapp.compose.topbar.nestedcollapse.CollapsingTopBarColumn
 import com.flaringapp.compose.topbar.scaffold.CollapsingTopBarScaffold
 import com.flaringapp.compose.topbar.scaffold.CollapsingTopBarScaffoldScrollMode
-import com.flaringapp.compose.topbar.scaffold.CollapsingTopBarScaffoldState
 import com.flaringapp.compose.topbar.scaffold.rememberCollapsingTopBarScaffoldState
 import com.flaringapp.compose.topbar.snap.rememberCollapsingTopBarSnapBehavior
 import com.flaringapp.compose.topbar.ui.theme.ComposeCollapsingTopBarTheme
@@ -197,7 +195,7 @@ private fun CollapsingColumn() {
             ) {
                 ContentHeader()
 
-                ContentControls(
+                ScaffoldSampleControls(
                     state = scaffoldState,
                 )
 
@@ -277,120 +275,6 @@ private fun ContentHeader(
         HorizontalDivider(
             modifier = Modifier.weight(1f),
         )
-    }
-}
-
-@Composable
-private fun ContentControls(
-    state: CollapsingTopBarScaffoldState,
-    modifier: Modifier = Modifier,
-) {
-    Column(
-        modifier = modifier.fillMaxWidth(),
-        horizontalAlignment = Alignment.CenterHorizontally,
-    ) {
-        Text(
-            "Controls",
-            color = MaterialTheme.colorScheme.primary,
-            style = MaterialTheme.typography.titleLarge,
-        )
-
-        Row(
-            modifier = Modifier.padding(top = 16.dp),
-        ) {
-            ControlsItem(
-                modifier = Modifier.weight(1f),
-                name = "Scaffold",
-                isExpanded = state.isExpanded,
-                isCollapsed = state.isCollapsed,
-                onExpand = { state.expand() },
-                onCollapse = { state.collapse() },
-            )
-
-            ControlsItem(
-                modifier = Modifier.weight(1f),
-                name = "Top Bar",
-                isExpanded = state.topBarState.layoutInfo.isExpanded,
-                isCollapsed = state.topBarState.layoutInfo.isCollapsed,
-                onExpand = { state.topBarState.expand() },
-                onCollapse = { state.topBarState.collapse() },
-            )
-
-            ControlsItem(
-                modifier = Modifier.weight(1f),
-                name = "Exit",
-                isExpandedName = "Entered",
-                isCollapsedName = "Exited",
-                expandName = "Enter",
-                collapseName = "Exit",
-                isExpanded = state.exitState.isFullyEntered,
-                isCollapsed = state.exitState.isFullyExited,
-                onExpand = { state.exitState.expand() },
-                onCollapse = { state.exitState.collapse() },
-            )
-        }
-    }
-}
-
-@Composable
-private fun ControlsItem(
-    name: String,
-    isExpanded: Boolean,
-    isCollapsed: Boolean,
-    onExpand: suspend () -> Unit,
-    onCollapse: suspend () -> Unit,
-    modifier: Modifier = Modifier,
-    isExpandedName: String = "Expanded",
-    isCollapsedName: String = "Collapsed",
-    expandName: String = "Expand",
-    collapseName: String = "Collapse",
-) {
-    var toggleExpandRequest: Boolean? by remember {
-        mutableStateOf(null)
-    }
-
-    LaunchedEffect(toggleExpandRequest) {
-        val expand = toggleExpandRequest ?: return@LaunchedEffect
-
-        if (expand) {
-            onExpand()
-        } else {
-            onCollapse()
-        }
-
-        toggleExpandRequest = null
-    }
-
-    Column(
-        modifier = modifier,
-        horizontalAlignment = Alignment.CenterHorizontally,
-    ) {
-        Text(
-            text = name,
-            style = MaterialTheme.typography.titleMedium,
-        )
-
-        Text(
-            modifier = Modifier.padding(top = 8.dp),
-            text = "$isExpandedName: $isExpanded",
-        )
-
-        Text(
-            modifier = Modifier.padding(top = 8.dp),
-            text = "$isCollapsedName: $isCollapsed",
-        )
-
-        TextButton(
-            onClick = { toggleExpandRequest = true },
-        ) {
-            Text(expandName)
-        }
-
-        TextButton(
-            onClick = { toggleExpandRequest = false },
-        ) {
-            Text(collapseName)
-        }
     }
 }
 
