@@ -24,14 +24,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.flaringapp.compose.topbar.scaffold.CollapsingTopBarScaffold
 import com.flaringapp.compose.topbar.scaffold.CollapsingTopBarScaffoldScrollMode
 import com.flaringapp.compose.topbar.scaffold.rememberCollapsingTopBarScaffoldState
-import com.flaringapp.compose.topbar.snap.rememberCollapsingTopBarSnapBehavior
 import com.flaringapp.compose.topbar.ui.samples.common.SampleContent
 import com.flaringapp.compose.topbar.ui.samples.common.SampleTopAppBar
 import com.flaringapp.compose.topbar.ui.samples.common.SampleTopBarImage
 import com.flaringapp.compose.topbar.ui.theme.ComposeCollapsingTopBarTheme
 
 @Composable
-fun ParallaxSnapCollapsingSample(
+fun ParallaxCollapsingSample(
     onBack: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -53,7 +52,6 @@ private fun CollapsingContent(
         modifier = modifier,
         state = rememberCollapsingTopBarScaffoldState(),
         scrollMode = CollapsingTopBarScaffoldScrollMode.collapse(expandAlways = false),
-        snapBehavior = rememberCollapsingTopBarSnapBehavior(threshold = 0.5f),
         topBar = {
             SampleTopBarImage(
                 modifier = Modifier
@@ -61,7 +59,7 @@ private fun CollapsingContent(
             )
 
             SampleTopAppBar(
-                title = "Parallax Snap Collapsing Sample",
+                title = "Parallax Collapsing Sample",
                 onBack = onBack,
             )
         },
@@ -75,7 +73,7 @@ private fun CollapsingContent(
 @Composable
 private fun Preview() {
     ComposeCollapsingTopBarTheme {
-        ParallaxSnapCollapsingSample(
+        ParallaxCollapsingSample(
             onBack = {},
         )
     }
