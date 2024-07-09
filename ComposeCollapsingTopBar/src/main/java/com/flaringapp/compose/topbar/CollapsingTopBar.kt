@@ -115,8 +115,13 @@ private class CollapsingTopBarMeasurePolicy(
                 it.topBarParentData?.nestedCollapseElement?.minHeight ?: Int.MAX_VALUE
             }.takeIf { it != Int.MAX_VALUE }
 
+            val placeablesMinHeight = placeables.minOf {
+                if (it.topBarParentData?.isFloating == true) return@minOf Int.MAX_VALUE
+                it.height
+            }.takeIf { it != Int.MAX_VALUE }
+
             val collapsedHeight = max(
-                placeables.minOf { it.height },
+                placeablesMinHeight ?: 0,
                 nestedCollapseMinHeight ?: 0,
             )
                 .let { constraints.constrainHeight(it) }
@@ -196,6 +201,12 @@ interface CollapsingTopBarScope {
     fun Modifier.parallax(ratio: Float): Modifier
 
     /**
+     * Exclude the element from resolving minimum height among all elements. Useful for 'floating'
+     * elements with custom motion on collapse.
+     */
+    fun Modifier.floating(): Modifier
+
+    /**
      * Define an explicit minimum (collapsed) height nested collapse connection between the top bar
      * and this element. The element is responsible for dispatching its own minimum height using
      * [element] handle. This value is read by the top bar to calculate total minimum height
@@ -214,6 +225,10 @@ private object CollapsingTopBarScopeInstance : CollapsingTopBarScope {
 
     override fun Modifier.parallax(ratio: Float): Modifier {
         return then(ParallaxModifier(ratio))
+    }
+
+    override fun Modifier.floating(): Modifier {
+        return then(FloatingModifier())
     }
 
     override fun Modifier.nestedCollapse(
@@ -239,6 +254,12 @@ private class ParallaxModifier(
     }
 }
 
+private class FloatingModifier : CollapsingTopBarParentDataModifier() {
+    override fun modifyParentData(parentData: CollapsingTopBarParentData) {
+        parentData.isFloating = true
+    }
+}
+
 private class NestedCollapseModifier(
     private val element: CollapsingTopBarNestedCollapseElement,
 ) : CollapsingTopBarParentDataModifier() {
@@ -261,6 +282,7 @@ private abstract class CollapsingTopBarParentDataModifier : ParentDataModifier {
 private data class CollapsingTopBarParentData(
     var progressListener: CollapsingTopBarProgressListener? = null,
     var parallaxRatio: Float? = null,
+    var isFloating: Boolean = false,
     var nestedCollapseElement: CollapsingTopBarNestedCollapseElement? = null,
 )
 
