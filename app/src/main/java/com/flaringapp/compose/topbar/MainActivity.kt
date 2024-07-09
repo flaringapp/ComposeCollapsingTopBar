@@ -20,7 +20,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import com.flaringapp.compose.topbar.ui.samples.advanced.ManualCollapsingControlsSample
+import com.flaringapp.compose.topbar.ui.samples.advanced.AppBarScrimSample
 import com.flaringapp.compose.topbar.ui.theme.ComposeCollapsingTopBarTheme
 
 class MainActivity : ComponentActivity() {
@@ -29,7 +29,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             ComposeCollapsingTopBarTheme {
-                ManualCollapsingControlsSample(
+                AppBarScrimSample(
                     onBack = {},
                 )
             }
