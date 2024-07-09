@@ -31,6 +31,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.flaringapp.compose.topbar.scaffold.CollapsingTopBarScaffoldState
@@ -129,12 +134,20 @@ private fun ControlsItem(
 
         Text(
             modifier = Modifier.padding(top = 8.dp),
-            text = "$isExpandedName: $isExpanded",
+            text = formatStateText(
+                stateName = isExpandedName,
+                state = isExpanded,
+            ),
+            style = MaterialTheme.typography.bodyMedium,
         )
 
         Text(
             modifier = Modifier.padding(top = 8.dp),
-            text = "$isCollapsedName: $isCollapsed",
+            text = formatStateText(
+                stateName = isCollapsedName,
+                state = isCollapsed,
+            ),
+            style = MaterialTheme.typography.bodyMedium,
         )
 
         TextButton(
@@ -148,6 +161,17 @@ private fun ControlsItem(
         ) {
             Text(collapseName)
         }
+    }
+}
+
+private fun formatStateText(
+    stateName: String,
+    state: Boolean,
+): AnnotatedString = buildAnnotatedString {
+    append(stateName)
+    append(": ")
+    withStyle(SpanStyle(fontWeight = FontWeight.Bold)) {
+        append(state.toString())
     }
 }
 
