@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.flaringapp.compose.topbar.ui.samples
+package com.flaringapp.compose.topbar.ui.samples.basic
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
