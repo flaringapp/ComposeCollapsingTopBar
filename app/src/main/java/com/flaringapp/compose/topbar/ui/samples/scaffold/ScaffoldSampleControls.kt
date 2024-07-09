@@ -53,7 +53,7 @@ fun ScaffoldSampleControls(
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Text(
-            "Controls",
+            "State Controls",
             color = MaterialTheme.colorScheme.primary,
             style = MaterialTheme.typography.titleLarge,
         )
