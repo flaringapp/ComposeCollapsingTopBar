@@ -118,6 +118,18 @@ class CollapsingTopBarExitState internal constructor(
     val exitHeight: Float
         get() = packedExitHeightState.floatValue.coerceAtMost(collapsedHeight)
 
+    /**
+     * Whether top bar exit height is fully exited/collapsed. Disabled state is never exited.
+     */
+    val isFullyExited: Boolean
+        get() = isEnabled && exitHeight == collapsedHeight
+
+    /**
+     * Whether top bar exit height is fully entered/expanded. Disabled state is always entered.
+     */
+    val isFullyEntered: Boolean
+        get() = exitHeight == 0f
+
     private val collapsedHeight: Float
         get() = collapsedHeightState.floatValue
 
