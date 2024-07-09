@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.flaringapp.compose.topbar.ui.samples
+package com.flaringapp.compose.topbar.ui.samples.common
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.ArrowBack

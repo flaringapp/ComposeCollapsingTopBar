@@ -30,6 +30,9 @@ import androidx.compose.ui.util.lerp
 import com.flaringapp.compose.topbar.scaffold.CollapsingTopBarScaffold
 import com.flaringapp.compose.topbar.scaffold.CollapsingTopBarScaffoldScrollMode
 import com.flaringapp.compose.topbar.scaffold.rememberCollapsingTopBarScaffoldState
+import com.flaringapp.compose.topbar.ui.samples.common.SampleContent
+import com.flaringapp.compose.topbar.ui.samples.common.SampleTopAppBar
+import com.flaringapp.compose.topbar.ui.samples.common.SampleTopBarImage
 import com.flaringapp.compose.topbar.ui.theme.ComposeCollapsingTopBarTheme
 
 private const val SCRIM_START_FRACTION = 0.25f
