@@ -146,7 +146,8 @@ private class CollapsingTopBarMeasurePolicy(
             placeables.forEach { placeable ->
                 val parentData = placeable.topBarParentData
 
-                val placeableCollapsibleDistance = placeable.height - layoutInfo.collapsedHeight
+                val placeableCollapsibleDistance =
+                    (placeable.height - layoutInfo.collapsedHeight).coerceAtLeast(0)
                 val placeableProgress = if (placeableCollapsibleDistance == 0) {
                     1f
                 } else {
