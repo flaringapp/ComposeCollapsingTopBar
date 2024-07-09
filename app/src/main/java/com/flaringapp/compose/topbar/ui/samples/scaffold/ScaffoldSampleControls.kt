@@ -151,7 +151,7 @@ private fun ControlsItem(
     }
 }
 
-@Preview
+@Preview(showBackground = true)
 @Composable
 private fun Preview() {
     ComposeCollapsingTopBarTheme {
