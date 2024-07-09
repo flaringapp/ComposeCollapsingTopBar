@@ -141,8 +141,15 @@ private class CollapsingTopBarMeasurePolicy(
             placeables.forEach { placeable ->
                 val parentData = placeable.topBarParentData
 
-                val placeableProgress =
-                    layoutInfo.height.coerceAtMost(placeable.height.toFloat()) / placeable.height
+                val placeableCollapsibleDistance = placeable.height - layoutInfo.collapsedHeight
+                val placeableProgress = if (placeableCollapsibleDistance == 0) {
+                    1f
+                } else {
+                    val placeableCollapseHeight = with(layoutInfo) {
+                        height.coerceAtMost(placeable.height.toFloat()) - collapsedHeight
+                    }
+                    placeableCollapseHeight / placeableCollapsibleDistance
+                }
 
                 parentData?.progressListener?.onProgressUpdate(
                     totalProgress = progress,
