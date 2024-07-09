@@ -38,6 +38,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.flaringapp.compose.topbar.CollapsingTopBarControls
 import com.flaringapp.compose.topbar.scaffold.CollapsingTopBarScaffoldState
 import com.flaringapp.compose.topbar.scaffold.rememberCollapsingTopBarScaffoldState
 import com.flaringapp.compose.topbar.ui.theme.ComposeCollapsingTopBarTheme
@@ -62,45 +63,41 @@ fun ScaffoldSampleControls(
         ) {
             ControlsItem(
                 modifier = Modifier.weight(1f),
+                state = state,
                 name = "Scaffold",
-                isExpanded = state.isExpanded,
-                isCollapsed = state.isCollapsed,
-                onExpand = { state.expand() },
-                onCollapse = { state.collapse() },
+                isExpanded = { it.isExpanded },
+                isCollapsed = { it.isCollapsed },
             )
 
             ControlsItem(
                 modifier = Modifier.weight(1f),
+                state = state.topBarState,
                 name = "Top Bar",
-                isExpanded = state.topBarState.layoutInfo.isExpanded,
-                isCollapsed = state.topBarState.layoutInfo.isCollapsed,
-                onExpand = { state.topBarState.expand() },
-                onCollapse = { state.topBarState.collapse() },
+                isExpanded = { it.layoutInfo.isExpanded },
+                isCollapsed = { it.layoutInfo.isCollapsed },
             )
 
             ControlsItem(
                 modifier = Modifier.weight(1f),
+                state = state.exitState,
                 name = "Exit",
                 isExpandedName = "Entered",
                 isCollapsedName = "Exited",
                 expandName = "Enter",
                 collapseName = "Exit",
-                isExpanded = state.exitState.isFullyEntered,
-                isCollapsed = state.exitState.isFullyExited,
-                onExpand = { state.exitState.expand() },
-                onCollapse = { state.exitState.collapse() },
+                isExpanded = { it.isFullyEntered },
+                isCollapsed = { it.isFullyExited },
             )
         }
     }
 }
 
 @Composable
-private fun ControlsItem(
+private fun <State : CollapsingTopBarControls> ControlsItem(
+    state: State,
     name: String,
-    isExpanded: Boolean,
-    isCollapsed: Boolean,
-    onExpand: suspend () -> Unit,
-    onCollapse: suspend () -> Unit,
+    isExpanded: (State) -> Boolean,
+    isCollapsed: (State) -> Boolean,
     modifier: Modifier = Modifier,
     isExpandedName: String = "Expanded",
     isCollapsedName: String = "Collapsed",
@@ -115,9 +112,9 @@ private fun ControlsItem(
         val expand = toggleExpandRequest ?: return@LaunchedEffect
 
         if (expand) {
-            onExpand()
+            state.expand()
         } else {
-            onCollapse()
+            state.collapse()
         }
 
         toggleExpandRequest = null
@@ -136,7 +133,7 @@ private fun ControlsItem(
             modifier = Modifier.padding(top = 8.dp),
             text = formatStateText(
                 stateName = isExpandedName,
-                state = isExpanded,
+                state = isExpanded(state),
             ),
             style = MaterialTheme.typography.bodyMedium,
         )
@@ -145,7 +142,7 @@ private fun ControlsItem(
             modifier = Modifier.padding(top = 8.dp),
             text = formatStateText(
                 stateName = isCollapsedName,
-                state = isCollapsed,
+                state = isCollapsed(state),
             ),
             style = MaterialTheme.typography.bodyMedium,
         )
