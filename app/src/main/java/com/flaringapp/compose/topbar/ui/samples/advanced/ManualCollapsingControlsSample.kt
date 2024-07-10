@@ -30,6 +30,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.tooling.preview.Preview
 import com.flaringapp.compose.topbar.scaffold.CollapsingTopBarScaffold
 import com.flaringapp.compose.topbar.scaffold.CollapsingTopBarScaffoldScrollMode
 import com.flaringapp.compose.topbar.scaffold.CollapsingTopBarScaffoldState
@@ -39,6 +40,7 @@ import com.flaringapp.compose.topbar.ui.samples.common.SampleContent
 import com.flaringapp.compose.topbar.ui.samples.common.SampleTopAppBar
 import com.flaringapp.compose.topbar.ui.samples.common.SampleTopBarImage
 import com.flaringapp.compose.topbar.ui.samples.common.rememberSampleExpandRequestHandler
+import com.flaringapp.compose.topbar.ui.theme.ComposeCollapsingTopBarTheme
 
 object ManualCollapsingControlsSample : CollapsingTopBarSample {
 
@@ -118,5 +120,15 @@ private fun TopBarControls(
         ) {
             Text("Collapse")
         }
+    }
+}
+
+@Preview
+@Composable
+private fun Preview() {
+    ComposeCollapsingTopBarTheme {
+        ManualCollapsingControlsSampleContent(
+            onBack = {},
+        )
     }
 }
