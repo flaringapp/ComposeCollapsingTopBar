@@ -36,7 +36,7 @@ import com.flaringapp.compose.topbar.ui.theme.ComposeCollapsingTopBarTheme
 private const val SCRIM_START_FRACTION = 0.25f
 
 @Composable
-fun BasicScaffoldSample(
+fun BasicScaffoldSampleContent(
     title: String,
     onBack: () -> Unit,
     scrollMode: CollapsingTopBarScaffoldScrollMode,
@@ -75,7 +75,7 @@ fun BasicScaffoldSample(
 @Composable
 private fun Preview() {
     ComposeCollapsingTopBarTheme {
-        BasicScaffoldSample(
+        BasicScaffoldSampleContent(
             title = "Basic Scaffold",
             onBack = {},
             scrollMode = CollapsingTopBarScaffoldScrollMode.collapse(expandAlways = false),

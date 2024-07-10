@@ -36,12 +36,12 @@ object ParallaxCollapsingSample : CollapsingTopBarSample {
 
     @Composable
     override fun Content(onBack: () -> Unit) {
-        ParallaxCollapsingSample(onBack = onBack)
+        ParallaxCollapsingSampleContent(onBack = onBack)
     }
 }
 
 @Composable
-fun ParallaxCollapsingSample(
+fun ParallaxCollapsingSampleContent(
     onBack: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -84,7 +84,7 @@ private fun CollapsingContent(
 @Composable
 private fun Preview() {
     ComposeCollapsingTopBarTheme {
-        ParallaxCollapsingSample(
+        ParallaxCollapsingSampleContent(
             onBack = {},
         )
     }

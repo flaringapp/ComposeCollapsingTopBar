@@ -44,12 +44,12 @@ object AppBarScrimSample : CollapsingTopBarSample {
 
     @Composable
     override fun Content(onBack: () -> Unit) {
-        AppBarScrimSample(onBack = onBack)
+        AppBarScrimSampleContent(onBack = onBack)
     }
 }
 
 @Composable
-fun AppBarScrimSample(
+fun AppBarScrimSampleContent(
     onBack: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -107,7 +107,7 @@ private fun CollapsingContent(
 @Composable
 private fun Preview() {
     ComposeCollapsingTopBarTheme {
-        AppBarScrimSample(
+        AppBarScrimSampleContent(
             onBack = {},
         )
     }

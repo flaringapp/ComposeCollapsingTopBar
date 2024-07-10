@@ -31,7 +31,7 @@ object CollapsingExitExpandAtTopSample : CollapsingTopBarSample {
 
     @Composable
     override fun Content(onBack: () -> Unit) {
-        CollapsingExitExpandAtTopSample(onBack = onBack)
+        CollapsingExitExpandAtTopSampleContent(onBack = onBack)
     }
 }
 
@@ -41,16 +41,16 @@ object CollapsingExitExpandAlwaysSample : CollapsingTopBarSample {
 
     @Composable
     override fun Content(onBack: () -> Unit) {
-        CollapsingExitExpandAlwaysSample(onBack = onBack)
+        CollapsingExitExpandAlwaysSampleContent(onBack = onBack)
     }
 }
 
 @Composable
-fun CollapsingExitExpandAtTopSample(
+fun CollapsingExitExpandAtTopSampleContent(
     onBack: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    CollapsingExitSample(
+    CollapsingExitSampleContent(
         modifier = modifier,
         title = "Collapse Exit / Expand At Top",
         onBack = onBack,
@@ -59,11 +59,11 @@ fun CollapsingExitExpandAtTopSample(
 }
 
 @Composable
-fun CollapsingExitExpandAlwaysSample(
+fun CollapsingExitExpandAlwaysSampleContent(
     onBack: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    CollapsingExitSample(
+    CollapsingExitSampleContent(
         modifier = modifier,
         title = "Collapse Exit / Expand Always",
         onBack = onBack,
@@ -72,7 +72,7 @@ fun CollapsingExitExpandAlwaysSample(
 }
 
 @Composable
-fun CollapsingExitSample(
+private fun CollapsingExitSampleContent(
     title: String,
     onBack: () -> Unit,
     expandAlways: Boolean,
@@ -81,7 +81,7 @@ fun CollapsingExitSample(
     Surface(
         modifier = modifier.fillMaxSize(),
     ) {
-        BasicScaffoldSample(
+        BasicScaffoldSampleContent(
             title = title,
             onBack = onBack,
             scrollMode = CollapsingTopBarScaffoldScrollMode.collapseAndExit(
@@ -95,7 +95,7 @@ fun CollapsingExitSample(
 @Composable
 private fun PreviewExpandAtTop() {
     ComposeCollapsingTopBarTheme {
-        CollapsingExitExpandAtTopSample(
+        CollapsingExitExpandAtTopSampleContent(
             onBack = {},
         )
     }
@@ -105,7 +105,7 @@ private fun PreviewExpandAtTop() {
 @Composable
 private fun PreviewExpandAlways() {
     ComposeCollapsingTopBarTheme {
-        CollapsingExitExpandAlwaysSample(
+        CollapsingExitExpandAlwaysSampleContent(
             onBack = {},
         )
     }

@@ -46,12 +46,12 @@ object ManualCollapsingControlsSample : CollapsingTopBarSample {
 
     @Composable
     override fun Content(onBack: () -> Unit) {
-        ManualCollapsingControlsSample(onBack = onBack)
+        ManualCollapsingControlsSampleContent(onBack = onBack)
     }
 }
 
 @Composable
-fun ManualCollapsingControlsSample(
+fun ManualCollapsingControlsSampleContent(
     onBack: () -> Unit,
     modifier: Modifier = Modifier,
 ) {

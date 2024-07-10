@@ -45,12 +45,12 @@ object CustomPlacementSample : CollapsingTopBarSample {
 
     @Composable
     override fun Content(onBack: () -> Unit) {
-        CustomPlacementSample(onBack = onBack)
+        CustomPlacementSampleContent(onBack = onBack)
     }
 }
 
 @Composable
-fun CustomPlacementSample(
+fun CustomPlacementSampleContent(
     onBack: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -122,7 +122,7 @@ private fun SlidingDot(
 @Composable
 private fun Preview() {
     ComposeCollapsingTopBarTheme {
-        CustomPlacementSample(
+        CustomPlacementSampleContent(
             onBack = {},
         )
     }

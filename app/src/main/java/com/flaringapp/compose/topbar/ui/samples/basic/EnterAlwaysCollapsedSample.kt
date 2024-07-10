@@ -31,19 +31,19 @@ object EnterAlwaysCollapsedSample : CollapsingTopBarSample {
 
     @Composable
     override fun Content(onBack: () -> Unit) {
-        EnterAlwaysCollapsedSample(onBack = onBack)
+        EnterAlwaysCollapsedSampleContent(onBack = onBack)
     }
 }
 
 @Composable
-fun EnterAlwaysCollapsedSample(
+fun EnterAlwaysCollapsedSampleContent(
     onBack: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Surface(
         modifier = modifier.fillMaxSize(),
     ) {
-        BasicScaffoldSample(
+        BasicScaffoldSampleContent(
             title = "Enter Always Collapsed",
             onBack = onBack,
             scrollMode = CollapsingTopBarScaffoldScrollMode.enterAlwaysCollapsed(),
@@ -55,7 +55,7 @@ fun EnterAlwaysCollapsedSample(
 @Composable
 private fun Preview() {
     ComposeCollapsingTopBarTheme {
-        EnterAlwaysCollapsedSample(
+        EnterAlwaysCollapsedSampleContent(
             onBack = {},
         )
     }

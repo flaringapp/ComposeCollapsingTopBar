@@ -37,12 +37,12 @@ object SnapCollapsingSample : CollapsingTopBarSample {
 
     @Composable
     override fun Content(onBack: () -> Unit) {
-        SnapCollapsingSample(onBack = onBack)
+        SnapCollapsingSampleContent(onBack = onBack)
     }
 }
 
 @Composable
-fun SnapCollapsingSample(
+fun SnapCollapsingSampleContent(
     onBack: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -83,7 +83,7 @@ private fun CollapsingContent(
 @Composable
 private fun Preview() {
     ComposeCollapsingTopBarTheme {
-        SnapCollapsingSample(
+        SnapCollapsingSampleContent(
             onBack = {},
         )
     }
