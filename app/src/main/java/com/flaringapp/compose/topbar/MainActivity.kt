@@ -110,6 +110,10 @@ private fun rememberSampleGroups(): SnapshotStateList<SamplesGalleryGroup> {
                 name = "Advanced Samples",
                 samples = CollapsingTopBarSampleGroups.Advanced.toMutableStateList(),
             ),
+            SamplesGalleryGroup(
+                name = "Playground Samples",
+                samples = CollapsingTopBarSampleGroups.Playground.toMutableStateList(),
+            ),
         )
     }
 }

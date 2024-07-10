@@ -58,12 +58,25 @@ import com.flaringapp.compose.topbar.scaffold.rememberCollapsingTopBarScaffoldSt
 import com.flaringapp.compose.topbar.screen
 import com.flaringapp.compose.topbar.snap.CollapsingTopBarNoSnapBehavior
 import com.flaringapp.compose.topbar.snap.rememberCollapsingTopBarSnapBehavior
+import com.flaringapp.compose.topbar.ui.samples.CollapsingTopBarSample
 import com.flaringapp.compose.topbar.ui.samples.CollapsingTopBarSampleDogDefaults
 import com.flaringapp.compose.topbar.ui.samples.common.SampleFilterChips
 import com.flaringapp.compose.topbar.ui.samples.common.SampleTopAppBar
 import com.flaringapp.compose.topbar.ui.samples.common.SampleTopBarBanner
 import com.flaringapp.compose.topbar.ui.samples.common.SampleTopBarImage
 import com.flaringapp.compose.topbar.ui.theme.ComposeCollapsingTopBarTheme
+
+object ScaffoldSample : CollapsingTopBarSample {
+
+    override val name: String = "Scaffold Playground"
+
+    @Composable
+    override fun Content(onBack: () -> Unit) {
+        ScaffoldSampleContent(
+            onBack = onBack,
+        )
+    }
+}
 
 @Composable
 fun ScaffoldSampleContent(
