@@ -18,7 +18,6 @@ package com.flaringapp.compose.topbar.ui.samples.scaffold
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
@@ -32,7 +31,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Button
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
@@ -56,7 +54,9 @@ import com.flaringapp.compose.topbar.scaffold.CollapsingTopBarScaffoldState
 import com.flaringapp.compose.topbar.scaffold.rememberCollapsingTopBarScaffoldState
 import com.flaringapp.compose.topbar.screen
 import com.flaringapp.compose.topbar.snap.rememberCollapsingTopBarSnapBehavior
+import com.flaringapp.compose.topbar.ui.samples.CollapsingTopBarSampleDogDefaults
 import com.flaringapp.compose.topbar.ui.samples.common.SampleTopAppBar
+import com.flaringapp.compose.topbar.ui.samples.common.SampleTopBarImage
 import com.flaringapp.compose.topbar.ui.theme.ComposeCollapsingTopBarTheme
 
 @Composable
@@ -90,8 +90,8 @@ private fun CollapsingColumn(
         mutableStateOf(false)
     }
 
-    var showBox by remember {
-        mutableStateOf(false)
+    var showDoggo by remember {
+        mutableStateOf(true)
     }
     var showColumn by remember {
         mutableStateOf(true)
@@ -103,12 +103,9 @@ private fun CollapsingColumn(
         scrollMode = scrollControlMode.rememberScrollMode(expandAlways = scrollEnterAlways),
         snapBehavior = rememberCollapsingTopBarSnapBehavior(threshold = 0.5f),
         topBar = {
-            if (showBox) {
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(500.dp)
-                        .background(Color.Yellow),
+            if (showDoggo) {
+                SampleTopBarImage(
+                    dog = CollapsingTopBarSampleDogDefaults.Column,
                 )
             }
 
@@ -117,13 +114,6 @@ private fun CollapsingColumn(
                     modifier = Modifier.background(Color.LightGray),
                     state = scaffoldState.topBarState,
                 ) {
-                    Button(
-                        modifier = Modifier.notCollapsible(),
-                        onClick = { showBox = !showBox },
-                    ) {
-                        Text(text = "${if (showBox) "Hide" else "Show"} box")
-                    }
-
                     SampleTopAppBar(
                         modifier = Modifier.notCollapsible(),
                         title = "Scaffold Playground",
@@ -167,17 +157,6 @@ private fun CollapsingColumn(
                     )
                 }
             }
-
-            Box(
-                modifier = Modifier.fillMaxWidth(),
-            ) {
-                Button(
-                    modifier = Modifier.align(Alignment.TopEnd),
-                    onClick = { showColumn = !showColumn },
-                ) {
-                    Text(text = "${if (showColumn) "Hide" else "Show"} column")
-                }
-            }
         },
         body = {
             Column(
@@ -197,6 +176,16 @@ private fun CollapsingColumn(
                 ContentStateControls(
                     modifier = Modifier.padding(top = 8.dp),
                     state = scaffoldState,
+                )
+
+                ScaffoldVisibilityControls(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 8.dp),
+                    doggoVisible = showDoggo,
+                    columnVisible = showColumn,
+                    changeDoggoVisible = { showDoggo = it },
+                    changeColumnVisible = { showColumn = it },
                 )
 
                 repeat(50) {
