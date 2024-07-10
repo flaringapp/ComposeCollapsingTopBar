@@ -89,8 +89,8 @@ private fun SampleCard(
 ) {
     Surface(
         modifier = modifier
-            .width(104.dp)
-            .heightIn(min = 120.dp),
+            .width(112.dp)
+            .heightIn(min = 140.dp),
         color = MaterialTheme.colorScheme.primaryContainer,
         shape = MaterialTheme.shapes.large,
         onClick = onClick,
