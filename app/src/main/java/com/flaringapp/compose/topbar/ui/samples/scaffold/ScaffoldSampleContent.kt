@@ -253,7 +253,7 @@ private fun ContentHeader(
         )
 
         Text(
-            text = "Content start \uD83D\uDC47",
+            text = "Content beginning \uD83D\uDC47",
             textAlign = TextAlign.Center,
             style = MaterialTheme.typography.titleLarge,
         )
