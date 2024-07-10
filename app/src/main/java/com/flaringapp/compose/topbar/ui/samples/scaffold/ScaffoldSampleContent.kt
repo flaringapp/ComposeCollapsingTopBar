@@ -24,12 +24,10 @@ import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.WindowInsetsSides
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.HorizontalDivider
@@ -55,7 +53,9 @@ import com.flaringapp.compose.topbar.scaffold.rememberCollapsingTopBarScaffoldSt
 import com.flaringapp.compose.topbar.screen
 import com.flaringapp.compose.topbar.snap.rememberCollapsingTopBarSnapBehavior
 import com.flaringapp.compose.topbar.ui.samples.CollapsingTopBarSampleDogDefaults
+import com.flaringapp.compose.topbar.ui.samples.common.SampleFilterChips
 import com.flaringapp.compose.topbar.ui.samples.common.SampleTopAppBar
+import com.flaringapp.compose.topbar.ui.samples.common.SampleTopBarBanner
 import com.flaringapp.compose.topbar.ui.samples.common.SampleTopBarImage
 import com.flaringapp.compose.topbar.ui.theme.ComposeCollapsingTopBarTheme
 
@@ -65,9 +65,7 @@ fun ScaffoldSampleContent(
     modifier: Modifier = Modifier,
 ) {
     Surface(
-        modifier = modifier
-            .fillMaxSize()
-            .windowInsetsPadding(WindowInsets.screen.only(WindowInsetsSides.Top)),
+        modifier = modifier.fillMaxSize(),
         color = MaterialTheme.colorScheme.background,
     ) {
         CollapsingColumn(
@@ -102,7 +100,7 @@ private fun CollapsingColumn(
         state = scaffoldState,
         scrollMode = scrollControlMode.rememberScrollMode(expandAlways = scrollEnterAlways),
         snapBehavior = rememberCollapsingTopBarSnapBehavior(threshold = 0.5f),
-        topBar = {
+        topBar = { topBarState ->
             if (showDoggo) {
                 SampleTopBarImage(
                     dog = CollapsingTopBarSampleDogDefaults.Column,
@@ -110,51 +108,29 @@ private fun CollapsingColumn(
             }
 
             if (showColumn) {
+                val topBarShape = RoundedCornerShape(bottomStart = 24.dp, bottomEnd = 24.dp)
+
                 CollapsingTopBarColumn(
-                    modifier = Modifier.background(Color.LightGray),
-                    state = scaffoldState.topBarState,
+                    modifier = Modifier
+                        .background(
+                            color = MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.5f),
+                            shape = topBarShape,
+                        ),
+                    state = topBarState,
                 ) {
+                    SampleTopBarBanner(
+                        shape = topBarShape,
+                        windowInsets = WindowInsets.screen.only(WindowInsetsSides.Top),
+                    )
+
                     SampleTopAppBar(
                         modifier = Modifier.notCollapsible(),
                         title = "Scaffold Playground",
                         onBack = onBack,
+                        containerColor = Color.Transparent,
                     )
 
-                    SampleItem(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(50.dp)
-                            .background(Color.Green),
-                    )
-
-                    SampleItem(
-                        modifier = Modifier
-                            .width(100.dp)
-                            .height(40.dp)
-                            .background(Color.Blue),
-                    )
-
-                    SampleItem(
-                        modifier = Modifier
-                            .width(200.dp)
-                            .height(60.dp)
-                            .background(Color.Black)
-                            .notCollapsible(),
-                    )
-
-                    SampleItem(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(50.dp)
-                            .background(Color.Magenta),
-                    )
-
-                    SampleItem(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(50.dp)
-                            .background(Color.Red),
-                    )
+                    SampleFilterChips()
                 }
             }
         },
@@ -193,20 +169,6 @@ private fun CollapsingColumn(
                         index = it,
                     )
                 }
-            }
-        },
-    )
-}
-
-@Composable
-private fun SampleItem(
-    modifier: Modifier = Modifier,
-) {
-    Text(
-        modifier = modifier,
-        text = buildString {
-            repeat(50) {
-                append("Hello $it")
             }
         },
     )
