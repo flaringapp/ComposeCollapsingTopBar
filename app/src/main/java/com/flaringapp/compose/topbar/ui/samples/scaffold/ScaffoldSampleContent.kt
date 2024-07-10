@@ -17,7 +17,6 @@
 package com.flaringapp.compose.topbar.ui.samples.scaffold
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -31,7 +30,6 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Checkbox
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -151,9 +149,18 @@ private fun CollapsingColumn(
                     .fillMaxSize()
                     .verticalScroll(rememberScrollState()),
             ) {
-                ContentHeader()
+                ScaffoldVisibilityControls(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 8.dp),
+                    doggoVisible = showDoggo,
+                    columnVisible = showColumn,
+                    changeDoggoVisible = { showDoggo = it },
+                    changeColumnVisible = { showColumn = it },
+                )
 
                 ContentScrollControls(
+                    modifier = Modifier.padding(top = 16.dp),
                     scrollMode = scrollControlMode,
                     scrollEnterAlways = scrollEnterAlways,
                     snapEnabled = snapEnabled,
@@ -167,16 +174,6 @@ private fun CollapsingColumn(
                     state = scaffoldState,
                 )
 
-                ScaffoldVisibilityControls(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = 8.dp),
-                    doggoVisible = showDoggo,
-                    columnVisible = showColumn,
-                    changeDoggoVisible = { showDoggo = it },
-                    changeColumnVisible = { showColumn = it },
-                )
-
                 repeat(50) {
                     ContentItem(
                         index = it,
@@ -185,32 +182,6 @@ private fun CollapsingColumn(
             }
         },
     )
-}
-
-@Composable
-private fun ContentHeader(
-    modifier: Modifier = Modifier,
-) {
-    Row(
-        modifier = modifier
-            .padding(horizontal = 32.dp, vertical = 16.dp),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(24.dp),
-    ) {
-        HorizontalDivider(
-            modifier = Modifier.weight(1f),
-        )
-
-        Text(
-            text = "Content beginning \uD83D\uDC47",
-            textAlign = TextAlign.Center,
-            style = MaterialTheme.typography.titleLarge,
-        )
-
-        HorizontalDivider(
-            modifier = Modifier.weight(1f),
-        )
-    }
 }
 
 @Composable
