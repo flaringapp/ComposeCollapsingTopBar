@@ -192,6 +192,10 @@ private fun resolveCollapsedHeight(placeables: List<Placeable>): Int {
         regularCollapseMinHeight = 0
     }
 
+    if (nestedCollapseMinHeight > 0 && regularCollapseMinHeight > 0) {
+        return min(nestedCollapseMinHeight, regularCollapseMinHeight)
+    }
+
     return max(nestedCollapseMinHeight, regularCollapseMinHeight)
 }
 
