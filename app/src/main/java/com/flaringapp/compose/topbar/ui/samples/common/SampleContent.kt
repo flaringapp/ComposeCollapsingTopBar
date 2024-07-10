@@ -70,8 +70,8 @@ fun SampleContentItem(
 
     Text(
         modifier = modifier
-            .background(backgroundColor)
             .fillMaxWidth()
+            .background(backgroundColor)
             .padding(horizontal = 32.dp, vertical = 16.dp),
         text = "Item $index",
         color = textColor,

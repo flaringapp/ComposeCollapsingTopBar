@@ -67,8 +67,8 @@ fun SampleTopBarBanner(
     ) {
         Column(
             modifier = Modifier
-                .padding(horizontal = 24.dp, vertical = 8.dp)
-                .windowInsetsPadding(windowInsets),
+                .windowInsetsPadding(windowInsets)
+                .padding(horizontal = 24.dp, vertical = 8.dp),
         ) {
             Text(
                 text = "Save your time",
