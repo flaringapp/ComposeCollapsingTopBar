@@ -21,8 +21,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.drawscope.ContentDrawScope
+import androidx.compose.ui.graphics.drawscope.clipRect
 import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.layout.Measurable
 import androidx.compose.ui.layout.MeasurePolicy
@@ -30,6 +33,10 @@ import androidx.compose.ui.layout.MeasureResult
 import androidx.compose.ui.layout.MeasureScope
 import androidx.compose.ui.layout.ParentDataModifier
 import androidx.compose.ui.layout.Placeable
+import androidx.compose.ui.node.DrawModifierNode
+import androidx.compose.ui.node.ModifierNodeElement
+import androidx.compose.ui.node.ParentDataModifierNode
+import androidx.compose.ui.platform.InspectorInfo
 import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.Density
 import com.flaringapp.compose.topbar.CollapsingTopBar
@@ -152,6 +159,9 @@ private class CollapsingTopBarColumnMeasurePolicy(
                         totalProgress = expandFraction,
                         itemProgress = 1f,
                     )
+                    if (parentData?.isNotCollapsible != true) {
+                        parentData?.clipToCollapseHeightListener?.invoke(0)
+                    }
                     placeable.place(0, itemOffset)
                     return@forEach
                 }
@@ -165,6 +175,7 @@ private class CollapsingTopBarColumnMeasurePolicy(
                     totalProgress = expandFraction,
                     itemProgress = 1f - itemCollapseOffset.toFloat() / placeable.height,
                 )
+                parentData?.clipToCollapseHeightListener?.invoke(itemCollapseOffset)
 
                 placeable.place(0, itemOffset - itemCollapseOffset)
             }
@@ -194,6 +205,13 @@ interface CollapsingTopBarColumnScope {
      * The height of all not collapsible elements form a total minimum (collapsed) height of column.
      */
     fun Modifier.notCollapsible(): Modifier
+
+    /**
+     * Clip element draw area as it collapses so that it does not draw underneath the element above.
+     *
+     * **Has no effect if applied together with [notCollapsible].**
+     */
+    fun Modifier.clipToCollapse(): Modifier
 }
 
 private object CollapsingTopBarColumnScopeInstance : CollapsingTopBarColumnScope {
@@ -204,6 +222,10 @@ private object CollapsingTopBarColumnScopeInstance : CollapsingTopBarColumnScope
 
     override fun Modifier.notCollapsible(): Modifier {
         return then(NotCollapsibleModifier())
+    }
+
+    override fun Modifier.clipToCollapse(): Modifier {
+        return then(ClipToCollapseElement)
     }
 }
 
@@ -218,6 +240,33 @@ private class ProgressListenerModifier(
 private class NotCollapsibleModifier : CollapsingTopBarColumnParentDataModifier() {
     override fun modifyParentData(parentData: CollapsingTopBarColumnParentData) {
         parentData.isNotCollapsible = true
+    }
+}
+
+private data object ClipToCollapseElement : ModifierNodeElement<ClipToCollapseNode>() {
+
+    override fun create(): ClipToCollapseNode = ClipToCollapseNode()
+    override fun update(node: ClipToCollapseNode) = Unit
+    override fun InspectorInfo.inspectableProperties() = Unit
+}
+
+private class ClipToCollapseNode : Modifier.Node(), ParentDataModifierNode, DrawModifierNode {
+
+    private var elementCollapseHeightState = mutableIntStateOf(0)
+
+    override fun Density.modifyParentData(parentData: Any?): Any {
+        val data = parentData as? CollapsingTopBarColumnParentData
+            ?: CollapsingTopBarColumnParentData()
+        data.clipToCollapseHeightListener = {
+            elementCollapseHeightState.intValue = it
+        }
+        return data
+    }
+
+    override fun ContentDrawScope.draw() {
+        clipRect(top = elementCollapseHeightState.intValue.toFloat()) {
+            this@draw.drawContent()
+        }
     }
 }
 
@@ -236,6 +285,7 @@ private abstract class CollapsingTopBarColumnParentDataModifier : ParentDataModi
 private data class CollapsingTopBarColumnParentData(
     var progressListener: CollapsingTopBarProgressListener? = null,
     var isNotCollapsible: Boolean = false,
+    var clipToCollapseHeightListener: ((Int) -> Unit)? = null,
 )
 
 private val Placeable.columnParentData: CollapsingTopBarColumnParentData?
