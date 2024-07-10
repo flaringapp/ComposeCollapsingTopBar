@@ -20,6 +20,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.WindowInsetsSides
 import androidx.compose.foundation.layout.fillMaxSize
@@ -51,6 +52,7 @@ import com.flaringapp.compose.topbar.scaffold.CollapsingTopBarScaffold
 import com.flaringapp.compose.topbar.scaffold.CollapsingTopBarScaffoldState
 import com.flaringapp.compose.topbar.scaffold.rememberCollapsingTopBarScaffoldState
 import com.flaringapp.compose.topbar.screen
+import com.flaringapp.compose.topbar.snap.CollapsingTopBarNoSnapBehavior
 import com.flaringapp.compose.topbar.snap.rememberCollapsingTopBarSnapBehavior
 import com.flaringapp.compose.topbar.ui.samples.CollapsingTopBarSampleDogDefaults
 import com.flaringapp.compose.topbar.ui.samples.common.SampleFilterChips
@@ -87,6 +89,9 @@ private fun CollapsingColumn(
     var scrollEnterAlways by remember {
         mutableStateOf(false)
     }
+    var snapEnabled by remember {
+        mutableStateOf(true)
+    }
 
     var showDoggo by remember {
         mutableStateOf(true)
@@ -95,11 +100,17 @@ private fun CollapsingColumn(
         mutableStateOf(true)
     }
 
+    val snapBehavior = if (snapEnabled) {
+        rememberCollapsingTopBarSnapBehavior(threshold = 0.5f)
+    } else {
+        CollapsingTopBarNoSnapBehavior
+    }
+
     CollapsingTopBarScaffold(
         modifier = modifier,
         state = scaffoldState,
         scrollMode = scrollControlMode.rememberScrollMode(expandAlways = scrollEnterAlways),
-        snapBehavior = rememberCollapsingTopBarSnapBehavior(threshold = 0.5f),
+        snapBehavior = snapBehavior,
         topBar = { topBarState ->
             if (showDoggo) {
                 SampleTopBarImage(
@@ -145,8 +156,10 @@ private fun CollapsingColumn(
                 ContentScrollControls(
                     scrollMode = scrollControlMode,
                     scrollEnterAlways = scrollEnterAlways,
+                    snapEnabled = snapEnabled,
                     changeScrollMode = { scrollControlMode = it },
                     changeScrollEnterAlways = { scrollEnterAlways = it },
+                    changeSnapEnabled = { snapEnabled = it },
                 )
 
                 ContentStateControls(
@@ -204,8 +217,10 @@ private fun ContentHeader(
 private fun ContentScrollControls(
     scrollMode: ScaffoldScrollControlMode,
     scrollEnterAlways: Boolean,
+    snapEnabled: Boolean,
     changeScrollMode: (ScaffoldScrollControlMode) -> Unit,
     changeScrollEnterAlways: (Boolean) -> Unit,
+    changeSnapEnabled: (Boolean) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -238,6 +253,19 @@ private fun ContentScrollControls(
 
             Text(
                 text = "Enter always",
+            )
+
+            Spacer(
+                modifier = Modifier.weight(1f),
+            )
+
+            Text(
+                text = "Snap",
+            )
+
+            Checkbox(
+                checked = snapEnabled,
+                onCheckedChange = changeSnapEnabled,
             )
         }
     }
