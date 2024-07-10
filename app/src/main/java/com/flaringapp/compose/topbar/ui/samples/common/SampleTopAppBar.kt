@@ -16,6 +16,7 @@
 
 package com.flaringapp.compose.topbar.ui.samples.common
 
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -36,9 +37,16 @@ fun SampleTopAppBar(
     title: String,
     onBack: () -> Unit,
     modifier: Modifier = Modifier,
+    ignoreWindowInsets: Boolean = false,
     containerColor: Color = Color.Unspecified,
     contentColor: Color = Color.Unspecified,
 ) {
+    val windowInsets = if (ignoreWindowInsets) {
+        WindowInsets(0)
+    } else {
+        TopAppBarDefaults.windowInsets
+    }
+
     TopAppBar(
         modifier = modifier,
         title = {
@@ -54,6 +62,7 @@ fun SampleTopAppBar(
                 )
             }
         },
+        windowInsets = windowInsets,
         colors = TopAppBarDefaults.topAppBarColors(
             containerColor = containerColor,
             navigationIconContentColor = contentColor,
