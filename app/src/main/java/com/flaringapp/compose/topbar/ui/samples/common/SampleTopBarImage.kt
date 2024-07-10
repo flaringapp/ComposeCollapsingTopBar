@@ -28,14 +28,21 @@ import androidx.compose.ui.unit.dp
 import com.flaringapp.compose.topbar.R
 import com.flaringapp.compose.topbar.ui.theme.ComposeCollapsingTopBarTheme
 
+sealed class SampleTopBarImageDog(val imageRes: Int) {
+    data object GoldenMartian : SampleTopBarImageDog(R.drawable.img_top_bar_dog_1)
+    data object LabradorInCar : SampleTopBarImageDog(R.drawable.img_top_bar_dog_2)
+    data object Dachshund : SampleTopBarImageDog(R.drawable.img_top_bar_dog_3)
+}
+
 @Composable
 fun SampleTopBarImage(
+    dog: SampleTopBarImageDog,
     modifier: Modifier = Modifier,
     height: Dp = 300.dp,
 ) {
     Image(
         modifier = modifier.height(height),
-        painter = painterResource(R.drawable.img_top_bar),
+        painter = painterResource(dog.imageRes),
         contentDescription = null,
         contentScale = ContentScale.FillHeight,
     )
@@ -45,6 +52,8 @@ fun SampleTopBarImage(
 @Composable
 private fun Preview() {
     ComposeCollapsingTopBarTheme {
-        SampleTopBarImage()
+        SampleTopBarImage(
+            dog = SampleTopBarImageDog.GoldenMartian,
+        )
     }
 }

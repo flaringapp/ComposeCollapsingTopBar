@@ -26,6 +26,7 @@ import com.flaringapp.compose.topbar.scaffold.CollapsingTopBarScaffoldScrollMode
 import com.flaringapp.compose.topbar.scaffold.rememberCollapsingTopBarScaffoldState
 import com.flaringapp.compose.topbar.snap.rememberCollapsingTopBarSnapBehavior
 import com.flaringapp.compose.topbar.ui.samples.CollapsingTopBarSample
+import com.flaringapp.compose.topbar.ui.samples.CollapsingTopBarSampleDogDefaults
 import com.flaringapp.compose.topbar.ui.samples.common.SampleContent
 import com.flaringapp.compose.topbar.ui.samples.common.SampleTopAppBar
 import com.flaringapp.compose.topbar.ui.samples.common.SampleTopBarImage
@@ -66,7 +67,9 @@ private fun CollapsingContent(
         scrollMode = CollapsingTopBarScaffoldScrollMode.collapse(expandAlways = false),
         snapBehavior = rememberCollapsingTopBarSnapBehavior(threshold = 0.5f),
         topBar = {
-            SampleTopBarImage()
+            SampleTopBarImage(
+                dog = CollapsingTopBarSampleDogDefaults.Advanced,
+            )
 
             SampleTopAppBar(
                 title = "Snap Collapsing Sample",
