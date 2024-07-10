@@ -114,7 +114,7 @@ data class CollapsingTopBarScaffoldScrollMode internal constructor(
         @Composable
         fun collapse(
             expandAlways: Boolean,
-        ): CollapsingTopBarScaffoldScrollMode = remember {
+        ): CollapsingTopBarScaffoldScrollMode = remember(expandAlways) {
             CollapsingTopBarScaffoldScrollMode(
                 expandAlways = expandAlways,
             )
@@ -132,7 +132,7 @@ data class CollapsingTopBarScaffoldScrollMode internal constructor(
         @Composable
         fun collapseAndExit(
             expandAlways: Boolean,
-        ): CollapsingTopBarScaffoldScrollMode = remember {
+        ): CollapsingTopBarScaffoldScrollMode = remember(expandAlways) {
             CollapsingTopBarScaffoldScrollMode(
                 expandAlways = expandAlways,
                 exit = Exit(
