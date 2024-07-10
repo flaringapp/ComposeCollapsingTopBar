@@ -46,30 +46,8 @@ fun ScaffoldStateControls(
     state: CollapsingTopBarScaffoldState,
     modifier: Modifier = Modifier,
 ) {
-    Column(
-        modifier = modifier.fillMaxWidth(),
-        horizontalAlignment = Alignment.CenterHorizontally,
-    ) {
-        Text(
-            "State Controls",
-            color = MaterialTheme.colorScheme.primary,
-            style = MaterialTheme.typography.titleLarge,
-        )
-
-        ControlsContent(
-            modifier = Modifier.padding(top = 16.dp),
-            state = state,
-        )
-    }
-}
-
-@Composable
-private fun ControlsContent(
-    state: CollapsingTopBarScaffoldState,
-    modifier: Modifier = Modifier,
-) {
     Row(
-        modifier = modifier,
+        modifier = modifier.fillMaxWidth(),
     ) {
         ControlsItem(
             modifier = Modifier.weight(1f),

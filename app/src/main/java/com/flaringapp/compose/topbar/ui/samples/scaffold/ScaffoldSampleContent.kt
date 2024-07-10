@@ -181,6 +181,13 @@ private fun CollapsingColumn() {
             ) {
                 ContentHeader()
 
+                ScaffoldControlsTitleText(
+                    modifier = Modifier
+                        .align(Alignment.CenterHorizontally)
+                        .padding(bottom = 16.dp),
+                    text = "State Controls",
+                )
+
                 ScaffoldStateControls(
                     state = scaffoldState,
                 )
