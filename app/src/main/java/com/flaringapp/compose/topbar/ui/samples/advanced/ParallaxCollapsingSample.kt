@@ -70,7 +70,7 @@ private fun CollapsingContent(
             )
 
             SampleTopAppBar(
-                title = "Parallax Collapsing Sample",
+                title = "Parallax",
                 onBack = onBack,
             )
         },

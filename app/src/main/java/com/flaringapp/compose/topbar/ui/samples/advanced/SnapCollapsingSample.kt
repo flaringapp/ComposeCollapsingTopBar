@@ -70,7 +70,7 @@ private fun CollapsingContent(
             )
 
             SampleTopAppBar(
-                title = "Snap Collapsing Sample",
+                title = "Snapping",
                 onBack = onBack,
             )
         },

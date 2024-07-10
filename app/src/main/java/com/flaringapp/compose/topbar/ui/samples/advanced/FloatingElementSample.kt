@@ -77,7 +77,7 @@ private fun CollapsingContent(
             )
 
             SampleTopAppBar(
-                title = "Floating Element Sample",
+                title = "Floating Element",
                 onBack = onBack,
             )
 

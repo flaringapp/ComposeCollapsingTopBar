@@ -84,7 +84,7 @@ private fun CollapsingContent(
             )
 
             SampleTopAppBar(
-                title = "Manual Collapsing Controls",
+                title = "Manual Collapsing",
                 onBack = onBack,
             )
         },
