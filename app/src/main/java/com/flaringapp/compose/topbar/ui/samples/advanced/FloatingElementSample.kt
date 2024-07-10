@@ -39,18 +39,18 @@ import com.flaringapp.compose.topbar.ui.samples.common.SampleTopAppBar
 import com.flaringapp.compose.topbar.ui.samples.common.SampleTopBarImage
 import com.flaringapp.compose.topbar.ui.theme.ComposeCollapsingTopBarTheme
 
-object CustomPlacementSample : CollapsingTopBarSample {
+object FloatingElementSample : CollapsingTopBarSample {
 
-    override val name: String = "Custom Placement"
+    override val name: String = "Floating Element"
 
     @Composable
     override fun Content(onBack: () -> Unit) {
-        CustomPlacementSampleContent(onBack = onBack)
+        FloatingElementSampleContent(onBack = onBack)
     }
 }
 
 @Composable
-fun CustomPlacementSampleContent(
+fun FloatingElementSampleContent(
     onBack: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -77,7 +77,7 @@ private fun CollapsingContent(
             )
 
             SampleTopAppBar(
-                title = "Custom Placement Sample",
+                title = "Floating Element Sample",
                 onBack = onBack,
             )
 
@@ -121,7 +121,7 @@ private fun SlidingDot(
 @Composable
 private fun Preview() {
     ComposeCollapsingTopBarTheme {
-        CustomPlacementSampleContent(
+        FloatingElementSampleContent(
             onBack = {},
         )
     }

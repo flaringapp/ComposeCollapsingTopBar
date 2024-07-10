@@ -41,7 +41,7 @@ import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Modifier
 import com.flaringapp.compose.topbar.ui.samples.CollapsingTopBarSample
 import com.flaringapp.compose.topbar.ui.samples.advanced.AppBarScrimSample
-import com.flaringapp.compose.topbar.ui.samples.advanced.CustomPlacementSample
+import com.flaringapp.compose.topbar.ui.samples.advanced.FloatingElementSample
 import com.flaringapp.compose.topbar.ui.samples.advanced.ManualCollapsingControlsSample
 import com.flaringapp.compose.topbar.ui.samples.advanced.ParallaxCollapsingSample
 import com.flaringapp.compose.topbar.ui.samples.advanced.SnapCollapsingSample
@@ -141,7 +141,7 @@ private fun rememberSampleGroups(): SnapshotStateList<SamplesGalleryGroup> {
                     SnapCollapsingSample,
                     AppBarScrimSample,
                     ManualCollapsingControlsSample,
-                    CustomPlacementSample,
+                    FloatingElementSample,
                 ),
             ),
         )
