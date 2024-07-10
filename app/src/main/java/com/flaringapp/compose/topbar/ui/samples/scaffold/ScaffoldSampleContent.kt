@@ -32,19 +32,12 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.KeyboardArrowDown
-import androidx.compose.material.icons.rounded.KeyboardArrowUp
 import androidx.compose.material3.Button
 import androidx.compose.material3.Checkbox
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -63,11 +56,12 @@ import com.flaringapp.compose.topbar.scaffold.CollapsingTopBarScaffoldState
 import com.flaringapp.compose.topbar.scaffold.rememberCollapsingTopBarScaffoldState
 import com.flaringapp.compose.topbar.screen
 import com.flaringapp.compose.topbar.snap.rememberCollapsingTopBarSnapBehavior
-import com.flaringapp.compose.topbar.ui.samples.common.rememberSampleExpandRequestHandler
+import com.flaringapp.compose.topbar.ui.samples.common.SampleTopAppBar
 import com.flaringapp.compose.topbar.ui.theme.ComposeCollapsingTopBarTheme
 
 @Composable
 fun ScaffoldSampleContent(
+    onBack: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Surface(
@@ -76,12 +70,17 @@ fun ScaffoldSampleContent(
             .windowInsetsPadding(WindowInsets.screen.only(WindowInsetsSides.Top)),
         color = MaterialTheme.colorScheme.background,
     ) {
-        CollapsingColumn()
+        CollapsingColumn(
+            onBack = onBack,
+        )
     }
 }
 
 @Composable
-private fun CollapsingColumn() {
+private fun CollapsingColumn(
+    onBack: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
     val scaffoldState = rememberCollapsingTopBarScaffoldState()
 
     var scrollControlMode: ScaffoldScrollControlMode by remember {
@@ -98,10 +97,8 @@ private fun CollapsingColumn() {
         mutableStateOf(true)
     }
 
-    var expandRequest: Boolean? by rememberSampleExpandRequestHandler(scaffoldState)
-
     CollapsingTopBarScaffold(
-        modifier = Modifier.fillMaxSize(),
+        modifier = modifier,
         state = scaffoldState,
         scrollMode = scrollControlMode.rememberScrollMode(expandAlways = scrollEnterAlways),
         snapBehavior = rememberCollapsingTopBarSnapBehavior(threshold = 0.5f),
@@ -127,9 +124,10 @@ private fun CollapsingColumn() {
                         Text(text = "${if (showBox) "Hide" else "Show"} box")
                     }
 
-                    HeaderTopAppBar(
-                        isExpanded = !scaffoldState.isCollapsed,
-                        toggleExpand = { expandRequest = scaffoldState.isCollapsed },
+                    SampleTopAppBar(
+                        modifier = Modifier.notCollapsible(),
+                        title = "Scaffold Playground",
+                        onBack = onBack,
                     )
 
                     SampleItem(
@@ -220,35 +218,6 @@ private fun SampleItem(
         text = buildString {
             repeat(50) {
                 append("Hello $it")
-            }
-        },
-    )
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-private fun HeaderTopAppBar(
-    isExpanded: Boolean,
-    toggleExpand: () -> Unit,
-    modifier: Modifier = Modifier,
-) {
-    val icon = if (isExpanded) {
-        Icons.Rounded.KeyboardArrowUp
-    } else {
-        Icons.Rounded.KeyboardArrowDown
-    }
-
-    TopAppBar(
-        modifier = modifier,
-        title = { Text("Regular top app bar") },
-        navigationIcon = {
-            IconButton(
-                onClick = toggleExpand,
-            ) {
-                Icon(
-                    imageVector = icon,
-                    contentDescription = null,
-                )
             }
         },
     )
@@ -372,6 +341,8 @@ private fun ContentItem(
 @Composable
 private fun Preview() {
     ComposeCollapsingTopBarTheme {
-        ScaffoldSampleContent()
+        ScaffoldSampleContent(
+            onBack = {},
+        )
     }
 }
