@@ -31,7 +31,7 @@ fun CollapsingExitExpandAtTopSample(
 ) {
     CollapsingExitSample(
         modifier = modifier,
-        title = "Expand At Top",
+        title = "Collapse Exit / Expand At Top",
         onBack = onBack,
         expandAlways = false,
     )
@@ -44,7 +44,7 @@ fun CollapsingExitExpandAlwaysSample(
 ) {
     CollapsingExitSample(
         modifier = modifier,
-        title = "Expand Always",
+        title = "Collapse Exit / Expand Always",
         onBack = onBack,
         expandAlways = true,
     )

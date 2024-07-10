@@ -30,7 +30,7 @@ fun CollapsingExpandAtTopSample(
     modifier: Modifier = Modifier,
 ) {
     CollapsingSample(
-        title = "Expand At Top",
+        title = "Collapse / Expand At Top",
         modifier = modifier,
         onBack = onBack,
         expandAlways = false,
@@ -44,7 +44,7 @@ fun CollapsingExpandAlwaysSample(
 ) {
     CollapsingSample(
         modifier = modifier,
-        title = "Expand Always",
+        title = "Collapse / Expand Always",
         onBack = onBack,
         expandAlways = true,
     )

@@ -76,7 +76,7 @@ fun BasicScaffoldSample(
 private fun Preview() {
     ComposeCollapsingTopBarTheme {
         BasicScaffoldSample(
-            title = "Basic Scaffold Sample",
+            title = "Basic Scaffold",
             onBack = {},
             scrollMode = CollapsingTopBarScaffoldScrollMode.collapse(expandAlways = false),
         )
