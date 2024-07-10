@@ -29,6 +29,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.flaringapp.compose.topbar.scaffold.CollapsingTopBarScaffold
 import com.flaringapp.compose.topbar.scaffold.CollapsingTopBarScaffoldScrollMode
 import com.flaringapp.compose.topbar.scaffold.rememberCollapsingTopBarScaffoldState
+import com.flaringapp.compose.topbar.ui.samples.CollapsingTopBarSample
 import com.flaringapp.compose.topbar.ui.samples.common.SampleContent
 import com.flaringapp.compose.topbar.ui.samples.common.SampleTopAppBar
 import com.flaringapp.compose.topbar.ui.samples.common.SampleTopBarImage
@@ -36,6 +37,16 @@ import com.flaringapp.compose.topbar.ui.theme.ComposeCollapsingTopBarTheme
 import androidx.compose.ui.util.lerp as primitiveLerp
 
 private const val SCRIM_START_FRACTION = 0.5f
+
+object AppBarScrimSample : CollapsingTopBarSample {
+
+    override val name: String = "App Bar Scrim"
+
+    @Composable
+    override fun Content(onBack: () -> Unit) {
+        AppBarScrimSample(onBack = onBack)
+    }
+}
 
 @Composable
 fun AppBarScrimSample(

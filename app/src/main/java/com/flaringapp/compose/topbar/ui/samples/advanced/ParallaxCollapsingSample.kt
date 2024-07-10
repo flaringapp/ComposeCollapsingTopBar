@@ -24,10 +24,21 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.flaringapp.compose.topbar.scaffold.CollapsingTopBarScaffold
 import com.flaringapp.compose.topbar.scaffold.CollapsingTopBarScaffoldScrollMode
 import com.flaringapp.compose.topbar.scaffold.rememberCollapsingTopBarScaffoldState
+import com.flaringapp.compose.topbar.ui.samples.CollapsingTopBarSample
 import com.flaringapp.compose.topbar.ui.samples.common.SampleContent
 import com.flaringapp.compose.topbar.ui.samples.common.SampleTopAppBar
 import com.flaringapp.compose.topbar.ui.samples.common.SampleTopBarImage
 import com.flaringapp.compose.topbar.ui.theme.ComposeCollapsingTopBarTheme
+
+object ParallaxCollapsingSample : CollapsingTopBarSample {
+
+    override val name: String = "Parallax"
+
+    @Composable
+    override fun Content(onBack: () -> Unit) {
+        ParallaxCollapsingSample(onBack = onBack)
+    }
+}
 
 @Composable
 fun ParallaxCollapsingSample(

@@ -20,7 +20,32 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.systemBars
+import androidx.compose.foundation.layout.windowInsetsPadding
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshots.SnapshotStateList
+import androidx.compose.ui.Modifier
+import com.flaringapp.compose.topbar.ui.samples.CollapsingTopBarSample
 import com.flaringapp.compose.topbar.ui.samples.advanced.AppBarScrimSample
+import com.flaringapp.compose.topbar.ui.samples.advanced.CustomPlacementSample
+import com.flaringapp.compose.topbar.ui.samples.advanced.ManualCollapsingControlsSample
+import com.flaringapp.compose.topbar.ui.samples.advanced.ParallaxCollapsingSample
+import com.flaringapp.compose.topbar.ui.samples.advanced.SnapCollapsingSample
+import com.flaringapp.compose.topbar.ui.samples.basic.CollapsingExitExpandAlwaysSample
+import com.flaringapp.compose.topbar.ui.samples.basic.CollapsingExitExpandAtTopSample
+import com.flaringapp.compose.topbar.ui.samples.basic.CollapsingExpandAlwaysSample
+import com.flaringapp.compose.topbar.ui.samples.basic.CollapsingExpandAtTopSample
+import com.flaringapp.compose.topbar.ui.samples.basic.EnterAlwaysCollapsedSample
+import com.flaringapp.compose.topbar.ui.samples.gallery.SamplesGallery
+import com.flaringapp.compose.topbar.ui.samples.gallery.SamplesGalleryGroup
 import com.flaringapp.compose.topbar.ui.theme.ComposeCollapsingTopBarTheme
 
 class MainActivity : ComponentActivity() {
@@ -29,10 +54,61 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             ComposeCollapsingTopBarTheme {
-                AppBarScrimSample(
-                    onBack = {},
-                )
+                SamplesNavigation()
             }
         }
+    }
+}
+
+@Composable
+private fun SamplesNavigation() {
+    var selectedSample: CollapsingTopBarSample? by remember {
+        mutableStateOf(null)
+    }
+
+    Box(
+        modifier = Modifier.fillMaxSize(),
+    ) {
+        selectedSample?.let {
+            it.Content(
+                onBack = { selectedSample = null },
+            )
+            return@Box
+        }
+
+        SamplesGallery(
+            modifier = Modifier
+                .windowInsetsPadding(WindowInsets.systemBars),
+            groups = rememberSampleGroups(),
+            onSampleSelect = { selectedSample = it },
+        )
+    }
+}
+
+@Composable
+private fun rememberSampleGroups(): SnapshotStateList<SamplesGalleryGroup> {
+    return remember {
+        mutableStateListOf(
+            SamplesGalleryGroup(
+                name = "Basic Samples",
+                samples = mutableStateListOf(
+                    CollapsingExpandAlwaysSample,
+                    CollapsingExpandAtTopSample,
+                    CollapsingExitExpandAlwaysSample,
+                    CollapsingExitExpandAtTopSample,
+                    EnterAlwaysCollapsedSample,
+                ),
+            ),
+            SamplesGalleryGroup(
+                name = "Advanced Samples",
+                samples = mutableStateListOf(
+                    ParallaxCollapsingSample,
+                    SnapCollapsingSample,
+                    AppBarScrimSample,
+                    ManualCollapsingControlsSample,
+                    CustomPlacementSample,
+                ),
+            ),
+        )
     }
 }

@@ -25,10 +25,21 @@ import com.flaringapp.compose.topbar.scaffold.CollapsingTopBarScaffold
 import com.flaringapp.compose.topbar.scaffold.CollapsingTopBarScaffoldScrollMode
 import com.flaringapp.compose.topbar.scaffold.rememberCollapsingTopBarScaffoldState
 import com.flaringapp.compose.topbar.snap.rememberCollapsingTopBarSnapBehavior
+import com.flaringapp.compose.topbar.ui.samples.CollapsingTopBarSample
 import com.flaringapp.compose.topbar.ui.samples.common.SampleContent
 import com.flaringapp.compose.topbar.ui.samples.common.SampleTopAppBar
 import com.flaringapp.compose.topbar.ui.samples.common.SampleTopBarImage
 import com.flaringapp.compose.topbar.ui.theme.ComposeCollapsingTopBarTheme
+
+object SnapCollapsingSample : CollapsingTopBarSample {
+
+    override val name: String = "Snapping"
+
+    @Composable
+    override fun Content(onBack: () -> Unit) {
+        SnapCollapsingSample(onBack = onBack)
+    }
+}
 
 @Composable
 fun SnapCollapsingSample(

@@ -33,10 +33,21 @@ import com.flaringapp.compose.topbar.scaffold.CollapsingTopBarScaffold
 import com.flaringapp.compose.topbar.scaffold.CollapsingTopBarScaffoldScrollMode
 import com.flaringapp.compose.topbar.scaffold.CollapsingTopBarScaffoldState
 import com.flaringapp.compose.topbar.scaffold.rememberCollapsingTopBarScaffoldState
+import com.flaringapp.compose.topbar.ui.samples.CollapsingTopBarSample
 import com.flaringapp.compose.topbar.ui.samples.common.SampleContent
 import com.flaringapp.compose.topbar.ui.samples.common.SampleTopAppBar
 import com.flaringapp.compose.topbar.ui.samples.common.SampleTopBarImage
 import com.flaringapp.compose.topbar.ui.theme.ComposeCollapsingTopBarTheme
+
+object CustomPlacementSample : CollapsingTopBarSample {
+
+    override val name: String = "Custom Placement"
+
+    @Composable
+    override fun Content(onBack: () -> Unit) {
+        CustomPlacementSample(onBack = onBack)
+    }
+}
 
 @Composable
 fun CustomPlacementSample(

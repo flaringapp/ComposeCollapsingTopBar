@@ -22,7 +22,18 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.flaringapp.compose.topbar.scaffold.CollapsingTopBarScaffoldScrollMode
+import com.flaringapp.compose.topbar.ui.samples.CollapsingTopBarSample
 import com.flaringapp.compose.topbar.ui.theme.ComposeCollapsingTopBarTheme
+
+object EnterAlwaysCollapsedSample : CollapsingTopBarSample {
+
+    override val name: String = "Enter always collapsed"
+
+    @Composable
+    override fun Content(onBack: () -> Unit) {
+        EnterAlwaysCollapsedSample(onBack = onBack)
+    }
+}
 
 @Composable
 fun EnterAlwaysCollapsedSample(

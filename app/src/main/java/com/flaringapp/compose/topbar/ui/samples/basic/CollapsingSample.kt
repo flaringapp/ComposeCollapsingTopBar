@@ -22,7 +22,28 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.flaringapp.compose.topbar.scaffold.CollapsingTopBarScaffoldScrollMode
+import com.flaringapp.compose.topbar.ui.samples.CollapsingTopBarSample
 import com.flaringapp.compose.topbar.ui.theme.ComposeCollapsingTopBarTheme
+
+object CollapsingExpandAtTopSample : CollapsingTopBarSample {
+
+    override val name: String = "Collapsing, expand at top"
+
+    @Composable
+    override fun Content(onBack: () -> Unit) {
+        CollapsingExpandAtTopSample(onBack = onBack)
+    }
+}
+
+object CollapsingExpandAlwaysSample : CollapsingTopBarSample {
+
+    override val name: String = "Collapsing, expand always"
+
+    @Composable
+    override fun Content(onBack: () -> Unit) {
+        CollapsingExpandAlwaysSample(onBack = onBack)
+    }
+}
 
 @Composable
 fun CollapsingExpandAtTopSample(
