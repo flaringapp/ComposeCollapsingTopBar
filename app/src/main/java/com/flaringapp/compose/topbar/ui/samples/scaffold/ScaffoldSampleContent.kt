@@ -16,7 +16,13 @@
 
 package com.flaringapp.compose.topbar.ui.samples.scaffold
 
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.SizeTransform
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -110,7 +116,20 @@ private fun CollapsingColumn(
         scrollMode = scrollControlMode.rememberScrollMode(expandAlways = scrollEnterAlways),
         snapBehavior = snapBehavior,
         topBar = { topBarState ->
-            if (showDoggo) {
+            AnimatedContent(
+                label = "DoggoVisibilityAnimation",
+                targetState = showDoggo,
+                transitionSpec = {
+                    fadeIn() togetherWith fadeOut() using SizeTransform(clip = false)
+                },
+            ) { currentShowDoggo ->
+                if (!currentShowDoggo) {
+                    Box(
+                        modifier = Modifier.fillMaxWidth(),
+                    )
+                    return@AnimatedContent
+                }
+
                 SampleTopBarImage(
                     dog = CollapsingTopBarSampleDogDefaults.Column,
                 )
