@@ -18,8 +18,10 @@ package com.flaringapp.compose.topbar.ui.samples.gallery
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
@@ -33,6 +35,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.flaringapp.compose.topbar.screen
 import com.flaringapp.compose.topbar.ui.samples.CollapsingTopBarSample
 import com.flaringapp.compose.topbar.ui.samples.CollapsingTopBarSampleGroups
 import com.flaringapp.compose.topbar.ui.theme.ComposeCollapsingTopBarTheme
@@ -45,6 +48,7 @@ fun SamplesGallery(
 ) {
     Column(
         modifier = modifier
+            .windowInsetsPadding(WindowInsets.screen)
             .verticalScroll(rememberScrollState())
             .padding(vertical = 24.dp),
         verticalArrangement = Arrangement.spacedBy(24.dp),
