@@ -22,7 +22,6 @@ import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.WindowInsetsSides
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.only
-import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
@@ -36,6 +35,7 @@ import androidx.compose.ui.unit.dp
 import com.flaringapp.compose.topbar.nestedcollapse.CollapsingTopBarColumn
 import com.flaringapp.compose.topbar.scaffold.CollapsingTopBarScaffold
 import com.flaringapp.compose.topbar.scaffold.CollapsingTopBarScaffoldScrollMode
+import com.flaringapp.compose.topbar.screen
 import com.flaringapp.compose.topbar.ui.samples.CollapsingTopBarSample
 import com.flaringapp.compose.topbar.ui.samples.CollapsingTopBarSampleDogDefaults
 import com.flaringapp.compose.topbar.ui.samples.common.SampleContent
@@ -96,7 +96,7 @@ private fun CollapsingContent(
             ) {
                 Spacer(
                     modifier = Modifier
-                        .windowInsetsPadding(WindowInsets.systemBars.only(WindowInsetsSides.Top))
+                        .windowInsetsPadding(WindowInsets.screen.only(WindowInsetsSides.Top))
                         .notCollapsible(),
                 )
 

@@ -28,7 +28,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.rememberScrollState
@@ -61,6 +60,7 @@ import com.flaringapp.compose.topbar.nestedcollapse.CollapsingTopBarColumn
 import com.flaringapp.compose.topbar.scaffold.CollapsingTopBarScaffold
 import com.flaringapp.compose.topbar.scaffold.CollapsingTopBarScaffoldScrollMode
 import com.flaringapp.compose.topbar.scaffold.rememberCollapsingTopBarScaffoldState
+import com.flaringapp.compose.topbar.screen
 import com.flaringapp.compose.topbar.snap.rememberCollapsingTopBarSnapBehavior
 import com.flaringapp.compose.topbar.ui.samples.common.rememberSampleExpandRequestHandler
 import com.flaringapp.compose.topbar.ui.theme.ComposeCollapsingTopBarTheme
@@ -72,7 +72,7 @@ fun ScaffoldSampleContent(
     Surface(
         modifier = modifier
             .fillMaxSize()
-            .windowInsetsPadding(WindowInsets.systemBars.only(WindowInsetsSides.Top)),
+            .windowInsetsPadding(WindowInsets.screen.only(WindowInsetsSides.Top)),
         color = MaterialTheme.colorScheme.background,
     ) {
         CollapsingColumn()

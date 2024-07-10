@@ -24,7 +24,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -37,6 +36,7 @@ import androidx.compose.ui.unit.dp
 import com.flaringapp.compose.topbar.nestedcollapse.CollapsingTopBarColumn
 import com.flaringapp.compose.topbar.scaffold.CollapsingTopBarScaffold
 import com.flaringapp.compose.topbar.scaffold.CollapsingTopBarScaffoldScrollMode
+import com.flaringapp.compose.topbar.screen
 import com.flaringapp.compose.topbar.ui.samples.CollapsingTopBarSample
 import com.flaringapp.compose.topbar.ui.samples.common.SampleContent
 import com.flaringapp.compose.topbar.ui.samples.common.SampleFilterChips
@@ -80,7 +80,7 @@ private fun CollapsingContent(
         topBar = { topBarState ->
             CollapsingTopBarColumn(topBarState) {
                 val topWindowInsetsPadding =
-                    WindowInsets.systemBars.only(WindowInsetsSides.Top).asPaddingValues()
+                    WindowInsets.screen.only(WindowInsetsSides.Top).asPaddingValues()
 
                 FixedElement(
                     modifier = Modifier.notCollapsible(),

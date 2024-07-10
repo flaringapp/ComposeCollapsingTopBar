@@ -29,7 +29,6 @@ import androidx.compose.animation.scaleOut
 import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -92,7 +91,7 @@ private fun SamplesNavigation() {
 
         SamplesGallery(
             modifier = Modifier
-                .windowInsetsPadding(WindowInsets.systemBars),
+                .windowInsetsPadding(WindowInsets.screen),
             groups = rememberSampleGroups(),
             onSampleSelect = { selectedSample = it },
         )

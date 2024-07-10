@@ -20,7 +20,6 @@ import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.WindowInsetsSides
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.only
-import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
@@ -30,6 +29,7 @@ import androidx.compose.ui.unit.dp
 import com.flaringapp.compose.topbar.nestedcollapse.CollapsingTopBarColumn
 import com.flaringapp.compose.topbar.scaffold.CollapsingTopBarScaffold
 import com.flaringapp.compose.topbar.scaffold.CollapsingTopBarScaffoldScrollMode
+import com.flaringapp.compose.topbar.screen
 import com.flaringapp.compose.topbar.ui.samples.CollapsingTopBarSample
 import com.flaringapp.compose.topbar.ui.samples.common.SampleContent
 import com.flaringapp.compose.topbar.ui.samples.common.SampleFilterChips
@@ -74,7 +74,7 @@ private fun CollapsingContent(
             CollapsingTopBarColumn(topBarState) {
                 SampleTopBarBanner(
                     shape = RoundedCornerShape(bottomStart = 24.dp, bottomEnd = 24.dp),
-                    windowInsets = WindowInsets.systemBars.only(WindowInsetsSides.Top),
+                    windowInsets = WindowInsets.screen.only(WindowInsetsSides.Top),
                 )
 
                 SampleTopAppBar(
