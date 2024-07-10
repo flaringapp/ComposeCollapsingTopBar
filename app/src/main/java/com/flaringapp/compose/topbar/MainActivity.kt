@@ -38,23 +38,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshots.SnapshotStateList
+import androidx.compose.runtime.toMutableStateList
 import androidx.compose.ui.Modifier
 import com.flaringapp.compose.topbar.ui.samples.CollapsingTopBarSample
-import com.flaringapp.compose.topbar.ui.samples.advanced.AppBarScrimSample
-import com.flaringapp.compose.topbar.ui.samples.advanced.FloatingElementSample
-import com.flaringapp.compose.topbar.ui.samples.advanced.ManualCollapsingControlsSample
-import com.flaringapp.compose.topbar.ui.samples.advanced.ParallaxCollapsingSample
-import com.flaringapp.compose.topbar.ui.samples.advanced.SnapCollapsingSample
-import com.flaringapp.compose.topbar.ui.samples.basic.CollapsingExitExpandAlwaysSample
-import com.flaringapp.compose.topbar.ui.samples.basic.CollapsingExitExpandAtTopSample
-import com.flaringapp.compose.topbar.ui.samples.basic.CollapsingExpandAlwaysSample
-import com.flaringapp.compose.topbar.ui.samples.basic.CollapsingExpandAtTopSample
-import com.flaringapp.compose.topbar.ui.samples.basic.EnterAlwaysCollapsedSample
-import com.flaringapp.compose.topbar.ui.samples.column.AlternatelyCollapsibleColumnSample
-import com.flaringapp.compose.topbar.ui.samples.column.ColumnInStackSample
-import com.flaringapp.compose.topbar.ui.samples.column.ColumnMovingElementSample
-import com.flaringapp.compose.topbar.ui.samples.column.FullyCollapsibleColumnSample
-import com.flaringapp.compose.topbar.ui.samples.column.PartiallyCollapsibleColumnSample
+import com.flaringapp.compose.topbar.ui.samples.CollapsingTopBarSampleGroups
 import com.flaringapp.compose.topbar.ui.samples.gallery.SamplesGallery
 import com.flaringapp.compose.topbar.ui.samples.gallery.SamplesGalleryGroup
 import com.flaringapp.compose.topbar.ui.theme.ComposeCollapsingTopBarTheme
@@ -118,33 +105,15 @@ private fun rememberSampleGroups(): SnapshotStateList<SamplesGalleryGroup> {
         mutableStateListOf(
             SamplesGalleryGroup(
                 name = "Basic Samples",
-                samples = mutableStateListOf(
-                    CollapsingExpandAtTopSample,
-                    CollapsingExpandAlwaysSample,
-                    CollapsingExitExpandAtTopSample,
-                    CollapsingExitExpandAlwaysSample,
-                    EnterAlwaysCollapsedSample,
-                ),
+                samples = CollapsingTopBarSampleGroups.Basic.toMutableStateList(),
             ),
             SamplesGalleryGroup(
                 name = "Column Samples",
-                samples = mutableStateListOf(
-                    FullyCollapsibleColumnSample,
-                    PartiallyCollapsibleColumnSample,
-                    AlternatelyCollapsibleColumnSample,
-                    ColumnInStackSample,
-                    ColumnMovingElementSample,
-                ),
+                samples = CollapsingTopBarSampleGroups.Column.toMutableStateList(),
             ),
             SamplesGalleryGroup(
                 name = "Advanced Samples",
-                samples = mutableStateListOf(
-                    ParallaxCollapsingSample,
-                    SnapCollapsingSample,
-                    AppBarScrimSample,
-                    ManualCollapsingControlsSample,
-                    FloatingElementSample,
-                ),
+                samples = CollapsingTopBarSampleGroups.Advanced.toMutableStateList(),
             ),
         )
     }

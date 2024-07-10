@@ -28,15 +28,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.snapshots.SnapshotStateList
+import androidx.compose.runtime.toMutableStateList
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.flaringapp.compose.topbar.ui.samples.CollapsingTopBarSample
-import com.flaringapp.compose.topbar.ui.samples.basic.CollapsingExitExpandAlwaysSample
-import com.flaringapp.compose.topbar.ui.samples.basic.CollapsingExitExpandAtTopSample
-import com.flaringapp.compose.topbar.ui.samples.basic.CollapsingExpandAlwaysSample
-import com.flaringapp.compose.topbar.ui.samples.basic.CollapsingExpandAtTopSample
+import com.flaringapp.compose.topbar.ui.samples.CollapsingTopBarSampleGroups
 import com.flaringapp.compose.topbar.ui.theme.ComposeCollapsingTopBarTheme
 
 @Composable
@@ -74,23 +72,15 @@ fun SamplesGallery(
 @Preview(showBackground = true)
 @Composable
 private fun Preview() {
-    val samples = remember {
-        mutableStateListOf(
-            CollapsingExpandAlwaysSample,
-            CollapsingExpandAtTopSample,
-            CollapsingExitExpandAlwaysSample,
-            CollapsingExitExpandAtTopSample,
-        )
-    }
     val groups = remember {
         mutableStateListOf(
             SamplesGalleryGroup(
                 name = "First Group",
-                samples = samples,
+                samples = CollapsingTopBarSampleGroups.Basic.toMutableStateList(),
             ),
             SamplesGalleryGroup(
                 name = "Second Group",
-                samples = samples,
+                samples = CollapsingTopBarSampleGroups.Column.toMutableStateList(),
             ),
         )
     }
