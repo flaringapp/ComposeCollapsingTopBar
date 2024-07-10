@@ -117,10 +117,10 @@ private fun rememberSampleGroups(): SnapshotStateList<SamplesGalleryGroup> {
             SamplesGalleryGroup(
                 name = "Basic Samples",
                 samples = mutableStateListOf(
-                    CollapsingExpandAlwaysSample,
                     CollapsingExpandAtTopSample,
-                    CollapsingExitExpandAlwaysSample,
+                    CollapsingExpandAlwaysSample,
                     CollapsingExitExpandAtTopSample,
+                    CollapsingExitExpandAlwaysSample,
                     EnterAlwaysCollapsedSample,
                 ),
             ),
