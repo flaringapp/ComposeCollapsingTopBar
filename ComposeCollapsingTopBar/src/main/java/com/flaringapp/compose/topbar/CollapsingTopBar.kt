@@ -36,12 +36,14 @@ import androidx.compose.ui.unit.constrainHeight
 import androidx.compose.ui.unit.constrainWidth
 import com.flaringapp.compose.topbar.nestedcollapse.CollapsingTopBarNestedCollapseElement
 import kotlin.math.max
+import kotlin.math.min
 import kotlin.math.roundToInt
 
 /**
  * A basic container for collapsing content. Places its children like a Box, on top of each other.
  * Top bar always occupies maximum (expanded) height while hoisting variable collapsing height in
- * [state]. Minimum (collapsed) height is always equal to the smallest child height.
+ * [state]. Minimum (collapsed) height is always equal to the smallest child or
+ * [CollapsingTopBarScope.nestedCollapse] height.
  *
  * Visual collapsing is achieved by [clipToBounds], although additional layout mechanism is likely
  * to be handy, e.g. [com.flaringapp.compose.topbar.scaffold.CollapsingTopBarScaffold].
@@ -111,19 +113,7 @@ private class CollapsingTopBarMeasurePolicy(
 
         // Update state layout info
         val measuredLayoutInfo = run {
-            val nestedCollapseMinHeight = placeables.minOf {
-                it.topBarParentData?.nestedCollapseElement?.minHeight ?: Int.MAX_VALUE
-            }.takeIf { it != Int.MAX_VALUE }
-
-            val placeablesMinHeight = placeables.minOf {
-                if (it.topBarParentData?.isFloating == true) return@minOf Int.MAX_VALUE
-                it.height
-            }.takeIf { it != Int.MAX_VALUE }
-
-            val collapsedHeight = max(
-                placeablesMinHeight ?: 0,
-                nestedCollapseMinHeight ?: 0,
-            )
+            val collapsedHeight = resolveCollapsedHeight(placeables)
                 .let { constraints.constrainHeight(it) }
 
             val expandedHeight = placeables.maxOf { it.height }
@@ -174,6 +164,35 @@ private class CollapsingTopBarMeasurePolicy(
             }
         }
     }
+}
+
+private fun resolveCollapsedHeight(placeables: List<Placeable>): Int {
+    var nestedCollapseMinHeight = Int.MAX_VALUE
+    var regularCollapseMinHeight = Int.MAX_VALUE
+
+    placeables.forEach { placeable ->
+        val parentData = placeable.topBarParentData
+
+        parentData?.nestedCollapseElement?.minHeight?.let {
+            nestedCollapseMinHeight = min(nestedCollapseMinHeight, it)
+            return@forEach
+        }
+
+        if (parentData?.isFloating == true) {
+            return@forEach
+        }
+
+        regularCollapseMinHeight = min(regularCollapseMinHeight, placeable.height)
+    }
+
+    if (nestedCollapseMinHeight == Int.MAX_VALUE) {
+        nestedCollapseMinHeight = 0
+    }
+    if (regularCollapseMinHeight == Int.MAX_VALUE) {
+        regularCollapseMinHeight = 0
+    }
+
+    return max(nestedCollapseMinHeight, regularCollapseMinHeight)
 }
 
 /**
