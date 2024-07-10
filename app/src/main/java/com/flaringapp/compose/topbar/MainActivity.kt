@@ -45,6 +45,7 @@ import com.flaringapp.compose.topbar.ui.samples.advanced.CustomPlacementSample
 import com.flaringapp.compose.topbar.ui.samples.advanced.ManualCollapsingControlsSample
 import com.flaringapp.compose.topbar.ui.samples.advanced.ParallaxCollapsingSample
 import com.flaringapp.compose.topbar.ui.samples.advanced.SnapCollapsingSample
+import com.flaringapp.compose.topbar.ui.samples.advanced.StackedWithColumnSample
 import com.flaringapp.compose.topbar.ui.samples.basic.CollapsingExitExpandAlwaysSample
 import com.flaringapp.compose.topbar.ui.samples.basic.CollapsingExitExpandAtTopSample
 import com.flaringapp.compose.topbar.ui.samples.basic.CollapsingExpandAlwaysSample
@@ -140,6 +141,7 @@ private fun rememberSampleGroups(): SnapshotStateList<SamplesGalleryGroup> {
                     AppBarScrimSample,
                     ManualCollapsingControlsSample,
                     CustomPlacementSample,
+                    StackedWithColumnSample,
                 ),
             ),
         )

@@ -25,4 +25,7 @@ object CollapsingTopBarSampleDogDefaults {
 
     val Advanced: SampleTopBarImageDog
         get() = SampleTopBarImageDog.LabradorInCar
+
+    val Column: SampleTopBarImageDog
+        get() = SampleTopBarImageDog.Dachshund
 }
