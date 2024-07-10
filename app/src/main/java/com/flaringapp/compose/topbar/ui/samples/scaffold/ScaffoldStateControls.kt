@@ -87,17 +87,19 @@ private fun ControlsContent(
             isCollapsed = { it.layoutInfo.isCollapsed },
         )
 
-        ControlsItem(
-            modifier = Modifier.weight(1f),
-            state = state.exitState,
-            name = "Exit",
-            isExpandedName = "Entered",
-            isCollapsedName = "Exited",
-            expandName = "Enter",
-            collapseName = "Exit",
-            isExpanded = { it.isFullyEntered },
-            isCollapsed = { it.isFullyExited },
-        )
+        if (state.exitState.isEnabled) {
+            ControlsItem(
+                modifier = Modifier.weight(1f),
+                state = state.exitState,
+                name = "Exit",
+                isExpandedName = "Entered",
+                isCollapsedName = "Exited",
+                expandName = "Enter",
+                collapseName = "Exit",
+                isExpanded = { it.isFullyEntered },
+                isCollapsed = { it.isFullyExited },
+            )
+        }
     }
 }
 
