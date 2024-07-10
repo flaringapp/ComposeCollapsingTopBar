@@ -51,6 +51,7 @@ import com.flaringapp.compose.topbar.ui.samples.basic.CollapsingExpandAlwaysSamp
 import com.flaringapp.compose.topbar.ui.samples.basic.CollapsingExpandAtTopSample
 import com.flaringapp.compose.topbar.ui.samples.basic.EnterAlwaysCollapsedSample
 import com.flaringapp.compose.topbar.ui.samples.column.FullyCollapsibleColumnSample
+import com.flaringapp.compose.topbar.ui.samples.column.PartiallyCollapsibleColumnSample
 import com.flaringapp.compose.topbar.ui.samples.gallery.SamplesGallery
 import com.flaringapp.compose.topbar.ui.samples.gallery.SamplesGalleryGroup
 import com.flaringapp.compose.topbar.ui.theme.ComposeCollapsingTopBarTheme
@@ -126,6 +127,7 @@ private fun rememberSampleGroups(): SnapshotStateList<SamplesGalleryGroup> {
                 name = "Column Samples",
                 samples = mutableStateListOf(
                     FullyCollapsibleColumnSample,
+                    PartiallyCollapsibleColumnSample,
                 ),
             ),
             SamplesGalleryGroup(
