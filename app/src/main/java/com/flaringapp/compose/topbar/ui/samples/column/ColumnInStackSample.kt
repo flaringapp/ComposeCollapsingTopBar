@@ -17,7 +17,13 @@
 package com.flaringapp.compose.topbar.ui.samples.column
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.WindowInsetsSides
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.only
+import androidx.compose.foundation.layout.systemBars
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -88,10 +94,21 @@ private fun CollapsingContent(
                     .clip(topBarShape),
                 state = topBarState,
             ) {
+                Spacer(
+                    modifier = Modifier
+                        .windowInsetsPadding(WindowInsets.systemBars.only(WindowInsetsSides.Top))
+                        .notCollapsible(),
+                )
+
+                SampleFilterChips(
+                    modifier = Modifier.clipToCollapse(),
+                )
+
                 SampleTopAppBar(
                     modifier = Modifier.notCollapsible(),
                     title = "Column In Stack",
                     onBack = onBack,
+                    ignoreWindowInsets = true,
                     containerColor = Color.Transparent,
                 )
 
