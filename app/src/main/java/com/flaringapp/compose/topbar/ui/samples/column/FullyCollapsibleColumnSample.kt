@@ -36,6 +36,7 @@ import com.flaringapp.compose.topbar.ui.samples.common.SampleContent
 import com.flaringapp.compose.topbar.ui.samples.common.SampleFilterChips
 import com.flaringapp.compose.topbar.ui.samples.common.SampleTopAppBar
 import com.flaringapp.compose.topbar.ui.samples.common.SampleTopBarBanner
+import com.flaringapp.compose.topbar.ui.samples.common.SampleVerticalFadingEdge
 import com.flaringapp.compose.topbar.ui.theme.ComposeCollapsingTopBarTheme
 
 object FullyCollapsibleColumnSample : CollapsingTopBarSample {
@@ -84,6 +85,7 @@ private fun CollapsingContent(
                     ignoreWindowInsets = true,
                 )
 
+                SampleVerticalFadingEdge()
                 SampleFilterChips()
             }
         },
