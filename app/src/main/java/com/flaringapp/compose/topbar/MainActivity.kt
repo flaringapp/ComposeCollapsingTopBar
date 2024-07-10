@@ -45,13 +45,13 @@ import com.flaringapp.compose.topbar.ui.samples.advanced.CustomPlacementSample
 import com.flaringapp.compose.topbar.ui.samples.advanced.ManualCollapsingControlsSample
 import com.flaringapp.compose.topbar.ui.samples.advanced.ParallaxCollapsingSample
 import com.flaringapp.compose.topbar.ui.samples.advanced.SnapCollapsingSample
-import com.flaringapp.compose.topbar.ui.samples.advanced.StackedWithColumnSample
 import com.flaringapp.compose.topbar.ui.samples.basic.CollapsingExitExpandAlwaysSample
 import com.flaringapp.compose.topbar.ui.samples.basic.CollapsingExitExpandAtTopSample
 import com.flaringapp.compose.topbar.ui.samples.basic.CollapsingExpandAlwaysSample
 import com.flaringapp.compose.topbar.ui.samples.basic.CollapsingExpandAtTopSample
 import com.flaringapp.compose.topbar.ui.samples.basic.EnterAlwaysCollapsedSample
 import com.flaringapp.compose.topbar.ui.samples.column.AlternatelyCollapsibleColumnSample
+import com.flaringapp.compose.topbar.ui.samples.column.ColumnInStackSample
 import com.flaringapp.compose.topbar.ui.samples.column.FullyCollapsibleColumnSample
 import com.flaringapp.compose.topbar.ui.samples.column.PartiallyCollapsibleColumnSample
 import com.flaringapp.compose.topbar.ui.samples.gallery.SamplesGallery
@@ -131,6 +131,7 @@ private fun rememberSampleGroups(): SnapshotStateList<SamplesGalleryGroup> {
                     FullyCollapsibleColumnSample,
                     PartiallyCollapsibleColumnSample,
                     AlternatelyCollapsibleColumnSample,
+                    ColumnInStackSample,
                 ),
             ),
             SamplesGalleryGroup(
@@ -141,7 +142,6 @@ private fun rememberSampleGroups(): SnapshotStateList<SamplesGalleryGroup> {
                     AppBarScrimSample,
                     ManualCollapsingControlsSample,
                     CustomPlacementSample,
-                    StackedWithColumnSample,
                 ),
             ),
         )

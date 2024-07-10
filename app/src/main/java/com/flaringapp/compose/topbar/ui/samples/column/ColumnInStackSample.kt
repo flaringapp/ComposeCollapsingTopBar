@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.flaringapp.compose.topbar.ui.samples.advanced
+package com.flaringapp.compose.topbar.ui.samples.column
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
@@ -38,18 +38,18 @@ import com.flaringapp.compose.topbar.ui.samples.common.SampleTopAppBar
 import com.flaringapp.compose.topbar.ui.samples.common.SampleTopBarImage
 import com.flaringapp.compose.topbar.ui.theme.ComposeCollapsingTopBarTheme
 
-object StackedWithColumnSample : CollapsingTopBarSample {
+object ColumnInStackSample : CollapsingTopBarSample {
 
-    override val name: String = "Stacked With Column"
+    override val name: String = "Column In Stack"
 
     @Composable
     override fun Content(onBack: () -> Unit) {
-        StackedWithColumnSampleContent(onBack = onBack)
+        ColumnInStackSampleContent(onBack = onBack)
     }
 }
 
 @Composable
-fun StackedWithColumnSampleContent(
+fun ColumnInStackSampleContent(
     onBack: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -90,7 +90,7 @@ private fun CollapsingContent(
             ) {
                 SampleTopAppBar(
                     modifier = Modifier.notCollapsible(),
-                    title = "Stacked With Column",
+                    title = "Column In Stack",
                     onBack = onBack,
                     containerColor = Color.Transparent,
                 )
@@ -110,7 +110,7 @@ private fun CollapsingContent(
 @Composable
 private fun Preview() {
     ComposeCollapsingTopBarTheme {
-        StackedWithColumnSampleContent(
+        ColumnInStackSampleContent(
             onBack = {},
         )
     }
