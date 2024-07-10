@@ -20,7 +20,12 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.Box
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.scaleIn
+import androidx.compose.animation.scaleOut
+import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.systemBars
@@ -66,14 +71,24 @@ private fun SamplesNavigation() {
         mutableStateOf(null)
     }
 
-    Box(
+    AnimatedContent(
         modifier = Modifier.fillMaxSize(),
-    ) {
-        selectedSample?.let {
-            it.Content(
+        label = "SampleContentAnimation",
+        targetState = selectedSample,
+        transitionSpec = {
+            val isOpeningSample = targetState != null
+            if (isOpeningSample) {
+                fadeIn() + scaleIn(initialScale = 1.1f) togetherWith fadeOut() using null
+            } else {
+                fadeIn() togetherWith fadeOut() + scaleOut(targetScale = 1.1f) using null
+            }
+        },
+    ) { currentSelectedSample ->
+        if (currentSelectedSample != null) {
+            currentSelectedSample.Content(
                 onBack = { selectedSample = null },
             )
-            return@Box
+            return@AnimatedContent
         }
 
         SamplesGallery(
