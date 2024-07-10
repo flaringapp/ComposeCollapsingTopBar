@@ -36,6 +36,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.KeyboardArrowDown
 import androidx.compose.material.icons.rounded.KeyboardArrowUp
 import androidx.compose.material3.Button
+import androidx.compose.material3.Checkbox
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -58,7 +59,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.flaringapp.compose.topbar.nestedcollapse.CollapsingTopBarColumn
 import com.flaringapp.compose.topbar.scaffold.CollapsingTopBarScaffold
-import com.flaringapp.compose.topbar.scaffold.CollapsingTopBarScaffoldScrollMode
 import com.flaringapp.compose.topbar.scaffold.CollapsingTopBarScaffoldState
 import com.flaringapp.compose.topbar.scaffold.rememberCollapsingTopBarScaffoldState
 import com.flaringapp.compose.topbar.screen
@@ -84,6 +84,13 @@ fun ScaffoldSampleContent(
 private fun CollapsingColumn() {
     val scaffoldState = rememberCollapsingTopBarScaffoldState()
 
+    var scrollControlMode: ScaffoldScrollControlMode by remember {
+        mutableStateOf(ScaffoldScrollControlMode.Collapse)
+    }
+    var scrollEnterAlways by remember {
+        mutableStateOf(false)
+    }
+
     var showBox by remember {
         mutableStateOf(false)
     }
@@ -96,7 +103,7 @@ private fun CollapsingColumn() {
     CollapsingTopBarScaffold(
         modifier = Modifier.fillMaxSize(),
         state = scaffoldState,
-        scrollMode = CollapsingTopBarScaffoldScrollMode.enterAlwaysCollapsed(),
+        scrollMode = scrollControlMode.rememberScrollMode(expandAlways = scrollEnterAlways),
         snapBehavior = rememberCollapsingTopBarSnapBehavior(threshold = 0.5f),
         topBar = {
             if (showBox) {
@@ -182,7 +189,15 @@ private fun CollapsingColumn() {
             ) {
                 ContentHeader()
 
+                ContentScrollControls(
+                    scrollMode = scrollControlMode,
+                    scrollEnterAlways = scrollEnterAlways,
+                    changeScrollMode = { scrollControlMode = it },
+                    changeScrollEnterAlways = { scrollEnterAlways = it },
+                )
+
                 ContentStateControls(
+                    modifier = Modifier.padding(top = 8.dp),
                     state = scaffoldState,
                 )
 
@@ -262,6 +277,49 @@ private fun ContentHeader(
         HorizontalDivider(
             modifier = Modifier.weight(1f),
         )
+    }
+}
+
+@Composable
+private fun ContentScrollControls(
+    scrollMode: ScaffoldScrollControlMode,
+    scrollEnterAlways: Boolean,
+    changeScrollMode: (ScaffoldScrollControlMode) -> Unit,
+    changeScrollEnterAlways: (Boolean) -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    Column(
+        modifier = modifier.fillMaxWidth(),
+    ) {
+        ScaffoldControlsTitleText(
+            modifier = Modifier
+                .align(Alignment.CenterHorizontally)
+                .padding(bottom = 16.dp),
+            text = "Scroll Controls",
+        )
+
+        ScaffoldScrollControls(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp),
+            selectedMode = scrollMode,
+            selectMode = changeScrollMode,
+        )
+
+        Row(
+            modifier = Modifier.padding(top = 8.dp),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Checkbox(
+                checked = scrollEnterAlways,
+                onCheckedChange = changeScrollEnterAlways,
+                enabled = scrollMode !is ScaffoldScrollControlMode.EnterAlwaysCollapsed,
+            )
+
+            Text(
+                text = "Enter always",
+            )
+        }
     }
 }
 
