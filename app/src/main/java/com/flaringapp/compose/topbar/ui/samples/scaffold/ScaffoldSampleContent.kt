@@ -59,6 +59,7 @@ import androidx.compose.ui.unit.dp
 import com.flaringapp.compose.topbar.nestedcollapse.CollapsingTopBarColumn
 import com.flaringapp.compose.topbar.scaffold.CollapsingTopBarScaffold
 import com.flaringapp.compose.topbar.scaffold.CollapsingTopBarScaffoldScrollMode
+import com.flaringapp.compose.topbar.scaffold.CollapsingTopBarScaffoldState
 import com.flaringapp.compose.topbar.scaffold.rememberCollapsingTopBarScaffoldState
 import com.flaringapp.compose.topbar.screen
 import com.flaringapp.compose.topbar.snap.rememberCollapsingTopBarSnapBehavior
@@ -181,14 +182,7 @@ private fun CollapsingColumn() {
             ) {
                 ContentHeader()
 
-                ScaffoldControlsTitleText(
-                    modifier = Modifier
-                        .align(Alignment.CenterHorizontally)
-                        .padding(bottom = 16.dp),
-                    text = "State Controls",
-                )
-
-                ScaffoldStateControls(
+                ContentStateControls(
                     state = scaffoldState,
                 )
 
@@ -267,6 +261,27 @@ private fun ContentHeader(
 
         HorizontalDivider(
             modifier = Modifier.weight(1f),
+        )
+    }
+}
+
+@Composable
+private fun ContentStateControls(
+    state: CollapsingTopBarScaffoldState,
+    modifier: Modifier = Modifier,
+) {
+    Column(
+        modifier = modifier.fillMaxWidth(),
+    ) {
+        ScaffoldControlsTitleText(
+            modifier = Modifier
+                .align(Alignment.CenterHorizontally)
+                .padding(bottom = 16.dp),
+            text = "State Controls",
+        )
+
+        ScaffoldStateControls(
+            state = state,
         )
     }
 }
