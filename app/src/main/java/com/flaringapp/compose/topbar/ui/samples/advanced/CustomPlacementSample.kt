@@ -32,7 +32,6 @@ import androidx.compose.ui.util.lerp
 import com.flaringapp.compose.topbar.CollapsingTopBarState
 import com.flaringapp.compose.topbar.scaffold.CollapsingTopBarScaffold
 import com.flaringapp.compose.topbar.scaffold.CollapsingTopBarScaffoldScrollMode
-import com.flaringapp.compose.topbar.scaffold.rememberCollapsingTopBarScaffoldState
 import com.flaringapp.compose.topbar.ui.samples.CollapsingTopBarSample
 import com.flaringapp.compose.topbar.ui.samples.CollapsingTopBarSampleDogDefaults
 import com.flaringapp.compose.topbar.ui.samples.common.SampleContent
@@ -71,7 +70,6 @@ private fun CollapsingContent(
 ) {
     CollapsingTopBarScaffold(
         modifier = modifier,
-        state = rememberCollapsingTopBarScaffoldState(),
         scrollMode = CollapsingTopBarScaffoldScrollMode.collapseAndExit(expandAlways = false),
         topBar = { topBarState ->
             SampleTopBarImage(

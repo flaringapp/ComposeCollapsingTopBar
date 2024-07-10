@@ -23,7 +23,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.flaringapp.compose.topbar.scaffold.CollapsingTopBarScaffold
 import com.flaringapp.compose.topbar.scaffold.CollapsingTopBarScaffoldScrollMode
-import com.flaringapp.compose.topbar.scaffold.rememberCollapsingTopBarScaffoldState
 import com.flaringapp.compose.topbar.snap.rememberCollapsingTopBarSnapBehavior
 import com.flaringapp.compose.topbar.ui.samples.CollapsingTopBarSample
 import com.flaringapp.compose.topbar.ui.samples.CollapsingTopBarSampleDogDefaults
@@ -63,7 +62,6 @@ private fun CollapsingContent(
 ) {
     CollapsingTopBarScaffold(
         modifier = modifier,
-        state = rememberCollapsingTopBarScaffoldState(),
         scrollMode = CollapsingTopBarScaffoldScrollMode.collapse(expandAlways = false),
         snapBehavior = rememberCollapsingTopBarSnapBehavior(threshold = 0.5f),
         topBar = {

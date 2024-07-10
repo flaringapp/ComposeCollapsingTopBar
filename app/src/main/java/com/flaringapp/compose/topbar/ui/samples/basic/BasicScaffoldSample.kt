@@ -27,7 +27,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.util.lerp
 import com.flaringapp.compose.topbar.scaffold.CollapsingTopBarScaffold
 import com.flaringapp.compose.topbar.scaffold.CollapsingTopBarScaffoldScrollMode
-import com.flaringapp.compose.topbar.scaffold.rememberCollapsingTopBarScaffoldState
 import com.flaringapp.compose.topbar.ui.samples.CollapsingTopBarSampleDogDefaults
 import com.flaringapp.compose.topbar.ui.samples.common.SampleContent
 import com.flaringapp.compose.topbar.ui.samples.common.SampleTopAppBar
@@ -45,7 +44,6 @@ fun BasicScaffoldSampleContent(
 ) {
     CollapsingTopBarScaffold(
         modifier = modifier,
-        state = rememberCollapsingTopBarScaffoldState(),
         scrollMode = scrollMode,
         topBar = {
             var topBarColorProgress by remember { mutableFloatStateOf(1f) }
