@@ -250,7 +250,10 @@ private data object ClipToCollapseElement : ModifierNodeElement<ClipToCollapseNo
     override fun InspectorInfo.inspectableProperties() = Unit
 }
 
-private class ClipToCollapseNode : Modifier.Node(), ParentDataModifierNode, DrawModifierNode {
+private class ClipToCollapseNode :
+    Modifier.Node(),
+    ParentDataModifierNode,
+    DrawModifierNode {
 
     private var elementCollapseHeightState = mutableIntStateOf(0)
 

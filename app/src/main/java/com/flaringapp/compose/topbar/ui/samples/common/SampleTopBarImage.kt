@@ -28,7 +28,9 @@ import androidx.compose.ui.unit.dp
 import com.flaringapp.compose.topbar.R
 import com.flaringapp.compose.topbar.ui.theme.ComposeCollapsingTopBarTheme
 
-sealed class SampleTopBarImageDog(val imageRes: Int) {
+sealed class SampleTopBarImageDog(
+    val imageRes: Int,
+) {
     data object GoldenMartian : SampleTopBarImageDog(R.drawable.img_top_bar_dog_1)
     data object LabradorInCar : SampleTopBarImageDog(R.drawable.img_top_bar_dog_2)
     data object Dachshund : SampleTopBarImageDog(R.drawable.img_top_bar_dog_3)
