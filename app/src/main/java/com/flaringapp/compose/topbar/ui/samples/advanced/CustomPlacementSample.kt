@@ -29,9 +29,9 @@ import androidx.compose.ui.layout.layout
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.lerp
+import com.flaringapp.compose.topbar.CollapsingTopBarState
 import com.flaringapp.compose.topbar.scaffold.CollapsingTopBarScaffold
 import com.flaringapp.compose.topbar.scaffold.CollapsingTopBarScaffoldScrollMode
-import com.flaringapp.compose.topbar.scaffold.CollapsingTopBarScaffoldState
 import com.flaringapp.compose.topbar.scaffold.rememberCollapsingTopBarScaffoldState
 import com.flaringapp.compose.topbar.ui.samples.CollapsingTopBarSample
 import com.flaringapp.compose.topbar.ui.samples.CollapsingTopBarSampleDogDefaults
@@ -69,13 +69,11 @@ private fun CollapsingContent(
     onBack: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val state = rememberCollapsingTopBarScaffoldState()
-
     CollapsingTopBarScaffold(
         modifier = modifier,
-        state = state,
+        state = rememberCollapsingTopBarScaffoldState(),
         scrollMode = CollapsingTopBarScaffoldScrollMode.collapseAndExit(expandAlways = false),
-        topBar = {
+        topBar = { topBarState ->
             SampleTopBarImage(
                 dog = CollapsingTopBarSampleDogDefaults.Advanced,
             )
@@ -87,7 +85,7 @@ private fun CollapsingContent(
 
             SlidingDot(
                 modifier = Modifier.floating(),
-                state = state,
+                state = topBarState,
             )
         },
         body = {
@@ -98,7 +96,7 @@ private fun CollapsingContent(
 
 @Composable
 private fun SlidingDot(
-    state: CollapsingTopBarScaffoldState,
+    state: CollapsingTopBarState,
     modifier: Modifier = Modifier,
 ) {
     Box(
@@ -106,7 +104,7 @@ private fun SlidingDot(
             .layout { measurable, constraints ->
                 val placeable = measurable.measure(constraints)
                 layout(placeable.width, placeable.height) {
-                    val layoutInfo = state.topBarState.layoutInfo
+                    val layoutInfo = state.layoutInfo
                     val x = lerp(
                         start = constraints.maxWidth - placeable.width - 16.dp.roundToPx(),
                         stop = 16.dp.roundToPx(),

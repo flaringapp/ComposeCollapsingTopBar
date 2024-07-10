@@ -68,21 +68,19 @@ private fun CollapsingContent(
     onBack: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val state = rememberCollapsingTopBarScaffoldState()
-
-    val topBarColorProgress by remember {
-        derivedStateOf {
-            val progress = state.topBarState.layoutInfo.collapseProgress
-            // Treat 0 <-> >=SCRIM_START_FRACTION progress as 0 <-> 1
-            progress.coerceAtMost(SCRIM_START_FRACTION) / SCRIM_START_FRACTION
-        }
-    }
-
     CollapsingTopBarScaffold(
         modifier = modifier,
-        state = state,
+        state = rememberCollapsingTopBarScaffoldState(),
         scrollMode = CollapsingTopBarScaffoldScrollMode.collapse(expandAlways = false),
-        topBar = {
+        topBar = { topBarState ->
+            val topBarColorProgress by remember {
+                derivedStateOf {
+                    val progress = topBarState.layoutInfo.collapseProgress
+                    // Treat 0 <-> >=SCRIM_START_FRACTION progress as 0 <-> 1
+                    progress.coerceAtMost(SCRIM_START_FRACTION) / SCRIM_START_FRACTION
+                }
+            }
+
             SampleTopBarImage(
                 dog = CollapsingTopBarSampleDogDefaults.Advanced,
             )

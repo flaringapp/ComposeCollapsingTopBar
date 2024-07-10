@@ -30,6 +30,7 @@ import androidx.compose.ui.unit.constrainHeight
 import androidx.compose.ui.unit.constrainWidth
 import com.flaringapp.compose.topbar.CollapsingTopBar
 import com.flaringapp.compose.topbar.CollapsingTopBarScope
+import com.flaringapp.compose.topbar.CollapsingTopBarState
 import com.flaringapp.compose.topbar.dependent.collapsingTopBarExitStateConnection
 import com.flaringapp.compose.topbar.nestedscroll.rememberNestedScrollConnection
 import com.flaringapp.compose.topbar.snap.CollapsingTopBarNoSnapBehavior
@@ -77,7 +78,7 @@ fun CollapsingTopBarScaffold(
     snapBehavior: CollapsingTopBarSnapBehavior = CollapsingTopBarNoSnapBehavior,
     topBarModifier: Modifier = Modifier,
     topBarClipToBounds: Boolean = true,
-    topBar: @Composable CollapsingTopBarScope.() -> Unit,
+    topBar: @Composable CollapsingTopBarScope.(topBarState: CollapsingTopBarState) -> Unit,
     body: @Composable () -> Unit,
 ) {
     LaunchedEffect(scrollMode.canExit) {
@@ -118,7 +119,7 @@ fun CollapsingTopBarScaffold(
                 state = state.topBarState,
                 clipToBounds = topBarClipToBounds,
             ) {
-                topBar()
+                topBar(state.topBarState)
             }
 
             body()
