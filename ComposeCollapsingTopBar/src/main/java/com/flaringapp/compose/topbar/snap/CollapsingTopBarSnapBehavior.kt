@@ -17,6 +17,7 @@
 package com.flaringapp.compose.topbar.snap
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.remember
 
 /**
@@ -25,6 +26,7 @@ import androidx.compose.runtime.remember
  * When nested scroll fling has ended, [snap] is called to perform snapping animation with
  * [CollapsingTopBarSnapScope] receiver.
  */
+@Immutable
 interface CollapsingTopBarSnapBehavior {
 
     /**
