@@ -39,7 +39,6 @@ import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.constrainHeight
 import androidx.compose.ui.unit.constrainWidth
 import com.flaringapp.compose.topbar.nestedcollapse.CollapsingTopBarNestedCollapseElement
-import kotlin.math.max
 import kotlin.math.min
 import kotlin.math.roundToInt
 
@@ -195,11 +194,11 @@ private fun resolveCollapsedHeight(placeables: List<Placeable>): Int {
         regularCollapseMinHeight = 0
     }
 
-    if (nestedCollapseMinHeight > 0 && regularCollapseMinHeight > 0) {
-        return min(nestedCollapseMinHeight, regularCollapseMinHeight)
+    if (nestedCollapseMinHeight > 0) {
+        return nestedCollapseMinHeight
     }
 
-    return max(nestedCollapseMinHeight, regularCollapseMinHeight)
+    return regularCollapseMinHeight
 }
 
 /**
