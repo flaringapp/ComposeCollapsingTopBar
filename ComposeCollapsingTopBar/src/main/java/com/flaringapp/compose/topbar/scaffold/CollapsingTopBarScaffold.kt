@@ -30,6 +30,7 @@ import androidx.compose.ui.unit.constrainHeight
 import androidx.compose.ui.unit.constrainWidth
 import com.flaringapp.compose.topbar.CollapsingTopBar
 import com.flaringapp.compose.topbar.CollapsingTopBarScope
+import com.flaringapp.compose.topbar.CollapsingTopBarState
 import com.flaringapp.compose.topbar.dependent.collapsingTopBarExitStateConnection
 import com.flaringapp.compose.topbar.nestedscroll.rememberNestedScrollConnection
 import com.flaringapp.compose.topbar.snap.CollapsingTopBarNoSnapBehavior
@@ -49,10 +50,10 @@ import kotlin.math.max
  * measurement phase rescheduling, and all the heavy (actually, light :D) work is done in placement
  * phase.
  *
- * @param state the state than manages this scaffold.
  * @param scrollMode the strategy of handling nested scroll to collapse and expand top bar, and
  * optionally exit and enter.
  * @param modifier the [Modifier] to be applied to this scaffold.
+ * @param state the state than manages this scaffold.
  * @param enabled the flag whether or not to enable nested scrolling. Top bar won't react to
  * content scrolling if disabled.
  * @param snapBehavior the behavior of top bar snapping after fling. Disabled by default. Can be
@@ -70,14 +71,14 @@ import kotlin.math.max
 @SuppressLint("ComposeParameterOrder")
 @Composable
 fun CollapsingTopBarScaffold(
-    state: CollapsingTopBarScaffoldState,
     scrollMode: CollapsingTopBarScaffoldScrollMode,
     modifier: Modifier = Modifier,
+    state: CollapsingTopBarScaffoldState = rememberCollapsingTopBarScaffoldState(),
     enabled: Boolean = true,
     snapBehavior: CollapsingTopBarSnapBehavior = CollapsingTopBarNoSnapBehavior,
     topBarModifier: Modifier = Modifier,
     topBarClipToBounds: Boolean = true,
-    topBar: @Composable CollapsingTopBarScope.() -> Unit,
+    topBar: @Composable CollapsingTopBarScope.(topBarState: CollapsingTopBarState) -> Unit,
     body: @Composable () -> Unit,
 ) {
     LaunchedEffect(scrollMode.canExit) {
@@ -118,7 +119,7 @@ fun CollapsingTopBarScaffold(
                 state = state.topBarState,
                 clipToBounds = topBarClipToBounds,
             ) {
-                topBar()
+                topBar(state.topBarState)
             }
 
             body()

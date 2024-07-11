@@ -21,8 +21,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.drawWithContent
-import androidx.compose.ui.graphics.drawscope.clipRect
+import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.geometry.toRect
+import androidx.compose.ui.graphics.Outline
+import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.layout.Measurable
 import androidx.compose.ui.layout.MeasurePolicy
@@ -32,16 +35,18 @@ import androidx.compose.ui.layout.ParentDataModifier
 import androidx.compose.ui.layout.Placeable
 import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.Density
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.constrainHeight
 import androidx.compose.ui.unit.constrainWidth
 import com.flaringapp.compose.topbar.nestedcollapse.CollapsingTopBarNestedCollapseElement
-import kotlin.math.max
+import kotlin.math.min
 import kotlin.math.roundToInt
 
 /**
  * A basic container for collapsing content. Places its children like a Box, on top of each other.
  * Top bar always occupies maximum (expanded) height while hoisting variable collapsing height in
- * [state]. Minimum (collapsed) height is always equal to the smallest child height.
+ * [state]. Minimum (collapsed) height is always equal to the smallest child or
+ * [CollapsingTopBarScope.nestedCollapse] height.
  *
  * Visual collapsing is achieved by [clipToBounds], although additional layout mechanism is likely
  * to be handy, e.g. [com.flaringapp.compose.topbar.scaffold.CollapsingTopBarScaffold].
@@ -73,12 +78,11 @@ fun CollapsingTopBar(
     }
 
     val clipToBoundsModifier = if (clipToBounds) {
-        Modifier.drawWithContent {
-            clipRect(
-                bottom = state.layoutInfo.height,
-            ) {
-                this@drawWithContent.drawContent()
-            }
+        Modifier.graphicsLayer {
+            clip = true
+            shape = CollapseBoundsShape(
+                collapseHeight = state.layoutInfo.expandedHeight - state.layoutInfo.height,
+            )
         }
     } else {
         Modifier
@@ -111,14 +115,7 @@ private class CollapsingTopBarMeasurePolicy(
 
         // Update state layout info
         val measuredLayoutInfo = run {
-            val nestedCollapseMinHeight = placeables.minOf {
-                it.topBarParentData?.nestedCollapseElement?.minHeight ?: Int.MAX_VALUE
-            }.takeIf { it != Int.MAX_VALUE }
-
-            val collapsedHeight = max(
-                placeables.minOf { it.height },
-                nestedCollapseMinHeight ?: 0,
-            )
+            val collapsedHeight = resolveCollapsedHeight(placeables)
                 .let { constraints.constrainHeight(it) }
 
             val expandedHeight = placeables.maxOf { it.height }
@@ -141,8 +138,16 @@ private class CollapsingTopBarMeasurePolicy(
             placeables.forEach { placeable ->
                 val parentData = placeable.topBarParentData
 
-                val placeableProgress =
-                    layoutInfo.height.coerceAtMost(placeable.height.toFloat()) / placeable.height
+                val placeableCollapsibleDistance =
+                    (placeable.height - layoutInfo.collapsedHeight).coerceAtLeast(0)
+                val placeableProgress = if (placeableCollapsibleDistance == 0) {
+                    1f
+                } else {
+                    val placeableCollapseHeight = with(layoutInfo) {
+                        height.coerceAtMost(placeable.height.toFloat()) - collapsedHeight
+                    }
+                    placeableCollapseHeight / placeableCollapsibleDistance
+                }
 
                 parentData?.progressListener?.onProgressUpdate(
                     totalProgress = progress,
@@ -154,13 +159,46 @@ private class CollapsingTopBarMeasurePolicy(
                         x = 0,
                         y = -(collapsibleDistance * (1 - progress) * parallaxRatio).roundToInt(),
                     )
-                    return@layout
+                    return@forEach
                 }
 
                 placeable.placeRelative(0, 0)
             }
         }
     }
+}
+
+private fun resolveCollapsedHeight(placeables: List<Placeable>): Int {
+    var nestedCollapseMinHeight = Int.MAX_VALUE
+    var regularCollapseMinHeight = Int.MAX_VALUE
+
+    placeables.forEach { placeable ->
+        val parentData = placeable.topBarParentData
+
+        parentData?.nestedCollapseElement?.minHeight?.let {
+            nestedCollapseMinHeight = min(nestedCollapseMinHeight, it)
+            return@forEach
+        }
+
+        if (parentData?.isFloating == true) {
+            return@forEach
+        }
+
+        regularCollapseMinHeight = min(regularCollapseMinHeight, placeable.height)
+    }
+
+    if (nestedCollapseMinHeight == Int.MAX_VALUE) {
+        nestedCollapseMinHeight = 0
+    }
+    if (regularCollapseMinHeight == Int.MAX_VALUE) {
+        regularCollapseMinHeight = 0
+    }
+
+    if (nestedCollapseMinHeight > 0) {
+        return nestedCollapseMinHeight
+    }
+
+    return regularCollapseMinHeight
 }
 
 /**
@@ -189,6 +227,12 @@ interface CollapsingTopBarScope {
     fun Modifier.parallax(ratio: Float): Modifier
 
     /**
+     * Exclude the element from resolving minimum height among all elements. Useful for 'floating'
+     * elements with custom motion on collapse.
+     */
+    fun Modifier.floating(): Modifier
+
+    /**
      * Define an explicit minimum (collapsed) height nested collapse connection between the top bar
      * and this element. The element is responsible for dispatching its own minimum height using
      * [element] handle. This value is read by the top bar to calculate total minimum height
@@ -207,6 +251,10 @@ private object CollapsingTopBarScopeInstance : CollapsingTopBarScope {
 
     override fun Modifier.parallax(ratio: Float): Modifier {
         return then(ParallaxModifier(ratio))
+    }
+
+    override fun Modifier.floating(): Modifier {
+        return then(FloatingModifier())
     }
 
     override fun Modifier.nestedCollapse(
@@ -232,6 +280,12 @@ private class ParallaxModifier(
     }
 }
 
+private class FloatingModifier : CollapsingTopBarParentDataModifier() {
+    override fun modifyParentData(parentData: CollapsingTopBarParentData) {
+        parentData.isFloating = true
+    }
+}
+
 private class NestedCollapseModifier(
     private val element: CollapsingTopBarNestedCollapseElement,
 ) : CollapsingTopBarParentDataModifier() {
@@ -254,8 +308,25 @@ private abstract class CollapsingTopBarParentDataModifier : ParentDataModifier {
 private data class CollapsingTopBarParentData(
     var progressListener: CollapsingTopBarProgressListener? = null,
     var parallaxRatio: Float? = null,
+    var isFloating: Boolean = false,
     var nestedCollapseElement: CollapsingTopBarNestedCollapseElement? = null,
 )
 
 private val Placeable.topBarParentData: CollapsingTopBarParentData?
     get() = parentData as? CollapsingTopBarParentData
+
+private data class CollapseBoundsShape(
+    private val collapseHeight: Float,
+) : Shape {
+
+    override fun createOutline(
+        size: Size,
+        layoutDirection: LayoutDirection,
+        density: Density,
+    ): Outline {
+        val collapseRect = size.toRect().run {
+            copy(bottom = maxOf(top, bottom - collapseHeight))
+        }
+        return Outline.Rectangle(collapseRect)
+    }
+}

@@ -49,7 +49,7 @@ fun <STATE> CollapsingTopBarNestedScrollStrategy<STATE>.rememberNestedScrollConn
     flingBehavior: FlingBehavior = ScrollableDefaults.flingBehavior(),
     snapBehavior: CollapsingTopBarSnapBehavior = CollapsingTopBarNoSnapBehavior,
 ): NestedScrollConnection {
-    return remember(this, state) {
+    return remember(this, state, flingBehavior, snapBehavior) {
         MultiNestedScrollConnection(
             createHandlers(
                 state = state,
