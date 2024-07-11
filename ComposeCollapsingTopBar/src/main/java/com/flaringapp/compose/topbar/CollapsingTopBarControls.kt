@@ -22,11 +22,13 @@ import androidx.compose.animation.core.animateTo
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.gestures.ScrollScope
 import androidx.compose.foundation.gestures.ScrollableState
+import androidx.compose.runtime.Stable
 
 /**
  * A functional contract of any top bar state that manages collapsing behavior. Allows to
  * [collapse] and [expand], as well as provides animation utility methods.
  */
+@Stable
 interface CollapsingTopBarControls {
 
     /**
