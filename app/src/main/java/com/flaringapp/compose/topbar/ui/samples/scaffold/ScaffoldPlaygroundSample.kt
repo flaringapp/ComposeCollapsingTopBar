@@ -66,20 +66,20 @@ import com.flaringapp.compose.topbar.ui.samples.common.SampleTopBarBanner
 import com.flaringapp.compose.topbar.ui.samples.common.SampleTopBarImage
 import com.flaringapp.compose.topbar.ui.theme.ComposeCollapsingTopBarTheme
 
-object ScaffoldSample : CollapsingTopBarSample {
+object ScaffoldPlaygroundSample : CollapsingTopBarSample {
 
     override val name: String = "Scaffold Playground"
 
     @Composable
     override fun Content(onBack: () -> Unit) {
-        ScaffoldSampleContent(
+        ScaffoldPlaygroundSampleContent(
             onBack = onBack,
         )
     }
 }
 
 @Composable
-fun ScaffoldSampleContent(
+fun ScaffoldPlaygroundSampleContent(
     onBack: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -87,14 +87,14 @@ fun ScaffoldSampleContent(
         modifier = modifier.fillMaxSize(),
         color = MaterialTheme.colorScheme.background,
     ) {
-        CollapsingColumn(
+        CollapsingContent(
             onBack = onBack,
         )
     }
 }
 
 @Composable
-private fun CollapsingColumn(
+private fun CollapsingContent(
     onBack: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -323,7 +323,7 @@ private fun ContentItem(
 @Composable
 private fun Preview() {
     ComposeCollapsingTopBarTheme {
-        ScaffoldSampleContent(
+        ScaffoldPlaygroundSampleContent(
             onBack = {},
         )
     }

@@ -31,7 +31,7 @@ import com.flaringapp.compose.topbar.ui.samples.column.ColumnInStackSample
 import com.flaringapp.compose.topbar.ui.samples.column.ColumnMovingElementSample
 import com.flaringapp.compose.topbar.ui.samples.column.FullyCollapsibleColumnSample
 import com.flaringapp.compose.topbar.ui.samples.column.PartiallyCollapsibleColumnSample
-import com.flaringapp.compose.topbar.ui.samples.scaffold.ScaffoldSample
+import com.flaringapp.compose.topbar.ui.samples.scaffold.ScaffoldPlaygroundSample
 
 object CollapsingTopBarSampleGroups {
 
@@ -64,6 +64,6 @@ object CollapsingTopBarSampleGroups {
 
     val Playground: List<CollapsingTopBarSample>
         get() = listOf(
-            ScaffoldSample,
+            ScaffoldPlaygroundSample,
         )
 }
