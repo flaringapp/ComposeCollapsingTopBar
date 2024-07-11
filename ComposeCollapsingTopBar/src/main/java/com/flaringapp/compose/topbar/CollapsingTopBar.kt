@@ -17,12 +17,14 @@
 package com.flaringapp.compose.topbar
 
 import androidx.compose.foundation.layout.LayoutScopeMarker
+import androidx.compose.foundation.layout.offset
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.drawWithContent
-import androidx.compose.ui.graphics.drawscope.clipRect
+import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.layout.Measurable
 import androidx.compose.ui.layout.MeasurePolicy
@@ -32,6 +34,7 @@ import androidx.compose.ui.layout.ParentDataModifier
 import androidx.compose.ui.layout.Placeable
 import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.Density
+import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.constrainHeight
 import androidx.compose.ui.unit.constrainWidth
 import com.flaringapp.compose.topbar.nestedcollapse.CollapsingTopBarNestedCollapseElement
@@ -75,13 +78,18 @@ fun CollapsingTopBar(
     }
 
     val clipToBoundsModifier = if (clipToBounds) {
-        Modifier.drawWithContent {
-            clipRect(
-                bottom = state.layoutInfo.height,
-            ) {
-                this@drawWithContent.drawContent()
+        val collapseOffset by remember {
+            derivedStateOf {
+                state.layoutInfo.height.toInt() - state.layoutInfo.expandedHeight
             }
         }
+        // We can't simply clip in draw phase, because we also need to clip user input.
+        // clipToBounds() does the trick, but in order to make it work we have to 'simulate'
+        // collapse by offsetting the element.
+        Modifier
+            .offset { IntOffset(x = 0, y = collapseOffset) }
+            .clipToBounds()
+            .offset { IntOffset(x = 0, y = -collapseOffset) }
     } else {
         Modifier
     }
