@@ -78,7 +78,7 @@ fun CollapsingTopBar(
     }
 
     val clipToBoundsModifier = if (clipToBounds) {
-        val collapseOffset by remember {
+        val collapseOffset by remember(state) {
             derivedStateOf {
                 state.layoutInfo.height.toInt() - state.layoutInfo.expandedHeight
             }
