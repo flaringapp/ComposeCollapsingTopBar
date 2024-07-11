@@ -79,6 +79,7 @@ private fun CollapsingContent(
             SampleTopAppBar(
                 title = "Floating Element",
                 onBack = onBack,
+                containerColor = Color.Transparent,
             )
 
             SlidingDot(

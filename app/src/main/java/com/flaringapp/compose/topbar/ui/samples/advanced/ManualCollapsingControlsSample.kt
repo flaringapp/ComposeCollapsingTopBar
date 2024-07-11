@@ -86,6 +86,7 @@ private fun CollapsingContent(
             SampleTopAppBar(
                 title = "Manual Collapsing",
                 onBack = onBack,
+                containerColor = Color.Transparent,
             )
         },
         body = {
