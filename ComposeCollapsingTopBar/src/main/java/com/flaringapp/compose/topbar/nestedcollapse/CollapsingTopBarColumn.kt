@@ -24,8 +24,10 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.drawscope.ContentDrawScope
-import androidx.compose.ui.graphics.drawscope.clipRect
+import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.geometry.toRect
+import androidx.compose.ui.graphics.Outline
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.layout.Measurable
 import androidx.compose.ui.layout.MeasurePolicy
@@ -33,12 +35,14 @@ import androidx.compose.ui.layout.MeasureResult
 import androidx.compose.ui.layout.MeasureScope
 import androidx.compose.ui.layout.ParentDataModifier
 import androidx.compose.ui.layout.Placeable
-import androidx.compose.ui.node.DrawModifierNode
+import androidx.compose.ui.node.LayoutModifierNode
 import androidx.compose.ui.node.ModifierNodeElement
 import androidx.compose.ui.node.ParentDataModifierNode
 import androidx.compose.ui.platform.InspectorInfo
 import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.Density
+import androidx.compose.ui.unit.IntOffset
+import androidx.compose.ui.unit.LayoutDirection
 import com.flaringapp.compose.topbar.CollapsingTopBar
 import com.flaringapp.compose.topbar.CollapsingTopBarProgressListener
 import com.flaringapp.compose.topbar.CollapsingTopBarScope
@@ -253,7 +257,7 @@ private data object ClipToCollapseElement : ModifierNodeElement<ClipToCollapseNo
 private class ClipToCollapseNode :
     Modifier.Node(),
     ParentDataModifierNode,
-    DrawModifierNode {
+    LayoutModifierNode {
 
     private var elementCollapseHeightState = mutableIntStateOf(0)
 
@@ -266,9 +270,34 @@ private class ClipToCollapseNode :
         return data
     }
 
-    override fun ContentDrawScope.draw() {
-        clipRect(top = elementCollapseHeightState.intValue.toFloat()) {
-            this@draw.drawContent()
+    override fun MeasureScope.measure(
+        measurable: Measurable,
+        constraints: Constraints,
+    ): MeasureResult {
+        val placeable = measurable.measure(constraints)
+        return layout(placeable.width, placeable.height) {
+            placeable.placeWithLayer(IntOffset.Zero) {
+                clip = true
+                shape = CollapseBoundsShape(
+                    collapseHeight = elementCollapseHeightState.intValue,
+                )
+            }
+        }
+    }
+
+    private data class CollapseBoundsShape(
+        private val collapseHeight: Int,
+    ) : Shape {
+
+        override fun createOutline(
+            size: Size,
+            layoutDirection: LayoutDirection,
+            density: Density,
+        ): Outline {
+            val collapseRect = size.toRect().run {
+                copy(top = min(top + collapseHeight, bottom))
+            }
+            return Outline.Rectangle(collapseRect)
         }
     }
 }
