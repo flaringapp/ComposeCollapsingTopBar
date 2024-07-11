@@ -171,7 +171,9 @@ private fun CollapsingContent(
                         containerColor = Color.Transparent,
                     )
 
-                    SampleFilterChips()
+                    SampleFilterChips(
+                        modifier = Modifier.clipToCollapse(),
+                    )
                 }
             }
         },
