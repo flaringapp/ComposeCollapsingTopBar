@@ -38,6 +38,13 @@ android {
     composeCompiler {
         reportsDestination = layout.buildDirectory.dir("compose_reports")
     }
+
+    publishing {
+        singleVariant("release") {
+            withSourcesJar()
+            withJavadocJar()
+        }
+    }
 }
 
 dependencies {
