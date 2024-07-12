@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.jetbrains.kotlin.compose)
+    `maven-publish`
 }
 
 android {
@@ -60,4 +61,18 @@ dependencies {
     debugImplementation(libs.androidx.compose.ui.test.manifest)
 
     lintChecks(libs.slack.compose.linter)
+}
+
+publishing {
+    publications {
+        register<MavenPublication>("release") {
+            groupId = "com.github.flaringapp"
+            artifactId = "ComposeCollapsingTopBar"
+            version = "1.0.1"
+
+            afterEvaluate {
+                from(components["release"])
+            }
+        }
+    }
 }
