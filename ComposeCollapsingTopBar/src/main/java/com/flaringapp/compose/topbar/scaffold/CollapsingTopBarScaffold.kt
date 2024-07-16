@@ -117,9 +117,7 @@ fun CollapsingTopBarScaffold(
                     .then(exitStateUpdateModifier)
                     // Contrary motion to scaffold placement
                     .offset {
-                        val collapseHeight = with(state.topBarState.layoutInfo) {
-                            expandedHeight - height
-                        }
+                        val collapseHeight = state.topBarState.layoutInfo.collapseHeightDelta
                         IntOffset(x = 0, y = collapseHeight.toInt())
                     },
                 state = state.topBarState,
@@ -167,7 +165,7 @@ fun CollapsingTopBarScaffold(
 
         layout(width, height) {
             val topBarHeight = state.topBarState.layoutInfo.height.toInt()
-            val topBarCollapseOffset = topBarHeight - state.topBarState.layoutInfo.expandedHeight
+            val topBarCollapseOffset = -state.topBarState.layoutInfo.collapseHeightDelta.toInt()
             val topBarExitHeight = state.exitState.exitHeight.toInt()
 
             bodyPlaceables.forEach { placeable ->

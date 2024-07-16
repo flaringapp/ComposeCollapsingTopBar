@@ -129,9 +129,9 @@ class CollapsingTopBarState internal constructor(
      */
     private fun onScroll(delta: Float): Float {
         val canConsumeDelta = if (delta < 0) {
-            max(layoutInfo.collapsedHeight - layoutInfo.height, delta)
+            max(-layoutInfo.expandHeightDelta, delta)
         } else {
-            min(layoutInfo.expandedHeight - layoutInfo.height, delta)
+            min(layoutInfo.collapseHeightDelta, delta)
         }
 
         if (canConsumeDelta == 0f) return 0f
@@ -147,14 +147,14 @@ class CollapsingTopBarState internal constructor(
     override suspend fun expand(
         animationSpec: AnimationSpec<Float>,
     ) = animateScrollBy(
-        offset = layoutInfo.expandedHeight - layoutInfo.height,
+        offset = layoutInfo.collapseHeightDelta,
         animationSpec = animationSpec,
     )
 
     override suspend fun collapse(
         animationSpec: AnimationSpec<Float>,
     ) = animateScrollBy(
-        offset = layoutInfo.collapsedHeight - layoutInfo.height,
+        offset = -layoutInfo.expandHeightDelta,
         animationSpec = animationSpec,
     )
     //endregion
@@ -244,8 +244,20 @@ data class CollapsingTopBarLayoutInfo(
             if (collapsedHeight == expandedHeight) {
                 1f
             } else {
-                ((height - collapsedHeight) / collapsibleDistance).coerceIn(0f, 1f)
+                (expandHeightDelta / collapsibleDistance).coerceIn(0f, 1f)
             }
+
+    /**
+     * The height difference between current and expanded height, positive value.
+     */
+    val collapseHeightDelta: Float
+        get() = expandedHeight - height
+
+    /**
+     * The height difference between current and collapsed height, positive value.
+     */
+    val expandHeightDelta: Float
+        get() = height - collapsedHeight
 
     /**
      * The total variable height amount that may collapse.
