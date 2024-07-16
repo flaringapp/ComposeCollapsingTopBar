@@ -22,6 +22,8 @@ import androidx.compose.foundation.gestures.ScrollScope
 import androidx.compose.foundation.gestures.ScrollableState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -121,14 +123,16 @@ class CollapsingTopBarExitState internal constructor(
     /**
      * Whether top bar exit height is fully exited/collapsed. Disabled state is never exited.
      */
-    val isFullyExited: Boolean
-        get() = isEnabled && exitHeight == collapsedHeight
+    val isFullyExited: Boolean by derivedStateOf {
+        isEnabled && exitHeight == collapsedHeight
+    }
 
     /**
      * Whether top bar exit height is fully entered/expanded. Disabled state is always entered.
      */
-    val isFullyEntered: Boolean
-        get() = exitHeight == 0f
+    val isFullyEntered: Boolean by derivedStateOf {
+        exitHeight == 0f
+    }
 
     private val collapsedHeight: Float
         get() = collapsedHeightState.floatValue

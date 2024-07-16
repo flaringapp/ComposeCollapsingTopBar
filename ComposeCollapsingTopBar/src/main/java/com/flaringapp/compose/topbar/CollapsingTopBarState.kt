@@ -22,6 +22,8 @@ import androidx.compose.foundation.gestures.ScrollScope
 import androidx.compose.foundation.gestures.ScrollableState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -70,6 +72,20 @@ class CollapsingTopBarState internal constructor(
     ) : this(
         initialHeight = if (isExpanded) Float.MAX_VALUE else 0f,
     )
+
+    /**
+     * Whether top bar height has reached its minimum height.
+     */
+    val isCollapsed: Boolean by derivedStateOf {
+        layoutInfo.isCollapsed
+    }
+
+    /**
+     * Whether top bar height has reached its maximum height.
+     */
+    val isExpanded: Boolean by derivedStateOf {
+        layoutInfo.isExpanded
+    }
 
     /**
      * The layout info object calculated during the last layout pass.
@@ -234,18 +250,18 @@ data class CollapsingTopBarLayoutInfo(
     /**
      * The total variable height amount that may collapse.
      */
-    val collapsibleDistance: Int
+    internal val collapsibleDistance: Int
         get() = expandedHeight - collapsedHeight
 
     /**
      * Whether top bar height has reached its minimum height.
      */
-    val isCollapsed: Boolean
+    internal val isCollapsed: Boolean
         get() = height == collapsedHeight.toFloat()
 
     /**
      * Whether top bar height has reached its maximum height.
      */
-    val isExpanded: Boolean
+    internal val isExpanded: Boolean
         get() = height == expandedHeight.toFloat()
 }

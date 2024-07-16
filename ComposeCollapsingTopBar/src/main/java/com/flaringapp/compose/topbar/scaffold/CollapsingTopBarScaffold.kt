@@ -17,6 +17,7 @@
 package com.flaringapp.compose.topbar.scaffold
 
 import android.annotation.SuppressLint
+import androidx.compose.foundation.layout.offset
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
@@ -26,6 +27,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.layout.Layout
+import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.constrainHeight
 import androidx.compose.ui.unit.constrainWidth
 import com.flaringapp.compose.topbar.CollapsingTopBar
@@ -98,9 +100,6 @@ fun CollapsingTopBarScaffold(
         }
         derivedStateOf { state.topBarState.layoutInfo.collapsedHeight }
     }
-    val topBarHeightState by remember(state.topBarState) {
-        derivedStateOf { state.topBarState.layoutInfo.height.toInt() }
-    }
 
     val exitStateUpdateModifier = if (scrollMode.canExit) {
         Modifier.collapsingTopBarExitStateConnection(
@@ -115,7 +114,14 @@ fun CollapsingTopBarScaffold(
         content = {
             CollapsingTopBar(
                 modifier = topBarModifier
-                    .then(exitStateUpdateModifier),
+                    .then(exitStateUpdateModifier)
+                    // Contrary motion to scaffold placement
+                    .offset {
+                        val collapseHeight = with(state.topBarState.layoutInfo) {
+                            expandedHeight - height
+                        }
+                        IntOffset(x = 0, y = collapseHeight.toInt())
+                    },
                 state = state.topBarState,
                 clipToBounds = topBarClipToBounds,
             ) {
@@ -160,13 +166,15 @@ fun CollapsingTopBarScaffold(
             .let { constraints.constrainHeight(it) }
 
         layout(width, height) {
+            val topBarHeight = state.topBarState.layoutInfo.height.toInt()
+            val topBarCollapseOffset = topBarHeight - state.topBarState.layoutInfo.expandedHeight
             val topBarExitHeight = state.exitState.exitHeight.toInt()
 
             bodyPlaceables.forEach { placeable ->
-                placeable.placeRelative(0, topBarHeightState - topBarExitHeight)
+                placeable.placeRelative(0, topBarHeight - topBarExitHeight)
             }
 
-            topBarPlaceable.placeRelative(0, -topBarExitHeight)
+            topBarPlaceable.placeRelative(0, topBarCollapseOffset - topBarExitHeight)
         }
     }
 }

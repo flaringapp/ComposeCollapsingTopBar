@@ -17,6 +17,7 @@
 package com.flaringapp.compose.topbar.ui.samples
 
 import com.flaringapp.compose.topbar.ui.samples.advanced.AppBarScrimSample
+import com.flaringapp.compose.topbar.ui.samples.advanced.AppBarShadowSample
 import com.flaringapp.compose.topbar.ui.samples.advanced.FloatingElementSample
 import com.flaringapp.compose.topbar.ui.samples.advanced.ManualCollapsingControlsSample
 import com.flaringapp.compose.topbar.ui.samples.advanced.ParallaxCollapsingSample
@@ -57,6 +58,7 @@ object CollapsingTopBarSampleGroups {
         get() = listOf(
             ParallaxCollapsingSample,
             SnapCollapsingSample,
+            AppBarShadowSample,
             AppBarScrimSample,
             ManualCollapsingControlsSample,
             FloatingElementSample,

@@ -20,6 +20,8 @@ import androidx.compose.animation.core.AnimationSpec
 import androidx.compose.foundation.gestures.ScrollScope
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.listSaver
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -74,15 +76,17 @@ class CollapsingTopBarScaffoldState internal constructor(
     /**
      * Whether top bar is fully expanded and entered.
      */
-    val isExpanded: Boolean
-        get() = topBarState.layoutInfo.isExpanded && exitState.isFullyEntered
+    val isExpanded: Boolean by derivedStateOf {
+        topBarState.isExpanded && exitState.isFullyEntered
+    }
 
     /**
      * Whether top bar is fully collapsed and exited (if exit is enabled).
      */
-    val isCollapsed: Boolean
-        get() = topBarState.layoutInfo.isCollapsed &&
+    val isCollapsed: Boolean by derivedStateOf {
+        topBarState.isCollapsed &&
             (!exitState.isEnabled || exitState.isFullyExited)
+    }
 
     override suspend fun expand(animationSpec: AnimationSpec<Float>) {
         animateScrollTo(animationSpec) {

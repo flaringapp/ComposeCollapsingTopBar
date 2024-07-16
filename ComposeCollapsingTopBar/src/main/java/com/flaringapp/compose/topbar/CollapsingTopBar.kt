@@ -57,8 +57,8 @@ import kotlin.math.roundToInt
  * - transformations based on [CollapsingTopBarState.layoutInfo]
  * - custom layout logic with [CollapsingTopBarNestedCollapseElement]
  *
- * @param state the state that manages this top bar.
  * @param modifier the [Modifier] to be applied to this top bar.
+ * @param state the state that manages this top bar.
  * @param clipToBounds the flag whether or not to automatically clip top bar [content] to the
  * actual collapse height.
  *
@@ -68,8 +68,8 @@ import kotlin.math.roundToInt
  */
 @Composable
 fun CollapsingTopBar(
-    state: CollapsingTopBarState,
     modifier: Modifier = Modifier,
+    state: CollapsingTopBarState = rememberCollapsingTopBarState(),
     clipToBounds: Boolean = true,
     content: @Composable CollapsingTopBarScope.() -> Unit,
 ) {
