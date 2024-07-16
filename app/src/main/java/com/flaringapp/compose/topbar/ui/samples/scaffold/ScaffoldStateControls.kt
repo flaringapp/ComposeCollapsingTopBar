@@ -61,8 +61,8 @@ fun ScaffoldStateControls(
             modifier = Modifier.weight(1f),
             state = state.topBarState,
             name = "Top Bar",
-            isExpanded = { it.layoutInfo.isExpanded },
-            isCollapsed = { it.layoutInfo.isCollapsed },
+            isExpanded = { it.isExpanded },
+            isCollapsed = { it.isCollapsed },
         )
 
         if (state.exitState.isEnabled) {

@@ -98,7 +98,7 @@ data class CollapsingTopBarScaffoldScrollMode internal constructor(
     ): CollapsingTopBarSnapScope {
         return when {
             wasMovingUp -> scaffoldState
-            scaffoldState.topBarState.layoutInfo.isCollapsed -> scaffoldState.exitState
+            scaffoldState.topBarState.isCollapsed -> scaffoldState.exitState
             else -> scaffoldState.topBarState
         }
     }

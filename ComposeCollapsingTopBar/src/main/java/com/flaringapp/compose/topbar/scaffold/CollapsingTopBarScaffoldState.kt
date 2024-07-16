@@ -75,13 +75,13 @@ class CollapsingTopBarScaffoldState internal constructor(
      * Whether top bar is fully expanded and entered.
      */
     val isExpanded: Boolean
-        get() = topBarState.layoutInfo.isExpanded && exitState.isFullyEntered
+        get() = topBarState.isExpanded && exitState.isFullyEntered
 
     /**
      * Whether top bar is fully collapsed and exited (if exit is enabled).
      */
     val isCollapsed: Boolean
-        get() = topBarState.layoutInfo.isCollapsed &&
+        get() = topBarState.isCollapsed &&
             (!exitState.isEnabled || exitState.isFullyExited)
 
     override suspend fun expand(animationSpec: AnimationSpec<Float>) {
