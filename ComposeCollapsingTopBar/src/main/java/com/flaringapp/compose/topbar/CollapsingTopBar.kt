@@ -81,7 +81,7 @@ fun CollapsingTopBar(
         Modifier.graphicsLayer {
             clip = true
             shape = CollapseBoundsShape(
-                collapseHeight = state.layoutInfo.expandedHeight - state.layoutInfo.height,
+                collapseHeight = state.layoutInfo.collapseHeightDelta,
             )
         }
     } else {
