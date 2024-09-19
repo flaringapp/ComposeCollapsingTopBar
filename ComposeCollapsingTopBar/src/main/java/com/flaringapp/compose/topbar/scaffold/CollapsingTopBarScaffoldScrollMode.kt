@@ -37,11 +37,13 @@ import com.flaringapp.compose.topbar.snap.CollapsingTopBarSnapScope
  * @see collapseAndExit
  * @see enterAlwaysCollapsed
  */
+@ConsistentCopyVisibility
 data class CollapsingTopBarScaffoldScrollMode internal constructor(
     val expandAlways: Boolean,
     val exit: Exit? = null,
 ) : CollapsingTopBarNestedScrollStrategy<CollapsingTopBarScaffoldState> {
 
+    @ConsistentCopyVisibility
     data class Exit internal constructor(
         val enterAlways: Boolean,
     )
