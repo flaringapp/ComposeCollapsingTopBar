@@ -95,6 +95,8 @@ private class CollapsingTopBarColumnMeasurePolicy(
     private val nestedCollapseState: CollapsingTopBarNestedCollapseState,
 ) : MeasurePolicy {
 
+    private val placer = BottomUpPlacer()
+
     private val topBarHeightState by derivedStateOf {
         // Don't care about height changes outside column height
         state.layoutInfo.height.coerceAtMost(lastTotalHeight.toFloat())
@@ -126,8 +128,37 @@ private class CollapsingTopBarColumnMeasurePolicy(
         nestedCollapseState.minHeight = minHeight
 
         return layout(width, totalHeight) {
+            with(placer) {
+                place(
+                    placeables = placeables,
+                    topBarHeight = topBarHeightState,
+                    totalHeight = totalHeight,
+                    collapsibleHeight = collapsibleHeight,
+                )
+            }
+        }
+    }
+
+    private interface Placer {
+
+        fun Placeable.PlacementScope.place(
+            placeables: List<Placeable>,
+            topBarHeight: Float,
+            totalHeight: Int,
+            collapsibleHeight: Int,
+        )
+    }
+
+    private class BottomUpPlacer : Placer {
+
+        override fun Placeable.PlacementScope.place(
+            placeables: List<Placeable>,
+            topBarHeight: Float,
+            totalHeight: Int,
+            collapsibleHeight: Int,
+        ) {
             // Can be larger than collapsible height when top bar is exiting completely
-            val collapseOffset = (totalHeight - topBarHeightState).coerceAtLeast(0f)
+            val collapseOffset = (totalHeight - topBarHeight).coerceAtLeast(0f)
             val collapseFraction = (collapseOffset / collapsibleHeight).coerceAtMost(1f)
             val expandFraction = 1f - collapseFraction
 
