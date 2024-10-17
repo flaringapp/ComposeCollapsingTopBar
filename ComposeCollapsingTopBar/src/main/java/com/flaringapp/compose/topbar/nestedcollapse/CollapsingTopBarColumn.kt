@@ -54,6 +54,7 @@ import kotlin.math.min
  * like [androidx.compose.foundation.layout.Column], but also implements staggered collapsing
  * mechanism.
  *
+ * // TODO update documentation
  * Collapsing is performed bottom up: as soon as column starts collapsing, it pins the last child
  * and pushes up by its height under the second last. The same logic is applied to all subsequent
  * children. It also supports not collapsible elements with
@@ -65,19 +66,22 @@ import kotlin.math.min
  *
  * @param state the state that manages this top bar column.
  * @param modifier the [Modifier] to be applied to this top bar column.
+ * @param collapseDirection the direction in which children of this top bar column collapse
  * @param content the content of this top bar column.
  */
 @Composable
 fun CollapsingTopBarScope.CollapsingTopBarColumn(
     state: CollapsingTopBarState,
     modifier: Modifier = Modifier,
+    collapseDirection: CollapseDirection = CollapseDirection.BottomUp,
     content: @Composable CollapsingTopBarColumnScope.() -> Unit,
 ) {
     val nestedCollapseState = rememberCollapsingTopBarNestedCollapseState()
 
-    val measurePolicy = remember(state) {
+    val measurePolicy = remember(state, collapseDirection) {
         CollapsingTopBarColumnMeasurePolicy(
             state = state,
+            collapseDirection = collapseDirection,
             nestedCollapseState = nestedCollapseState,
         )
     }
@@ -92,10 +96,14 @@ fun CollapsingTopBarScope.CollapsingTopBarColumn(
 
 private class CollapsingTopBarColumnMeasurePolicy(
     state: CollapsingTopBarState,
+    collapseDirection: CollapseDirection,
     private val nestedCollapseState: CollapsingTopBarNestedCollapseState,
 ) : MeasurePolicy {
 
-    private val placer = BottomUpPlacer()
+    private val placer = when (collapseDirection) {
+        CollapseDirection.BottomUp -> BottomUpPlacer
+        CollapseDirection.TopToBottom -> TopToBottomPlacer
+    }
 
     private val topBarHeightState by derivedStateOf {
         // Don't care about height changes outside column height
@@ -149,7 +157,7 @@ private class CollapsingTopBarColumnMeasurePolicy(
         )
     }
 
-    private class BottomUpPlacer : Placer {
+    private object BottomUpPlacer : Placer {
 
         override fun Placeable.PlacementScope.place(
             placeables: List<Placeable>,
@@ -217,7 +225,7 @@ private class CollapsingTopBarColumnMeasurePolicy(
         }
     }
 
-    private class TopToBottomPlacer : Placer {
+    private object TopToBottomPlacer : Placer {
 
         override fun Placeable.PlacementScope.place(
             placeables: List<Placeable>,
@@ -261,6 +269,11 @@ private class CollapsingTopBarColumnMeasurePolicy(
             }
         }
     }
+}
+
+sealed class CollapseDirection {
+    data object BottomUp : CollapseDirection()
+    data object TopToBottom : CollapseDirection()
 }
 
 /**
