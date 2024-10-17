@@ -216,6 +216,51 @@ private class CollapsingTopBarColumnMeasurePolicy(
             }
         }
     }
+
+    private class TopToBottomPlacer : Placer {
+
+        override fun Placeable.PlacementScope.place(
+            placeables: List<Placeable>,
+            topBarHeight: Float,
+            totalHeight: Int,
+            collapsibleHeight: Int,
+        ) {
+            // Can be larger than collapsible height when top bar is exiting completely
+            val collapseOffset = (totalHeight - topBarHeight).coerceAtLeast(0f)
+            val collapseFraction = (collapseOffset / collapsibleHeight).coerceAtMost(1f)
+            val expandFraction = 1f - collapseFraction
+
+            var unhandledCollapseOffset = collapseOffset.toInt()
+            var placementOffset = 0
+
+            placeables.forEachIndexed { index, placeable ->
+                val zIndex = (placeables.size - index).toFloat()
+                val parentData = placeable.columnParentData
+
+                if (parentData?.isNotCollapsible == true) {
+                    placeable.place(0, placementOffset, zIndex)
+                    placementOffset += placeable.height
+                    return@forEachIndexed
+                }
+
+                val itemCollapseOffset = min(placeable.height, unhandledCollapseOffset)
+                placementOffset -= itemCollapseOffset
+
+                unhandledCollapseOffset =
+                    (unhandledCollapseOffset - itemCollapseOffset).coerceAtLeast(0)
+
+                parentData?.progressListener?.onProgressUpdate(
+                    totalProgress = expandFraction,
+                    itemProgress = 1f - itemCollapseOffset.toFloat() / placeable.height,
+                )
+                parentData?.clipToCollapseHeightListener?.invoke(itemCollapseOffset)
+
+                placeable.place(0, placementOffset, zIndex)
+
+                placementOffset += placeable.height
+            }
+        }
+    }
 }
 
 /**
