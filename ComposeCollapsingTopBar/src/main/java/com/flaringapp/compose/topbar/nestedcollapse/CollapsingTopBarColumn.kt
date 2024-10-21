@@ -52,32 +52,40 @@ import kotlin.math.min
 /**
  * A nested collapse container to be used inside [CollapsingTopBar]. Places its children just
  * like [androidx.compose.foundation.layout.Column], but also implements staggered collapsing
- * mechanism.
+ * mechanism. Supports pinned elements with [CollapsingTopBarColumnScope.notCollapsible] modifier.
  *
- * Collapsing is performed bottom up: as soon as column starts collapsing, it pins the last child
- * and pushes up by its height under the second last. The same logic is applied to all subsequent
- * children. It also supports not collapsible elements with
- * [CollapsingTopBarColumnScope.notCollapsible] modifier. Such elements remain pinned till the end
- * of collapsing, and never collapse. If there are other collapsible elements above, they are
- * simply pinned together with not collapsible until collapsed.
+ * Two collapse directions are supported and can be customized with [collapseDirection]:
+ * - Bottom up - [CollapsingTopBarColumnDirection.BottomUp]. As soon as column starts collapsing,
+ * it pins the last child and pushes up by its height under the second last. The same logic is
+ * applied to all subsequent children. Not collapsible elements remain pinned till the end of
+ * collapsing, and never collapse. If there are other collapsible elements above, they are simply
+ * pinned together with not collapsible until collapsed.
+ * - Top to bottom - [CollapsingTopBarColumnDirection.TopToBottom]. Column starts collapsing with
+ * the first element, pushing it out of the layout bounds to the top; all other children slide up
+ * while it collapses. When the first one is fully collapsed, the same logic is applied to all
+ * subsequent children. Non collapsible elements remain pinned and stack at the top of layout as
+ * they collapse. Other collapsible elements below just slide under the pinned ones.
  *
  * The minimum (collapsed) height of the column is equal to sum of all not collapsible elements.
  *
  * @param state the state that manages this top bar column.
  * @param modifier the [Modifier] to be applied to this top bar column.
+ * @param collapseDirection the direction in which children of this top bar column collapse.
  * @param content the content of this top bar column.
  */
 @Composable
 fun CollapsingTopBarScope.CollapsingTopBarColumn(
     state: CollapsingTopBarState,
     modifier: Modifier = Modifier,
+    collapseDirection: CollapsingTopBarColumnDirection = CollapsingTopBarColumnDirection.BottomUp,
     content: @Composable CollapsingTopBarColumnScope.() -> Unit,
 ) {
     val nestedCollapseState = rememberCollapsingTopBarNestedCollapseState()
 
-    val measurePolicy = remember(state) {
+    val measurePolicy = remember(state, collapseDirection) {
         CollapsingTopBarColumnMeasurePolicy(
             state = state,
+            collapseDirection = collapseDirection,
             nestedCollapseState = nestedCollapseState,
         )
     }
@@ -92,8 +100,14 @@ fun CollapsingTopBarScope.CollapsingTopBarColumn(
 
 private class CollapsingTopBarColumnMeasurePolicy(
     state: CollapsingTopBarState,
+    collapseDirection: CollapsingTopBarColumnDirection,
     private val nestedCollapseState: CollapsingTopBarNestedCollapseState,
 ) : MeasurePolicy {
+
+    private val placer = when (collapseDirection) {
+        CollapsingTopBarColumnDirection.BottomUp -> BottomUpPlacer
+        CollapsingTopBarColumnDirection.TopToBottom -> TopToBottomPlacer
+    }
 
     private val topBarHeightState by derivedStateOf {
         // Don't care about height changes outside column height
@@ -126,8 +140,37 @@ private class CollapsingTopBarColumnMeasurePolicy(
         nestedCollapseState.minHeight = minHeight
 
         return layout(width, totalHeight) {
+            with(placer) {
+                place(
+                    placeables = placeables,
+                    topBarHeight = topBarHeightState,
+                    totalHeight = totalHeight,
+                    collapsibleHeight = collapsibleHeight,
+                )
+            }
+        }
+    }
+
+    private interface Placer {
+
+        fun Placeable.PlacementScope.place(
+            placeables: List<Placeable>,
+            topBarHeight: Float,
+            totalHeight: Int,
+            collapsibleHeight: Int,
+        )
+    }
+
+    private object BottomUpPlacer : Placer {
+
+        override fun Placeable.PlacementScope.place(
+            placeables: List<Placeable>,
+            topBarHeight: Float,
+            totalHeight: Int,
+            collapsibleHeight: Int,
+        ) {
             // Can be larger than collapsible height when top bar is exiting completely
-            val collapseOffset = (totalHeight - topBarHeightState).coerceAtLeast(0f)
+            val collapseOffset = (totalHeight - topBarHeight).coerceAtLeast(0f)
             val collapseFraction = (collapseOffset / collapsibleHeight).coerceAtMost(1f)
             val expandFraction = 1f - collapseFraction
 
@@ -175,9 +218,15 @@ private class CollapsingTopBarColumnMeasurePolicy(
                 unhandledCollapseOffset =
                     (unhandledCollapseOffset - itemCollapseOffset).coerceAtLeast(0)
 
+                val itemCollapseProgress = if (placeable.height == 0) {
+                    1f
+                } else {
+                    1f - itemCollapseOffset.toFloat() / placeable.height
+                }
+
                 parentData?.progressListener?.onProgressUpdate(
                     totalProgress = expandFraction,
-                    itemProgress = 1f - itemCollapseOffset.toFloat() / placeable.height,
+                    itemProgress = itemCollapseProgress,
                 )
                 parentData?.clipToCollapseHeightListener?.invoke(itemCollapseOffset)
 
@@ -185,6 +234,68 @@ private class CollapsingTopBarColumnMeasurePolicy(
             }
         }
     }
+
+    private object TopToBottomPlacer : Placer {
+
+        override fun Placeable.PlacementScope.place(
+            placeables: List<Placeable>,
+            topBarHeight: Float,
+            totalHeight: Int,
+            collapsibleHeight: Int,
+        ) {
+            // Can be larger than collapsible height when top bar is exiting completely
+            val collapseOffset = (totalHeight - topBarHeight).coerceAtLeast(0f)
+            val collapseFraction = (collapseOffset / collapsibleHeight).coerceAtMost(1f)
+            val expandFraction = 1f - collapseFraction
+
+            var unhandledCollapseOffset = collapseOffset.toInt()
+            var placementOffset = 0
+
+            val yPositions = placeables.map { placeable ->
+                val parentData = placeable.columnParentData
+
+                if (parentData?.isNotCollapsible == true) {
+                    return@map placementOffset.also {
+                        placementOffset += placeable.height
+                    }
+                }
+
+                val itemCollapseOffset = min(placeable.height, unhandledCollapseOffset)
+                placementOffset -= itemCollapseOffset
+
+                unhandledCollapseOffset =
+                    (unhandledCollapseOffset - itemCollapseOffset).coerceAtLeast(0)
+
+                val itemCollapseProgress = if (placeable.height == 0) {
+                    1f
+                } else {
+                    1f - itemCollapseOffset.toFloat() / placeable.height
+                }
+
+                parentData?.progressListener?.onProgressUpdate(
+                    totalProgress = expandFraction,
+                    itemProgress = itemCollapseProgress,
+                )
+                parentData?.clipToCollapseHeightListener?.invoke(itemCollapseOffset)
+
+                return@map placementOffset.also {
+                    placementOffset += placeable.height
+                }
+            }
+
+            for (i in placeables.indices.reversed()) {
+                val placeable = placeables[i]
+                val yPosition = yPositions[i]
+
+                placeable.place(0, yPosition)
+            }
+        }
+    }
+}
+
+sealed class CollapsingTopBarColumnDirection {
+    data object BottomUp : CollapsingTopBarColumnDirection()
+    data object TopToBottom : CollapsingTopBarColumnDirection()
 }
 
 /**
