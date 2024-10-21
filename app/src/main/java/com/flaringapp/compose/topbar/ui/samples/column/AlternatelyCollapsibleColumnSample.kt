@@ -33,6 +33,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.zIndex
 import com.flaringapp.compose.topbar.nestedcollapse.CollapsingTopBarColumn
 import com.flaringapp.compose.topbar.scaffold.CollapsingTopBarScaffold
 import com.flaringapp.compose.topbar.scaffold.CollapsingTopBarScaffoldScrollMode
@@ -103,7 +104,9 @@ private fun CollapsingContent(
                 SampleFilterChips()
 
                 FixedElement(
-                    modifier = Modifier.notCollapsible(),
+                    modifier = Modifier
+                        .notCollapsible()
+                        .zIndex(1f),
                     text = "Fixed top bar footer",
                 )
             }
