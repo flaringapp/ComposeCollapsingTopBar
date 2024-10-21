@@ -52,21 +52,25 @@ import kotlin.math.min
 /**
  * A nested collapse container to be used inside [CollapsingTopBar]. Places its children just
  * like [androidx.compose.foundation.layout.Column], but also implements staggered collapsing
- * mechanism.
+ * mechanism. Supports pinned elements with [CollapsingTopBarColumnScope.notCollapsible] modifier.
  *
- * // TODO update documentation
- * Collapsing is performed bottom up: as soon as column starts collapsing, it pins the last child
- * and pushes up by its height under the second last. The same logic is applied to all subsequent
- * children. It also supports not collapsible elements with
- * [CollapsingTopBarColumnScope.notCollapsible] modifier. Such elements remain pinned till the end
- * of collapsing, and never collapse. If there are other collapsible elements above, they are
- * simply pinned together with not collapsible until collapsed.
+ * Two collapse directions are supported and can be customized with [collapseDirection]:
+ * - Bottom up - [CollapsingTopBarColumnDirection.BottomUp]. As soon as column starts collapsing,
+ * it pins the last child and pushes up by its height under the second last. The same logic is
+ * applied to all subsequent children. Not collapsible elements remain pinned till the end of
+ * collapsing, and never collapse. If there are other collapsible elements above, they are simply
+ * pinned together with not collapsible until collapsed.
+ * - Top to bottom - [CollapsingTopBarColumnDirection.TopToBottom]. Column starts collapsing with
+ * the first element, pushing it out of the layout bounds to the top; all other children slide up
+ * while it collapses. When the first one is fully collapsed, the same logic is applied to all
+ * subsequent children. Non collapsible elements remain pinned and stack at the top of layout as
+ * they collapse. Other collapsible elements below just slide under the pinned ones.
  *
  * The minimum (collapsed) height of the column is equal to sum of all not collapsible elements.
  *
  * @param state the state that manages this top bar column.
  * @param modifier the [Modifier] to be applied to this top bar column.
- * @param collapseDirection the direction in which children of this top bar column collapse
+ * @param collapseDirection the direction in which children of this top bar column collapse.
  * @param content the content of this top bar column.
  */
 @Composable
