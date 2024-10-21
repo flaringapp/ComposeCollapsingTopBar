@@ -109,6 +109,9 @@ private fun CollapsingContent(
     var snapEnabled by remember {
         mutableStateOf(true)
     }
+    var columnDirectionMode: ScaffoldColumnDirectionMode by remember {
+        mutableStateOf(ScaffoldColumnDirectionMode.BottomUp)
+    }
 
     var showDoggo by remember {
         mutableStateOf(true)
@@ -158,6 +161,7 @@ private fun CollapsingContent(
                             shape = topBarShape,
                         ),
                     state = topBarState,
+                    collapseDirection = columnDirectionMode.provideColumnDirection(),
                 ) {
                     SampleTopBarBanner(
                         shape = topBarShape,
@@ -198,13 +202,15 @@ private fun CollapsingContent(
                     scrollMode = scrollControlMode,
                     scrollEnterAlways = scrollEnterAlways,
                     snapEnabled = snapEnabled,
+                    columnDirectionMode = columnDirectionMode,
                     changeScrollMode = { scrollControlMode = it },
                     changeScrollEnterAlways = { scrollEnterAlways = it },
                     changeSnapEnabled = { snapEnabled = it },
+                    changeColumnDirectionMode = { columnDirectionMode = it },
                 )
 
                 ContentStateControls(
-                    modifier = Modifier.padding(top = 8.dp),
+                    modifier = Modifier.padding(top = 16.dp),
                     state = scaffoldState,
                 )
 
@@ -223,9 +229,11 @@ private fun ContentScrollControls(
     scrollMode: ScaffoldScrollControlMode,
     scrollEnterAlways: Boolean,
     snapEnabled: Boolean,
+    columnDirectionMode: ScaffoldColumnDirectionMode,
     changeScrollMode: (ScaffoldScrollControlMode) -> Unit,
     changeScrollEnterAlways: (Boolean) -> Unit,
     changeSnapEnabled: (Boolean) -> Unit,
+    changeColumnDirectionMode: (ScaffoldColumnDirectionMode) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -252,6 +260,20 @@ private fun ContentScrollControls(
             snapEnabled = snapEnabled,
             changeScrollEnterAlways = changeScrollEnterAlways,
             changeSnapEnabled = changeSnapEnabled,
+        )
+
+        Text(
+            modifier = Modifier.padding(top = 8.dp, start = 16.dp, end = 16.dp),
+            text = "Column direction",
+            style = MaterialTheme.typography.titleMedium,
+        )
+
+        ScaffoldColumnDirectionControls(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 8.dp, start = 16.dp, end = 16.dp),
+            selectedMode = columnDirectionMode,
+            selectMode = changeColumnDirectionMode,
         )
     }
 }
