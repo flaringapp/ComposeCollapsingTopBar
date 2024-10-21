@@ -251,14 +251,13 @@ private class CollapsingTopBarColumnMeasurePolicy(
             var unhandledCollapseOffset = collapseOffset.toInt()
             var placementOffset = 0
 
-            placeables.forEachIndexed { index, placeable ->
-                val zIndex = (placeables.size - index).toFloat()
+            val yPositions = placeables.map { placeable ->
                 val parentData = placeable.columnParentData
 
                 if (parentData?.isNotCollapsible == true) {
-                    placeable.place(0, placementOffset, zIndex)
-                    placementOffset += placeable.height
-                    return@forEachIndexed
+                    return@map placementOffset.also {
+                        placementOffset += placeable.height
+                    }
                 }
 
                 val itemCollapseOffset = min(placeable.height, unhandledCollapseOffset)
@@ -279,9 +278,16 @@ private class CollapsingTopBarColumnMeasurePolicy(
                 )
                 parentData?.clipToCollapseHeightListener?.invoke(itemCollapseOffset)
 
-                placeable.place(0, placementOffset, zIndex)
+                return@map placementOffset.also {
+                    placementOffset += placeable.height
+                }
+            }
 
-                placementOffset += placeable.height
+            for (i in placeables.indices.reversed()) {
+                val placeable = placeables[i]
+                val yPosition = yPositions[i]
+
+                placeable.place(0, yPosition)
             }
         }
     }
