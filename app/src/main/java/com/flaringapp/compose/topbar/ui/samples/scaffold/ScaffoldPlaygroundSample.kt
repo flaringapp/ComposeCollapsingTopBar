@@ -246,33 +246,51 @@ private fun ContentScrollControls(
             selectMode = changeScrollMode,
         )
 
-        Row(
-            modifier = Modifier.padding(top = 8.dp),
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            Checkbox(
-                checked = scrollEnterAlways,
-                onCheckedChange = changeScrollEnterAlways,
-                enabled = scrollMode !is ScaffoldScrollControlMode.EnterAlwaysCollapsed,
-            )
+        ScrollSecondaryControls(
+            scrollMode = scrollMode,
+            scrollEnterAlways = scrollEnterAlways,
+            snapEnabled = snapEnabled,
+            changeScrollEnterAlways = changeScrollEnterAlways,
+            changeSnapEnabled = changeSnapEnabled,
+        )
+    }
+}
 
-            Text(
-                text = "Enter always",
-            )
+@Composable
+private fun ScrollSecondaryControls(
+    scrollMode: ScaffoldScrollControlMode,
+    scrollEnterAlways: Boolean,
+    snapEnabled: Boolean,
+    changeScrollEnterAlways: (Boolean) -> Unit,
+    changeSnapEnabled: (Boolean) -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    Row(
+        modifier = modifier.padding(top = 8.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Checkbox(
+            checked = scrollEnterAlways,
+            onCheckedChange = changeScrollEnterAlways,
+            enabled = scrollMode !is ScaffoldScrollControlMode.EnterAlwaysCollapsed,
+        )
 
-            Spacer(
-                modifier = Modifier.weight(1f),
-            )
+        Text(
+            text = "Enter always",
+        )
 
-            Text(
-                text = "Snap",
-            )
+        Spacer(
+            modifier = Modifier.weight(1f),
+        )
 
-            Checkbox(
-                checked = snapEnabled,
-                onCheckedChange = changeSnapEnabled,
-            )
-        }
+        Text(
+            text = "Snap",
+        )
+
+        Checkbox(
+            checked = snapEnabled,
+            onCheckedChange = changeSnapEnabled,
+        )
     }
 }
 
