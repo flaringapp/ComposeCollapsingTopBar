@@ -214,9 +214,15 @@ private class CollapsingTopBarColumnMeasurePolicy(
                 unhandledCollapseOffset =
                     (unhandledCollapseOffset - itemCollapseOffset).coerceAtLeast(0)
 
+                val itemCollapseProgress = if (placeable.height == 0) {
+                    1f
+                } else {
+                    1f - itemCollapseOffset.toFloat() / placeable.height
+                }
+
                 parentData?.progressListener?.onProgressUpdate(
                     totalProgress = expandFraction,
-                    itemProgress = 1f - itemCollapseOffset.toFloat() / placeable.height,
+                    itemProgress = itemCollapseProgress,
                 )
                 parentData?.clipToCollapseHeightListener?.invoke(itemCollapseOffset)
 
@@ -257,9 +263,15 @@ private class CollapsingTopBarColumnMeasurePolicy(
                 unhandledCollapseOffset =
                     (unhandledCollapseOffset - itemCollapseOffset).coerceAtLeast(0)
 
+                val itemCollapseProgress = if (placeable.height == 0) {
+                    1f
+                } else {
+                    1f - itemCollapseOffset.toFloat() / placeable.height
+                }
+
                 parentData?.progressListener?.onProgressUpdate(
                     totalProgress = expandFraction,
-                    itemProgress = 1f - itemCollapseOffset.toFloat() / placeable.height,
+                    itemProgress = itemCollapseProgress,
                 )
                 parentData?.clipToCollapseHeightListener?.invoke(itemCollapseOffset)
 
