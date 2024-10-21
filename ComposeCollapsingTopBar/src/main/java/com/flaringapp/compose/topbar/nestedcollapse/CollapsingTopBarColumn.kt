@@ -73,7 +73,7 @@ import kotlin.math.min
 fun CollapsingTopBarScope.CollapsingTopBarColumn(
     state: CollapsingTopBarState,
     modifier: Modifier = Modifier,
-    collapseDirection: CollapseDirection = CollapseDirection.BottomUp,
+    collapseDirection: CollapsingTopBarColumnDirection = CollapsingTopBarColumnDirection.BottomUp,
     content: @Composable CollapsingTopBarColumnScope.() -> Unit,
 ) {
     val nestedCollapseState = rememberCollapsingTopBarNestedCollapseState()
@@ -96,13 +96,13 @@ fun CollapsingTopBarScope.CollapsingTopBarColumn(
 
 private class CollapsingTopBarColumnMeasurePolicy(
     state: CollapsingTopBarState,
-    collapseDirection: CollapseDirection,
+    collapseDirection: CollapsingTopBarColumnDirection,
     private val nestedCollapseState: CollapsingTopBarNestedCollapseState,
 ) : MeasurePolicy {
 
     private val placer = when (collapseDirection) {
-        CollapseDirection.BottomUp -> BottomUpPlacer
-        CollapseDirection.TopToBottom -> TopToBottomPlacer
+        CollapsingTopBarColumnDirection.BottomUp -> BottomUpPlacer
+        CollapsingTopBarColumnDirection.TopToBottom -> TopToBottomPlacer
     }
 
     private val topBarHeightState by derivedStateOf {
@@ -283,9 +283,9 @@ private class CollapsingTopBarColumnMeasurePolicy(
     }
 }
 
-sealed class CollapseDirection {
-    data object BottomUp : CollapseDirection()
-    data object TopToBottom : CollapseDirection()
+sealed class CollapsingTopBarColumnDirection {
+    data object BottomUp : CollapsingTopBarColumnDirection()
+    data object TopToBottom : CollapsingTopBarColumnDirection()
 }
 
 /**
