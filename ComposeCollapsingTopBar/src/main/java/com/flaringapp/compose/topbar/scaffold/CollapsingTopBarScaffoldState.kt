@@ -89,13 +89,13 @@ class CollapsingTopBarScaffoldState internal constructor(
     }
 
     override suspend fun expand(animationSpec: AnimationSpec<Float>) {
-        animateScrollTo(animationSpec) {
+        animateHeightTo(animationSpec) {
             topBarState.layoutInfo.expandedHeight.toFloat()
         }
     }
 
     override suspend fun collapse(animationSpec: AnimationSpec<Float>) {
-        animateScrollTo(animationSpec) { canExit ->
+        animateHeightTo(animationSpec) { canExit ->
             if (canExit) {
                 0f
             } else {
@@ -105,29 +105,30 @@ class CollapsingTopBarScaffoldState internal constructor(
     }
 
     /**
-     * Perform scroll animation on top bar. If top bar can exit, then both [exitState] and
+     * Perform height animation on top bar. If top bar can exit, then both [exitState] and
      * [topBarState] scroll scopes are held while animation is running. Otherwise only
      * [topBarState] scroll scope is used. This helps locking scroll access and properly handling
      * cancellation in case animation is interrupted by user input.
      *
      * @see androidx.compose.foundation.gestures.ScrollableState.scroll
      */
-    private suspend inline fun animateScrollTo(
+    private suspend inline fun animateHeightTo(
         animationSpec: AnimationSpec<Float>,
-        targetValueProvider: (canExit: Boolean) -> Float,
+        targetHeightProvider: (canExit: Boolean) -> Float,
     ) {
         val canExit = exitState.isEnabled
-        val targetValue = targetValueProvider(canExit)
+        val targetHeight = targetHeightProvider(canExit)
 
         if (!canExit) {
-            topBarState.animateScrollBy(
-                offset = targetValue - topBarState.layoutInfo.height,
+            topBarState.animateHeightTo(
+                currentHeight = totalTopBarHeight,
+                targetHeight = targetHeight,
                 animationSpec = animationSpec,
             )
             return
         }
 
-        val offset = targetValue - totalTopBarHeight
+        val isCollapsing = targetHeight < totalTopBarHeight
 
         topBarState.scroll topBarScrollScope@{
             exitState.scroll exitScrollScope@{
@@ -135,7 +136,7 @@ class CollapsingTopBarScaffoldState internal constructor(
                     this@topBarScrollScope,
                     this@exitScrollScope,
                 ).let {
-                    if (offset < 0) it else it.asReversed()
+                    if (isCollapsing) it else it.asReversed()
                 }
 
                 val mergedScrollScope = object : ScrollScope {
@@ -147,8 +148,9 @@ class CollapsingTopBarScaffoldState internal constructor(
                     }
                 }
 
-                mergedScrollScope.animateScrollBy(
-                    offset = offset,
+                mergedScrollScope.animateHeightTo(
+                    currentHeight = totalTopBarHeight,
+                    targetHeight = targetHeight,
                     animationSpec = animationSpec,
                 )
             }

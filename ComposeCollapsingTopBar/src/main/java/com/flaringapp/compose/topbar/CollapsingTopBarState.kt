@@ -146,15 +146,17 @@ class CollapsingTopBarState internal constructor(
     //region Controls
     override suspend fun expand(
         animationSpec: AnimationSpec<Float>,
-    ) = animateScrollBy(
-        offset = layoutInfo.collapseHeightDelta,
+    ) = animateHeightTo(
+        currentHeight = layoutInfo.height,
+        targetHeight = layoutInfo.expandedHeight.toFloat(),
         animationSpec = animationSpec,
     )
 
     override suspend fun collapse(
         animationSpec: AnimationSpec<Float>,
-    ) = animateScrollBy(
-        offset = -layoutInfo.expandHeightDelta,
+    ) = animateHeightTo(
+        currentHeight = layoutInfo.height,
+        targetHeight = layoutInfo.collapsedHeight.toFloat(),
         animationSpec = animationSpec,
     )
     //endregion

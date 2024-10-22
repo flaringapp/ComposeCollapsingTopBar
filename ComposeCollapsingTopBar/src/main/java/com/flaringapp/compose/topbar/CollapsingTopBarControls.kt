@@ -53,16 +53,19 @@ interface CollapsingTopBarControls {
      * An utility method to perform collapsing top bar height animation with [ScrollableState].
      * Useful for state implementations that also implement [ScrollableState].
      *
-     * @param offset the offset of top bar height to be applied with an animation.
+     * @param currentHeight the current height of top bar.
+     * @param targetHeight the target height of top bar to animate to.
      * @param animationSpec the animation spec of height animation.
      */
-    suspend fun ScrollableState.animateScrollBy(
-        offset: Float,
+    suspend fun ScrollableState.animateHeightTo(
+        currentHeight: Float,
+        targetHeight: Float,
         animationSpec: AnimationSpec<Float>,
     ) {
         scroll {
-            animateScrollBy(
-                offset = offset,
+            animateHeightTo(
+                currentHeight = currentHeight,
+                targetHeight = targetHeight,
                 animationSpec = animationSpec,
             )
         }
@@ -71,20 +74,22 @@ interface CollapsingTopBarControls {
     /**
      * An utility method to perform collapsing top bar height animation on [ScrollScope].
      *
-     * @param offset the offset of top bar height to be applied with an animation.
+     * @param currentHeight the current height of top bar.
+     * @param targetHeight the target height of top bar to animate to.
      * @param animationSpec the animation spec of height animation.
      */
-    suspend fun ScrollScope.animateScrollBy(
-        offset: Float,
+    suspend fun ScrollScope.animateHeightTo(
+        currentHeight: Float,
+        targetHeight: Float,
         animationSpec: AnimationSpec<Float>,
     ) {
-        if (offset == 0f) return
+        if (currentHeight == targetHeight) return
 
-        val animation = AnimationState(0f)
+        val animation = AnimationState(currentHeight)
         var previousAnimatedValue = animation.value
 
         animation.animateTo(
-            targetValue = offset,
+            targetValue = targetHeight,
             animationSpec = animationSpec,
         ) {
             scrollBy(value - previousAnimatedValue)
