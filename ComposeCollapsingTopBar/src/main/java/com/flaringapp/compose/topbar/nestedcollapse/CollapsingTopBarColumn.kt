@@ -327,6 +327,15 @@ interface CollapsingTopBarColumnScope {
      * **Has no effect if applied together with [notCollapsible].**
      */
     fun Modifier.clipToCollapse(): Modifier
+
+    /**
+     * Move element further in the collapse direction after it has collapsed together with the
+     * column.
+     *
+     * Has no effect if combined with [notCollapsible], and makes no sense to use in combination
+     * with [clipToCollapse].
+     */
+    fun Modifier.scrollAfterCollapsed(): Modifier
 }
 
 private object CollapsingTopBarColumnScopeInstance : CollapsingTopBarColumnScope {
@@ -341,6 +350,10 @@ private object CollapsingTopBarColumnScopeInstance : CollapsingTopBarColumnScope
 
     override fun Modifier.clipToCollapse(): Modifier {
         return then(ClipToCollapseElement)
+    }
+
+    override fun Modifier.scrollAfterCollapsed(): Modifier {
+        return then(ScrollAfterCollapsedElement)
     }
 }
 
@@ -363,6 +376,12 @@ private data object ClipToCollapseElement : ModifierNodeElement<ClipToCollapseNo
     override fun create(): ClipToCollapseNode = ClipToCollapseNode()
     override fun update(node: ClipToCollapseNode) = Unit
     override fun InspectorInfo.inspectableProperties() = Unit
+}
+
+private data object ScrollAfterCollapsedElement : CollapsingTopBarColumnParentDataModifier() {
+    override fun modifyParentData(parentData: CollapsingTopBarColumnParentData) {
+        parentData.scrollAfterCollapsed = true
+    }
 }
 
 private class ClipToCollapseNode :
@@ -428,6 +447,7 @@ private abstract class CollapsingTopBarColumnParentDataModifier : ParentDataModi
 private data class CollapsingTopBarColumnParentData(
     var progressListener: CollapsingTopBarProgressListener? = null,
     var isNotCollapsible: Boolean = false,
+    var scrollAfterCollapsed: Boolean = false,
     var clipToCollapseHeightListener: ((Int) -> Unit)? = null,
 )
 
