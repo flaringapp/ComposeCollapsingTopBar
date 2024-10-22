@@ -31,6 +31,7 @@ import androidx.compose.runtime.snapshots.Snapshot
 import com.flaringapp.compose.topbar.snap.CollapsingTopBarSnapScope
 import kotlin.math.max
 import kotlin.math.min
+import kotlin.math.roundToInt
 
 /**
  * Creates a [CollapsingTopBarState] that is remembered across compositions.
@@ -146,15 +147,17 @@ class CollapsingTopBarState internal constructor(
     //region Controls
     override suspend fun expand(
         animationSpec: AnimationSpec<Float>,
-    ) = animateScrollBy(
-        offset = layoutInfo.collapseHeightDelta,
+    ) = animateHeightTo(
+        currentHeight = layoutInfo.height,
+        targetHeight = layoutInfo.expandedHeight.toFloat(),
         animationSpec = animationSpec,
     )
 
     override suspend fun collapse(
         animationSpec: AnimationSpec<Float>,
-    ) = animateScrollBy(
-        offset = -layoutInfo.expandHeightDelta,
+    ) = animateHeightTo(
+        currentHeight = layoutInfo.height,
+        targetHeight = layoutInfo.collapsedHeight.toFloat(),
         animationSpec = animationSpec,
     )
     //endregion
@@ -287,11 +290,11 @@ data class CollapsingTopBarLayoutInfo(
      * Whether top bar height has reached its minimum height.
      */
     internal val isCollapsed: Boolean
-        get() = height == collapsedHeight.toFloat()
+        get() = height.roundToInt() == collapsedHeight
 
     /**
      * Whether top bar height has reached its maximum height.
      */
     internal val isExpanded: Boolean
-        get() = height == expandedHeight.toFloat()
+        get() = height.roundToInt() == expandedHeight
 }

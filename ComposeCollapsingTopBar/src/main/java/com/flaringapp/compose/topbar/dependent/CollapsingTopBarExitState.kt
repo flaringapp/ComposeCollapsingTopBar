@@ -186,15 +186,17 @@ class CollapsingTopBarExitState internal constructor(
     //region Controls
     override suspend fun expand(
         animationSpec: AnimationSpec<Float>,
-    ) = animateScrollBy(
-        offset = exitHeight,
+    ) = animateHeightTo(
+        currentHeight = -exitHeight,
+        targetHeight = 0f,
         animationSpec = animationSpec,
     )
 
     override suspend fun collapse(
         animationSpec: AnimationSpec<Float>,
-    ) = animateScrollBy(
-        offset = exitHeight - collapsedHeight,
+    ) = animateHeightTo(
+        currentHeight = -exitHeight,
+        targetHeight = -collapsedHeight,
         animationSpec = animationSpec,
     )
     //endregion
