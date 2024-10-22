@@ -230,12 +230,12 @@ private class CollapsingTopBarColumnMeasurePolicy(
                 )
                 parentData?.clipToCollapseHeightListener?.invoke(itemCollapseOffset)
 
-                val itemOffsetWithSlide = (itemOffset - itemCollapseOffset).let {
-                    if (parentData?.scrollAfterCollapsed != true) return@let it
+                val itemPositionWithOptionalPin = (itemOffset - itemCollapseOffset).let {
+                    if (parentData?.pinWhenCollapsed != true) return@let it
                     it - unhandledCollapseOffset
                 }
 
-                placeable.place(0, itemOffsetWithSlide)
+                placeable.place(0, itemPositionWithOptionalPin)
             }
         }
     }
@@ -283,12 +283,12 @@ private class CollapsingTopBarColumnMeasurePolicy(
                 )
                 parentData?.clipToCollapseHeightListener?.invoke(itemCollapseOffset)
 
-                val itemOffsetWithSlide = placementOffset.let {
-                    if (parentData?.scrollAfterCollapsed != true) return@let it
+                val itemPositionWithOptionalPin = placementOffset.let {
+                    if (parentData?.pinWhenCollapsed != true) return@let it
                     it - unhandledCollapseOffset
                 }
 
-                return@map itemOffsetWithSlide.also {
+                return@map itemPositionWithOptionalPin.also {
                     placementOffset += placeable.height
                 }
             }
@@ -339,13 +339,13 @@ interface CollapsingTopBarColumnScope {
     fun Modifier.clipToCollapse(): Modifier
 
     /**
-     * Move element further in the collapse direction after it has collapsed together with the
-     * column.
+     * Move element further in the collapse direction after it has collapsed, like 'pinning' to the
+     * bottom of column under the next element.
      *
      * Has no effect if combined with [notCollapsible], and makes no sense to use in combination
      * with [clipToCollapse].
      */
-    fun Modifier.scrollAfterCollapsed(): Modifier
+    fun Modifier.pinWhenCollapsed(): Modifier
 }
 
 private object CollapsingTopBarColumnScopeInstance : CollapsingTopBarColumnScope {
@@ -362,8 +362,8 @@ private object CollapsingTopBarColumnScopeInstance : CollapsingTopBarColumnScope
         return then(ClipToCollapseElement)
     }
 
-    override fun Modifier.scrollAfterCollapsed(): Modifier {
-        return then(ScrollAfterCollapsedElement)
+    override fun Modifier.pinWhenCollapsed(): Modifier {
+        return then(PinWhenCollapsedElement)
     }
 }
 
@@ -388,9 +388,9 @@ private data object ClipToCollapseElement : ModifierNodeElement<ClipToCollapseNo
     override fun InspectorInfo.inspectableProperties() = Unit
 }
 
-private data object ScrollAfterCollapsedElement : CollapsingTopBarColumnParentDataModifier() {
+private data object PinWhenCollapsedElement : CollapsingTopBarColumnParentDataModifier() {
     override fun modifyParentData(parentData: CollapsingTopBarColumnParentData) {
-        parentData.scrollAfterCollapsed = true
+        parentData.pinWhenCollapsed = true
     }
 }
 
@@ -457,7 +457,7 @@ private abstract class CollapsingTopBarColumnParentDataModifier : ParentDataModi
 private data class CollapsingTopBarColumnParentData(
     var progressListener: CollapsingTopBarProgressListener? = null,
     var isNotCollapsible: Boolean = false,
-    var scrollAfterCollapsed: Boolean = false,
+    var pinWhenCollapsed: Boolean = false,
     var clipToCollapseHeightListener: ((Int) -> Unit)? = null,
 )
 
