@@ -230,7 +230,12 @@ private class CollapsingTopBarColumnMeasurePolicy(
                 )
                 parentData?.clipToCollapseHeightListener?.invoke(itemCollapseOffset)
 
-                placeable.place(0, itemOffset - itemCollapseOffset)
+                val itemOffsetWithSlide = (itemOffset - itemCollapseOffset).let {
+                    if (parentData?.scrollAfterCollapsed != true) return@let it
+                    it - unhandledCollapseOffset
+                }
+
+                placeable.place(0, itemOffsetWithSlide)
             }
         }
     }
@@ -278,7 +283,12 @@ private class CollapsingTopBarColumnMeasurePolicy(
                 )
                 parentData?.clipToCollapseHeightListener?.invoke(itemCollapseOffset)
 
-                return@map placementOffset.also {
+                val itemOffsetWithSlide = placementOffset.let {
+                    if (parentData?.scrollAfterCollapsed != true) return@let it
+                    it - unhandledCollapseOffset
+                }
+
+                return@map itemOffsetWithSlide.also {
                     placementOffset += placeable.height
                 }
             }
