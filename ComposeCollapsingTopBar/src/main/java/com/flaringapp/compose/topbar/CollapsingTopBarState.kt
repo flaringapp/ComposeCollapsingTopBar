@@ -31,6 +31,7 @@ import androidx.compose.runtime.snapshots.Snapshot
 import com.flaringapp.compose.topbar.snap.CollapsingTopBarSnapScope
 import kotlin.math.max
 import kotlin.math.min
+import kotlin.math.roundToInt
 
 /**
  * Creates a [CollapsingTopBarState] that is remembered across compositions.
@@ -289,11 +290,11 @@ data class CollapsingTopBarLayoutInfo(
      * Whether top bar height has reached its minimum height.
      */
     internal val isCollapsed: Boolean
-        get() = height == collapsedHeight.toFloat()
+        get() = height.roundToInt() == collapsedHeight
 
     /**
      * Whether top bar height has reached its maximum height.
      */
     internal val isExpanded: Boolean
-        get() = height == expandedHeight.toFloat()
+        get() = height.roundToInt() == expandedHeight
 }
