@@ -203,12 +203,27 @@ class CollapsingTopBarState internal constructor(
 
     companion object {
 
+        private const val FULLY_EXPANDED = -1f
+        private const val FULLY_COLLAPSED = -2f
+
         /**
          * The default [Saver] implementation for [CollapsingTopBarState].
          */
         val Saver: Saver<CollapsingTopBarState, Float> = Saver(
-            save = { it.layoutInfo.height },
-            restore = { CollapsingTopBarState(initialHeight = it) },
+            save = {
+                when {
+                    it.layoutInfo.isExpanded -> FULLY_EXPANDED
+                    it.layoutInfo.isCollapsed -> FULLY_COLLAPSED
+                    else -> it.layoutInfo.height
+                }
+            },
+            restore = {
+                when (it) {
+                    FULLY_EXPANDED -> CollapsingTopBarState(isExpanded = true)
+                    FULLY_COLLAPSED -> CollapsingTopBarState(isExpanded = false)
+                    else -> CollapsingTopBarState(initialHeight = it)
+                }
+            },
         )
     }
 }
