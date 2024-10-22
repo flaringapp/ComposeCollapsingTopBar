@@ -70,7 +70,7 @@ class CollapsingTopBarState internal constructor(
     constructor(
         isExpanded: Boolean = true,
     ) : this(
-        initialHeight = if (isExpanded) Float.MAX_VALUE else 0f,
+        initialHeight = if (isExpanded) UNKNOWN_EXPANDED_HEIGHT.toFloat() else 0f,
     )
 
     /**
@@ -102,7 +102,7 @@ class CollapsingTopBarState internal constructor(
         CollapsingTopBarLayoutInfo(
             height = initialHeight,
             collapsedHeight = 0,
-            expandedHeight = Int.MAX_VALUE,
+            expandedHeight = UNKNOWN_EXPANDED_HEIGHT,
         ),
     )
 
@@ -202,6 +202,9 @@ class CollapsingTopBarState internal constructor(
     }
 
     companion object {
+
+        // Using int type is important: it guarantees value integrity when converting to float
+        private const val UNKNOWN_EXPANDED_HEIGHT = Int.MAX_VALUE
 
         private const val FULLY_EXPANDED = -1f
         private const val FULLY_COLLAPSED = -2f
