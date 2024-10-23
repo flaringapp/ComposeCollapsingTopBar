@@ -121,7 +121,7 @@ private fun CollapsingContent(
     }
 
     val snapBehavior = if (snapEnabled) {
-        rememberCollapsingTopBarSnapBehavior(threshold = 0.5f)
+        rememberCollapsingTopBarSnapBehavior()
     } else {
         CollapsingTopBarNoSnapBehavior
     }

@@ -16,9 +16,11 @@
 
 package com.flaringapp.compose.topbar.snap
 
+import androidx.compose.animation.core.AnimationSpec
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.remember
+import com.flaringapp.compose.topbar.CollapsingTopBarControls.Companion.DefaultAnimationSpec
 
 /**
  * Defines the logic of snap animation.
@@ -54,17 +56,19 @@ object CollapsingTopBarNoSnapBehavior : CollapsingTopBarSnapBehavior {
  * @param threshold the fraction of collapse progress, a bound to define in which direction to snap.
  * If current collapse progress is larger than this value, then expand snapping is performed;
  * collapse snapping is performed otherwise.
+ * @param animationSpec the animation spec of snap animation.
  */
 class CollapsingTopBarThresholdSnapBehavior(
-    private val threshold: Float,
+    private val threshold: Float = 0.5f,
+    private val animationSpec: AnimationSpec<Float> = DefaultAnimationSpec,
 ) : CollapsingTopBarSnapBehavior {
 
     override suspend fun CollapsingTopBarSnapScope.snap(wasMovingUp: Boolean) {
         snapWithProgress(wasMovingUp) { progress ->
             if (progress >= threshold) {
-                expand()
+                expand(animationSpec)
             } else {
-                collapse()
+                collapse(animationSpec)
             }
         }
     }
@@ -77,16 +81,19 @@ class CollapsingTopBarThresholdSnapBehavior(
  * @param threshold the fraction of collapse progress, a bound to define in which direction to snap.
  * If current collapse progress is larger than this value, then expand snapping is performed;
  * collapse snapping is performed otherwise.
+ * @param animationSpec the animation spec of snap animation.
  *
  * @see CollapsingTopBarThresholdSnapBehavior
  */
 @Composable
 fun rememberCollapsingTopBarSnapBehavior(
-    threshold: Float,
+    threshold: Float = 0.5f,
+    animationSpec: AnimationSpec<Float> = DefaultAnimationSpec,
 ): CollapsingTopBarSnapBehavior {
     return remember(threshold) {
         CollapsingTopBarThresholdSnapBehavior(
             threshold = threshold,
+            animationSpec = animationSpec,
         )
     }
 }
