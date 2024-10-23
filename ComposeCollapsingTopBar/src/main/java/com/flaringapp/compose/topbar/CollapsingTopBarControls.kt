@@ -18,11 +18,14 @@ package com.flaringapp.compose.topbar
 
 import androidx.compose.animation.core.AnimationSpec
 import androidx.compose.animation.core.AnimationState
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.VisibilityThreshold
 import androidx.compose.animation.core.animateTo
-import androidx.compose.animation.core.tween
+import androidx.compose.animation.core.spring
 import androidx.compose.foundation.gestures.ScrollScope
 import androidx.compose.foundation.gestures.ScrollableState
 import androidx.compose.runtime.Stable
+import androidx.compose.ui.geometry.Offset
 
 /**
  * A functional contract of any top bar state that manages collapsing behavior. Allows to
@@ -37,7 +40,10 @@ interface CollapsingTopBarControls {
      * @param animationSpec the animation spec of expand animation.
      */
     suspend fun expand(
-        animationSpec: AnimationSpec<Float> = tween(300),
+        animationSpec: AnimationSpec<Float> = spring(
+            stiffness = Spring.StiffnessMediumLow,
+            visibilityThreshold = Offset.VisibilityThreshold.y,
+        ),
     )
 
     /**
@@ -46,7 +52,10 @@ interface CollapsingTopBarControls {
      * @param animationSpec the animation spec of collapse animation.
      */
     suspend fun collapse(
-        animationSpec: AnimationSpec<Float> = tween(300),
+        animationSpec: AnimationSpec<Float> = spring(
+            stiffness = Spring.StiffnessMediumLow,
+            visibilityThreshold = Offset.VisibilityThreshold.y,
+        ),
     )
 
     /**
