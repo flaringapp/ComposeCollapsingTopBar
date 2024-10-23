@@ -34,16 +34,21 @@ import androidx.compose.ui.geometry.Offset
 @Stable
 interface CollapsingTopBarControls {
 
+    companion object {
+
+        val DefaultAnimationSpec: AnimationSpec<Float> = spring(
+            stiffness = Spring.StiffnessMediumLow,
+            visibilityThreshold = Offset.VisibilityThreshold.y,
+        )
+    }
+
     /**
      * Animates top bar state collapsing height to its maximum value, i.e. expands.
      *
      * @param animationSpec the animation spec of expand animation.
      */
     suspend fun expand(
-        animationSpec: AnimationSpec<Float> = spring(
-            stiffness = Spring.StiffnessMediumLow,
-            visibilityThreshold = Offset.VisibilityThreshold.y,
-        ),
+        animationSpec: AnimationSpec<Float> = DefaultAnimationSpec,
     )
 
     /**
@@ -52,10 +57,7 @@ interface CollapsingTopBarControls {
      * @param animationSpec the animation spec of collapse animation.
      */
     suspend fun collapse(
-        animationSpec: AnimationSpec<Float> = spring(
-            stiffness = Spring.StiffnessMediumLow,
-            visibilityThreshold = Offset.VisibilityThreshold.y,
-        ),
+        animationSpec: AnimationSpec<Float> = DefaultAnimationSpec,
     )
 
     /**
