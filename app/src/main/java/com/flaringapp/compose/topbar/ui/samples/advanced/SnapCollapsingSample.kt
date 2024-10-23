@@ -64,7 +64,7 @@ private fun CollapsingContent(
     CollapsingTopBarScaffold(
         modifier = modifier,
         scrollMode = CollapsingTopBarScaffoldScrollMode.collapse(expandAlways = false),
-        snapBehavior = rememberCollapsingTopBarSnapBehavior(threshold = 0.5f),
+        snapBehavior = rememberCollapsingTopBarSnapBehavior(),
         topBar = {
             SampleTopBarImage(
                 dog = CollapsingTopBarSampleDogDefaults.Advanced,

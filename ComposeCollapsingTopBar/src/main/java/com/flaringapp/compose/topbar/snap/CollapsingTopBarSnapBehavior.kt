@@ -56,7 +56,7 @@ object CollapsingTopBarNoSnapBehavior : CollapsingTopBarSnapBehavior {
  * collapse snapping is performed otherwise.
  */
 class CollapsingTopBarThresholdSnapBehavior(
-    private val threshold: Float,
+    private val threshold: Float = 0.5f,
 ) : CollapsingTopBarSnapBehavior {
 
     override suspend fun CollapsingTopBarSnapScope.snap(wasMovingUp: Boolean) {
@@ -82,7 +82,7 @@ class CollapsingTopBarThresholdSnapBehavior(
  */
 @Composable
 fun rememberCollapsingTopBarSnapBehavior(
-    threshold: Float,
+    threshold: Float = 0.5f,
 ): CollapsingTopBarSnapBehavior {
     return remember(threshold) {
         CollapsingTopBarThresholdSnapBehavior(
