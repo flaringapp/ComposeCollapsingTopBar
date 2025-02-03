@@ -5,7 +5,9 @@
 
 **Extremely flexible and generic collapsing top bar**
 
-*Full README WIP. For now, go check samples in `app` module.*
+*Full README WIP - [see here](https://github.com/flaringapp/ComposeCollapsingTopBar/tree/readme).*
+
+For now, go check samples in `app` module.*
 
 # Usage
 
