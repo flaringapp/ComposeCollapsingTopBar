@@ -62,8 +62,6 @@ look at the `CollapsingTopBarScaffold()` source code if you decide to do so.
 
 ### Scroll modes
 
-There are a few supported scroll modes:
-
 |                   Collapse                    |             Collapse and exit              |                    Enter always collapsed                    |
 |:---------------------------------------------:|:------------------------------------------:|:------------------------------------------------------------:|
 | ![](/docs/assets/collapsing_mode_regular.gif) | ![](/docs/assets/collapsing_mode_exit.gif) | ![](/docs/assets/collapsing_mode_enter_always_collapsed.gif) |
@@ -141,14 +139,16 @@ snapping direction:
 rememberCollapsingTopBarSnapBehavior(threshold = 0.75f)
 ```
 
-### Placement customization
+### Customization
 
 When using `CollapsingTopBarScaffold`, you get access to a `CollapsingTopBarScope` in the `topBar`
-block. It offers a few predefined Modifiers to customize element placement.
+block. It offers a few predefined Modifiers to customize element placement and more.
 
 |            Parallax            |            Floating            |          Progress           |
 |:------------------------------:|:------------------------------:|:---------------------------:|
 | ![](/docs/assets/parallax.gif) | ![](/docs/assets/floating.gif) | ![](/docs/assets/scrim.gif) |
+
+See all supported placement customization Modifiers:
 
 <details>
 <summary>Parallax</summary>
@@ -280,20 +280,33 @@ A `Column`-like layout that creates an amazing stacking collapse effect with pre
 customization options and the possibility to build custom transformations based on collapse
 progress.
 
-|              Fully collapsible               |               Partially collapsible               |
-|:--------------------------------------------:|:-------------------------------------------------:|
-| ![](/docs/assets/collapsing_column_full.gif) | ![](/docs/assets/collapsing_column_partially.gif) |
+|              Fully collapsible               |               Partially collapsible               |                 Custom transformations                 |
+|:--------------------------------------------:|:-------------------------------------------------:|:------------------------------------------------------:|
+| ![](/docs/assets/collapsing_column_full.gif) | ![](/docs/assets/collapsing_column_partially.gif) | ![](/docs/assets/collapsing_column_moving_element.gif) |
 
-Supports two collapse directions:
+#### Collapse direction
 
-|                     BottomUp                      |                      TopToBottom                      |
-|:-------------------------------------------------:|:-----------------------------------------------------:|
-| ![](/docs/assets/collapsing_column_bottom_up.gif) | ![](/docs/assets/collapsing_column_top_to_bottom.gif) |
+`CollapsingTopBarColumn` supports two collapse directions:
 
 - `CollapsingTopBarColumnDirection.BottomUp` (default) - starts collapsing with the
   bottommost element sliding under the second last and so on;
 - `CollapsingTopBarColumnDirection.TopToBottom` - starts collapsing with the
   topmost element sliding up and so on.
+
+|                     BottomUp                      |                   TopToBottom                   |
+|:-------------------------------------------------:|:-----------------------------------------------:|
+| ![](/docs/assets/collapsing_column_partially.gif) | ![](/docs/assets/collapsing_column_reverse.gif) |
+
+Use a parameter `collapseDirection` of `CollapsingTopBarColumn()`:
+
+```kotlin
+CollapsingTopBarColumn(
+    state = topBarState,
+    collapseDirection = CollapsingTopBarColumnDirection.TopToBottom,
+) { /* ... */ }
+```
+
+#### Customization
 
 See all supported placement customization Modifiers:
 
@@ -466,7 +479,12 @@ CollapsingTopBarScaffold(
 ### React to state changes
 
 You can easily access `CollapsingTopBarScaffoldState` and its nested states to observe state
-changes. Now just use your imagination to figure out what beautiful effects to create. :wink:
+changes. For convenience, you can also access `CollapsingTopBarState` from within the `topBar`
+block of `CollapsingTopBarScaffold()`. Now just use your imagination to figure out what beautiful
+effects to create. :wink:
+
+<details>
+<summary>Example</summary>
 
 ```kotlin
 val state = rememberCollapsingTopBarScaffoldState()
@@ -492,6 +510,10 @@ CollapsingTopBarScaffold(
 
 > In this example the top bar drops a shadow that appears with animation as soon as the top bar is
 > collapsed.
+
+</details>
+
+#### Working with states
 
 <details>
 <summary>CollapsingTopBarScaffoldState</summary>
@@ -531,7 +553,6 @@ This state exposes comprehensive measurement data via `layoutInfo`, such as coll
 
 #### CollapsingTopBarExitState
 
-> [!NOTE]
 > This state only makes sense if you use a scroll mode that supports exiting: `collapseAndExit()`,
 > `enterAlwaysCollapsed()`.
 
@@ -543,40 +564,9 @@ This state exposes current exit offset via `exitHeight`.
 
 </details>
 
-## Examples
+## More examples
 
-Here you can find a few examples of this library's capabilities. Feel free to install a
-[demo app](/app) and try it yourself!
-
-### Basic collapse - scroll modes
-
-|                   Collapse                    |                   Collapse, enter always                    |
-|:---------------------------------------------:|:-----------------------------------------------------------:|
-| ![](/docs/assets/collapsing_mode_regular.gif) | ![](/docs/assets/collapsing_mode_regular_expand_always.gif) |
-
-|             Collapse and exit              |             Collapse and exit, enter always              |                    Enter always collapsed                    |
-|:------------------------------------------:|:--------------------------------------------------------:|:------------------------------------------------------------:|
-| ![](/docs/assets/collapsing_mode_exit.gif) | ![](/docs/assets/collapsing_mode_exit_expand_always.gif) | ![](/docs/assets/collapsing_mode_enter_always_collapsed.gif) |
-
-### Common mechanics
-
-|            Parallax            |            Snapping            |            Shadow            |
-|:------------------------------:|:------------------------------:|:----------------------------:|
-| ![](/docs/assets/parallax.gif) | ![](/docs/assets/snapping.gif) | ![](/docs/assets/shadow.gif) |
-
-|            Scrim            |            Floating            |
-|:---------------------------:|:------------------------------:|
-| ![](/docs/assets/scrim.gif) | ![](/docs/assets/floating.gif) |
-
-### Collapsing column
-
-|              Fully collapsible               |               Partially collapsible               |              Multiple fixed elements              |
-|:--------------------------------------------:|:-------------------------------------------------:|:-------------------------------------------------:|
-| ![](/docs/assets/collapsing_column_full.gif) | ![](/docs/assets/collapsing_column_partially.gif) | ![](/docs/assets/collapsing_column_bottom_up.gif) |
-
-|                Top to bottom collapse                 |          Stacked with other element           |                     Moving element                     |
-|:-----------------------------------------------------:|:---------------------------------------------:|:------------------------------------------------------:|
-| ![](/docs/assets/collapsing_column_top_to_bottom.gif) | ![](/docs/assets/collapsing_column_stack.gif) | ![](/docs/assets/collapsing_column_moving_element.gif) |
+Feel free to install a [demo app](/app) and try yourself even more samples!
 
 ## Contributing
 
