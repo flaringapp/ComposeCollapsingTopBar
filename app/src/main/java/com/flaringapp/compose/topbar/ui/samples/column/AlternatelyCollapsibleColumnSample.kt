@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 Flaringapp
+ * Copyright 2025 Flaringapp
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -35,7 +35,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import com.flaringapp.compose.topbar.nestedcollapse.CollapsingTopBarColumn
-import com.flaringapp.compose.topbar.nestedcollapse.CollapsingTopBarColumnDirection
 import com.flaringapp.compose.topbar.scaffold.CollapsingTopBarScaffold
 import com.flaringapp.compose.topbar.scaffold.CollapsingTopBarScaffoldScrollMode
 import com.flaringapp.compose.topbar.screen
@@ -55,20 +54,6 @@ object AlternatelyCollapsibleColumnSample : CollapsingTopBarSample {
     override fun Content(onBack: () -> Unit) {
         AlternatelyCollapsibleColumnSampleContent(
             onBack = onBack,
-            isReversed = false,
-        )
-    }
-}
-
-object AlternatelyReverseCollapsibleColumnSample : CollapsingTopBarSample {
-
-    override val name: String = "Alternately Reverse Collapsible Column"
-
-    @Composable
-    override fun Content(onBack: () -> Unit) {
-        AlternatelyCollapsibleColumnSampleContent(
-            onBack = onBack,
-            isReversed = true,
         )
     }
 }
@@ -76,7 +61,6 @@ object AlternatelyReverseCollapsibleColumnSample : CollapsingTopBarSample {
 @Composable
 fun AlternatelyCollapsibleColumnSampleContent(
     onBack: () -> Unit,
-    isReversed: Boolean,
     modifier: Modifier = Modifier,
 ) {
     Surface(
@@ -84,7 +68,6 @@ fun AlternatelyCollapsibleColumnSampleContent(
     ) {
         CollapsingContent(
             onBack = onBack,
-            isReversed = isReversed,
         )
     }
 }
@@ -92,23 +75,13 @@ fun AlternatelyCollapsibleColumnSampleContent(
 @Composable
 private fun CollapsingContent(
     onBack: () -> Unit,
-    isReversed: Boolean,
     modifier: Modifier = Modifier,
 ) {
     CollapsingTopBarScaffold(
         modifier = modifier,
         scrollMode = CollapsingTopBarScaffoldScrollMode.collapse(expandAlways = false),
         topBar = { topBarState ->
-            val collapseDirection = if (isReversed) {
-                CollapsingTopBarColumnDirection.TopToBottom
-            } else {
-                CollapsingTopBarColumnDirection.BottomUp
-            }
-
-            CollapsingTopBarColumn(
-                state = topBarState,
-                collapseDirection = collapseDirection,
-            ) {
+            CollapsingTopBarColumn(topBarState) {
                 val topWindowInsetsPadding =
                     WindowInsets.screen.only(WindowInsetsSides.Top).asPaddingValues()
 
@@ -170,7 +143,6 @@ private fun Preview() {
     ComposeCollapsingTopBarTheme {
         AlternatelyCollapsibleColumnSampleContent(
             onBack = {},
-            isReversed = false,
         )
     }
 }

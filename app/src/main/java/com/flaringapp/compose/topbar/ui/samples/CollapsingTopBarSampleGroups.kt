@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 Flaringapp
+ * Copyright 2025 Flaringapp
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,11 +28,11 @@ import com.flaringapp.compose.topbar.ui.samples.basic.CollapsingExpandAlwaysSamp
 import com.flaringapp.compose.topbar.ui.samples.basic.CollapsingExpandAtTopSample
 import com.flaringapp.compose.topbar.ui.samples.basic.EnterAlwaysCollapsedSample
 import com.flaringapp.compose.topbar.ui.samples.column.AlternatelyCollapsibleColumnSample
-import com.flaringapp.compose.topbar.ui.samples.column.AlternatelyReverseCollapsibleColumnSample
 import com.flaringapp.compose.topbar.ui.samples.column.ColumnInStackSample
 import com.flaringapp.compose.topbar.ui.samples.column.ColumnMovingElementSample
 import com.flaringapp.compose.topbar.ui.samples.column.FullyCollapsibleColumnSample
 import com.flaringapp.compose.topbar.ui.samples.column.PartiallyCollapsibleColumnSample
+import com.flaringapp.compose.topbar.ui.samples.column.ReverseCollapsibleColumnSample
 import com.flaringapp.compose.topbar.ui.samples.scaffold.ScaffoldPlaygroundSample
 
 object CollapsingTopBarSampleGroups {
@@ -50,8 +50,8 @@ object CollapsingTopBarSampleGroups {
         get() = listOf(
             FullyCollapsibleColumnSample,
             PartiallyCollapsibleColumnSample,
+            ReverseCollapsibleColumnSample,
             AlternatelyCollapsibleColumnSample,
-            AlternatelyReverseCollapsibleColumnSample,
             ColumnInStackSample,
             ColumnMovingElementSample,
         )
