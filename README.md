@@ -5,6 +5,8 @@
 [![ktlint](https://img.shields.io/badge/ktlint%20code--style-%E2%9D%A4-FF4081)](https://pinterest.github.io/ktlint/)
 [![Licence](https://img.shields.io/github/license/flaringapp/ComposeCollapsingTopBar)](https://github.com/flaringapp/ComposeCollapsingTopBar/blob/main/LICENSE)
 
+If you like this project, :star: star and :loudspeaker: share it!
+
 ComposeCollapsingTopBar is the ultimate Jetpack Compose library for creating versatile collapsing
 header UIs. It provides the capability to build custom top bars with automatic height adjustment,
 featuring common scroll modes, snapping, and offering plenty of customization options. It's designed
