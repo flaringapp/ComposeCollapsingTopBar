@@ -1,3 +1,5 @@
+name: Publish Maven Central release
+
 on:
   push:
     tags:
