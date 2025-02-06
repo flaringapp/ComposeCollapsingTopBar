@@ -1,8 +1,10 @@
+import com.vanniktech.maven.publish.AndroidSingleVariantLibrary
+
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.jetbrains.kotlin.compose)
-    `maven-publish`
+    alias(libs.plugins.vanniktech.maven.publish)
 }
 
 android {
@@ -39,13 +41,6 @@ android {
     composeCompiler {
         reportsDestination = layout.buildDirectory.dir("compose_reports")
     }
-
-    publishing {
-        singleVariant("release") {
-            withSourcesJar()
-            withJavadocJar()
-        }
-    }
 }
 
 dependencies {
@@ -63,16 +58,12 @@ dependencies {
     lintChecks(libs.slack.compose.linter)
 }
 
-publishing {
-    publications {
-        register<MavenPublication>("release") {
-            groupId = "com.github.flaringapp"
-            artifactId = "ComposeCollapsingTopBar"
-            version = "1.0.1"
-
-            afterEvaluate {
-                from(components["release"])
-            }
-        }
-    }
+mavenPublishing {
+    configure(
+        AndroidSingleVariantLibrary(
+            variant = "release",
+            sourcesJar = true,
+            publishJavadocJar = true,
+        ),
+    )
 }
