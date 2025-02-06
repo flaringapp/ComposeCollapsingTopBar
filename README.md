@@ -1,7 +1,8 @@
 # ComposeCollapsingTopBar
 
 [![GitHub Release](https://img.shields.io/github/v/release/flaringapp/ComposeCollapsingTopBar?label=Release)](https://github.com/flaringapp/ComposeCollapsingTopBar/releases/latest)
-[![JitPack](https://jitpack.io/v/flaringapp/ComposeCollapsingTopBar.svg)](https://jitpack.io/#flaringapp/ComposeCollapsingTopBar)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/io.github.flaringapp/ComposeCollapsingTopBar/badge.svg)](https://maven-badges.herokuapp.com/maven-central/io.github.flaringapp/ComposeCollapsingTopBar)
+[![API](https://img.shields.io/badge/API-21%2B-green.svg)](https://android-arsenal.com/api?level=21)
 [![ktlint](https://img.shields.io/badge/ktlint%20code--style-%E2%9D%A4-FF4081)](https://pinterest.github.io/ktlint/)
 [![Licence](https://img.shields.io/github/license/flaringapp/ComposeCollapsingTopBar)](https://github.com/flaringapp/ComposeCollapsingTopBar/blob/main/LICENSE)
 
@@ -22,7 +23,7 @@ Add the dependency to your target module's `build.gradle.kts` file:
 
 ```kotlin
 dependencies {
-    implementation("com.github.flaringapp:ComposeCollapsingTopBar:1.0.5")
+    implementation("io.github.flaringapp:ComposeCollapsingTopBar:1.0.5")
 }
 ```
 
@@ -31,7 +32,6 @@ Ensure you've configured repositories in `settings.gradle.kts`:
 ```kotlin
 dependencyResolutionManagement {
     repositories {
-        google()
         mavenCentral()
     }
 }

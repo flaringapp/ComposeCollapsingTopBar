@@ -7,6 +7,7 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.android) apply false
     alias(libs.plugins.jetbrains.kotlin.compose) apply false
     alias(libs.plugins.ktlint)
+    alias(libs.plugins.vanniktech.maven.publish) apply false
 }
 
 subprojects {
