@@ -31,7 +31,6 @@ Ensure you've configured repositories in `settings.gradle.kts`:
 ```kotlin
 dependencyResolutionManagement {
     repositories {
-        google()
         mavenCentral()
     }
 }
