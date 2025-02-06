@@ -23,7 +23,7 @@ Add the dependency to your target module's `build.gradle.kts` file:
 
 ```kotlin
 dependencies {
-    implementation("io.github.flaringapp:ComposeCollapsingTopBar:1.0.5")
+    implementation("io.github.flaringapp:ComposeCollapsingTopBar:1.1.0")
 }
 ```
 
