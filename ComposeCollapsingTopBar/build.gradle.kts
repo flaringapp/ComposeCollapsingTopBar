@@ -9,7 +9,7 @@ plugins {
 
 android {
     namespace = "com.flaringapp.compose.topbar"
-    compileSdk = 34
+    compileSdk = 36
 
     defaultConfig {
         minSdk = 21
