@@ -18,6 +18,7 @@ package com.flaringapp.compose.topbar.scaffold
 
 import androidx.compose.foundation.gestures.FlingBehavior
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.annotation.RememberInComposition
 import androidx.compose.runtime.remember
 import com.flaringapp.compose.topbar.nestedscroll.CollapsingTopBarNestedScrollCollapse
 import com.flaringapp.compose.topbar.nestedscroll.CollapsingTopBarNestedScrollExpand
@@ -38,13 +39,13 @@ import com.flaringapp.compose.topbar.snap.CollapsingTopBarSnapScope
  * @see enterAlwaysCollapsed
  */
 @ConsistentCopyVisibility
-data class CollapsingTopBarScaffoldScrollMode internal constructor(
+data class CollapsingTopBarScaffoldScrollMode @RememberInComposition internal constructor(
     val expandAlways: Boolean,
     val exit: Exit? = null,
 ) : CollapsingTopBarNestedScrollStrategy<CollapsingTopBarScaffoldState> {
 
     @ConsistentCopyVisibility
-    data class Exit internal constructor(
+    data class Exit @RememberInComposition internal constructor(
         val enterAlways: Boolean,
     )
 
