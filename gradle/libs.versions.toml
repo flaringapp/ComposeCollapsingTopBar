@@ -17,7 +17,7 @@ androidx-compose-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-
 androidx-compose-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 androidx-compose-material3 = { group = "androidx.compose.material3", name = "material3" }
 
-slack-compose-linter = { group = "com.slack.lint.compose", name = "compose-lint-checks", version = "1.4.1" }
+slack-compose-linter = { group = "com.slack.lint.compose", name = "compose-lint-checks", version = "1.4.2" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
