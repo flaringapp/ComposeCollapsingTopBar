@@ -18,6 +18,7 @@ package com.flaringapp.compose.topbar.nestedcollapse
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
+import androidx.compose.runtime.annotation.RememberInComposition
 import androidx.compose.runtime.remember
 import com.flaringapp.compose.topbar.CollapsingTopBar
 
@@ -54,7 +55,8 @@ interface CollapsingTopBarNestedCollapseElement {
  * In most cases, this will be created via [rememberCollapsingTopBarNestedCollapseState].
  */
 @Stable
-class CollapsingTopBarNestedCollapseState : CollapsingTopBarNestedCollapseElement {
+class CollapsingTopBarNestedCollapseState @RememberInComposition constructor() :
+    CollapsingTopBarNestedCollapseElement {
 
     /**
      * The minimum height of this nested collapse element. Must be updated in measurement phase.

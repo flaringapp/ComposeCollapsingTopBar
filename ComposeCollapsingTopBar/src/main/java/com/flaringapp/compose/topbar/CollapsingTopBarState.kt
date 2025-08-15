@@ -22,6 +22,8 @@ import androidx.compose.foundation.gestures.ScrollScope
 import androidx.compose.foundation.gestures.ScrollableState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
+import androidx.compose.runtime.annotation.FrequentlyChangingValue
+import androidx.compose.runtime.annotation.RememberInComposition
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -59,7 +61,7 @@ fun rememberCollapsingTopBarState(
  * In most cases, this will be created via [rememberCollapsingTopBarState].
  */
 @Stable
-class CollapsingTopBarState internal constructor(
+class CollapsingTopBarState @RememberInComposition internal constructor(
     initialHeight: Float,
 ) : ScrollableState,
     CollapsingTopBarControls,
@@ -68,6 +70,7 @@ class CollapsingTopBarState internal constructor(
     /**
      * @param isExpanded the initial state of top bar height being expanded.
      */
+    @RememberInComposition
     constructor(
         isExpanded: Boolean = true,
     ) : this(
@@ -96,6 +99,7 @@ class CollapsingTopBarState internal constructor(
      * potential performance issues including infinity recomposition loop.
      * Therefore, avoid using it in the composition.
      */
+    @get:FrequentlyChangingValue
     val layoutInfo: CollapsingTopBarLayoutInfo
         get() = layoutInfoState.value
 

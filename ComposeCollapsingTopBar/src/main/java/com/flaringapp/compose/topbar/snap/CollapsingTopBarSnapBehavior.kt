@@ -19,6 +19,7 @@ package com.flaringapp.compose.topbar.snap
 import androidx.compose.animation.core.AnimationSpec
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
+import androidx.compose.runtime.annotation.RememberInComposition
 import androidx.compose.runtime.remember
 import com.flaringapp.compose.topbar.CollapsingTopBarControls.Companion.DefaultAnimationSpec
 
@@ -58,7 +59,7 @@ object CollapsingTopBarNoSnapBehavior : CollapsingTopBarSnapBehavior {
  * collapse snapping is performed otherwise.
  * @param animationSpec the animation spec of snap animation.
  */
-class CollapsingTopBarThresholdSnapBehavior(
+class CollapsingTopBarThresholdSnapBehavior @RememberInComposition constructor(
     private val threshold: Float = 0.5f,
     private val animationSpec: AnimationSpec<Float> = DefaultAnimationSpec,
 ) : CollapsingTopBarSnapBehavior {

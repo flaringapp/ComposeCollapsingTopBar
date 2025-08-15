@@ -22,6 +22,8 @@ import androidx.compose.foundation.gestures.ScrollScope
 import androidx.compose.foundation.gestures.ScrollableState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
+import androidx.compose.runtime.annotation.FrequentlyChangingValue
+import androidx.compose.runtime.annotation.RememberInComposition
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
@@ -90,7 +92,7 @@ fun Modifier.collapsingTopBarExitStateConnection(
  * In most cases, this will be created via [rememberCollapsingTopBarExitState].
  */
 @Stable
-class CollapsingTopBarExitState internal constructor(
+class CollapsingTopBarExitState @RememberInComposition internal constructor(
     initialExitHeight: Float,
 ) : ScrollableState,
     CollapsingTopBarControls,
@@ -99,6 +101,7 @@ class CollapsingTopBarExitState internal constructor(
     /**
      * @param isExited the initial state of top bar exit height being collapsed (exited).
      */
+    @RememberInComposition
     constructor(
         isExited: Boolean = false,
     ) : this(
@@ -117,6 +120,7 @@ class CollapsingTopBarExitState internal constructor(
      * (positive) all the way to collapsed top bar height to become fully exited. Collapsed top bar
      * height is updated in scope of measurement updates.
      */
+    @get:FrequentlyChangingValue
     val exitHeight: Float
         get() = packedExitHeightState.floatValue.coerceAtMost(collapsedHeight)
 
