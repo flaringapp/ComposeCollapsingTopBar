@@ -287,18 +287,18 @@ data class CollapsingTopBarLayoutInfo(
     /**
      * The total variable height amount that may collapse.
      */
-    internal val collapsibleDistance: Int
+    val collapsibleDistance: Int
         get() = expandedHeight - collapsedHeight
 
     /**
      * Whether top bar height has reached its minimum height.
      */
-    internal val isCollapsed: Boolean
+    val isCollapsed: Boolean
         get() = height.roundToInt() == collapsedHeight
 
     /**
      * Whether top bar height has reached its maximum height.
      */
-    internal val isExpanded: Boolean
+    val isExpanded: Boolean
         get() = height.roundToInt() == expandedHeight
 }
