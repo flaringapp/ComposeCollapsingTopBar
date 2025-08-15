@@ -138,7 +138,10 @@ class CollapsingTopBarExitState @RememberInComposition internal constructor(
         exitHeight == 0f
     }
 
-    private val collapsedHeight: Float
+    /**
+     * The entered (collapsed) height of the collapsing top bar, highest [exitHeight] can go.
+     */
+    val collapsedHeight: Float
         get() = collapsedHeightState.floatValue
 
     /**
