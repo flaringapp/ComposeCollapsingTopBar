@@ -20,6 +20,7 @@ import androidx.compose.animation.core.AnimationSpec
 import androidx.compose.foundation.gestures.ScrollScope
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
+import androidx.compose.runtime.annotation.FrequentlyChangingValue
 import androidx.compose.runtime.annotation.RememberInComposition
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
@@ -71,6 +72,7 @@ class CollapsingTopBarScaffoldState @RememberInComposition internal constructor(
     /**
      * The current visual top bar height, either during collapse or exit.
      */
+    @get:FrequentlyChangingValue
     val totalTopBarHeight: Float
         get() = topBarState.layoutInfo.height - exitState.exitHeight
 
