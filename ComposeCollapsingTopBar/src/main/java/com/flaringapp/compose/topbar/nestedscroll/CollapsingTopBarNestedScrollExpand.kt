@@ -21,8 +21,6 @@ import androidx.compose.foundation.gestures.ScrollableState
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 import androidx.compose.ui.unit.Velocity
-import com.flaringapp.compose.topbar.nestedscroll.CollapsingTopBarNestedScrollExpand.Always
-import com.flaringapp.compose.topbar.nestedscroll.CollapsingTopBarNestedScrollExpand.AtTop
 
 /**
  * An origin class that encapsulates expand scroll handling logic.
