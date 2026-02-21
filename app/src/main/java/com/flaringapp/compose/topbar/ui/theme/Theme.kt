@@ -62,6 +62,7 @@ fun ComposeCollapsingTopBarTheme(
         }
 
         darkTheme -> DarkColorScheme
+
         else -> LightColorScheme
     }
 

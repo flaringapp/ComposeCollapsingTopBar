@@ -2,7 +2,7 @@
 
 [![GitHub Release](https://img.shields.io/github/v/release/flaringapp/ComposeCollapsingTopBar?label=Release)](https://github.com/flaringapp/ComposeCollapsingTopBar/releases/latest)
 [![Maven Central](https://img.shields.io/maven-central/v/io.github.flaringapp/ComposeCollapsingTopBar)](https://central.sonatype.com/artifact/io.github.flaringapp/ComposeCollapsingTopBar)
-[![API](https://img.shields.io/badge/API-21%2B-green.svg)](https://android-arsenal.com/api?level=21)
+[![API](https://img.shields.io/badge/API-23%2B-green.svg)](https://android-arsenal.com/api?level=23)
 [![ktlint](https://img.shields.io/badge/ktlint%20code--style-%E2%9D%A4-FF4081)](https://pinterest.github.io/ktlint/)
 [![Licence](https://img.shields.io/github/license/flaringapp/ComposeCollapsingTopBar)](https://github.com/flaringapp/ComposeCollapsingTopBar/blob/main/LICENSE)
 
