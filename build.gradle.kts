@@ -23,5 +23,5 @@ configure<KtlintExtension> {
 }
 
 fun KtlintExtension.configure() {
-    version.set("1.7.1")
+    version.set("1.8.0")
 }
