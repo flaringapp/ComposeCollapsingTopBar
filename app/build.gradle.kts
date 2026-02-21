@@ -6,11 +6,11 @@ plugins {
 }
 
 android {
-    namespace = "com.flaringapp.compose.topbar"
+    namespace = "com.flaringapp.compose.topbar.sample"
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "com.flaringapp.compose.topbar"
+        applicationId = "com.flaringapp.compose.topbar.sample"
         minSdk = 23
         targetSdk = 36
         versionCode = 1
