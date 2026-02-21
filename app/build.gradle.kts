@@ -37,9 +37,6 @@ android {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
-    composeCompiler {
-        reportsDestination = layout.buildDirectory.dir("compose_reports")
-    }
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
@@ -51,6 +48,10 @@ kotlin {
     compilerOptions {
         jvmTarget.set(JvmTarget.JVM_17)
     }
+}
+
+composeCompiler {
+    reportsDestination = layout.buildDirectory.dir("compose_reports")
 }
 
 dependencies {
