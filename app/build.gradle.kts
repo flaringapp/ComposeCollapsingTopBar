@@ -2,22 +2,20 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     alias(libs.plugins.android.application)
-    alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.jetbrains.kotlin.compose)
 }
 
 android {
-    namespace = "com.flaringapp.compose.topbar"
+    namespace = "com.flaringapp.compose.topbar.sample"
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "com.flaringapp.compose.topbar"
+        applicationId = "com.flaringapp.compose.topbar.sample"
         minSdk = 23
         targetSdk = 36
         versionCode = 1
         versionName = "1.0"
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
             useSupportLibrary = true
         }
@@ -39,9 +37,6 @@ android {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
-    composeCompiler {
-        reportsDestination = layout.buildDirectory.dir("compose_reports")
-    }
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
@@ -53,6 +48,10 @@ kotlin {
     compilerOptions {
         jvmTarget.set(JvmTarget.JVM_17)
     }
+}
+
+composeCompiler {
+    reportsDestination = layout.buildDirectory.dir("compose_reports")
 }
 
 dependencies {

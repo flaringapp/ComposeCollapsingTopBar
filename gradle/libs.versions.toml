@@ -1,5 +1,5 @@
 [versions]
-agp = "8.13.2"
+agp = "9.0.1"
 kotlin = "2.3.10"
 
 [libraries]
@@ -23,7 +23,6 @@ slack-compose-linter = { group = "com.slack.lint.compose", name = "compose-lint-
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 android-library = { id = "com.android.library", version.ref = "agp" }
-jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 jetbrains-kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 ktlint = { id = "org.jlleitschuh.gradle.ktlint", version = "14.0.1" }
-vanniktech-maven-publish = { id = "com.vanniktech.maven.publish", version = "0.34.0" }
+vanniktech-maven-publish = { id = "com.vanniktech.maven.publish", version = "0.36.0" }

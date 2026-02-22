@@ -1,9 +1,10 @@
 import com.vanniktech.maven.publish.AndroidSingleVariantLibrary
+import com.vanniktech.maven.publish.JavadocJar
+import com.vanniktech.maven.publish.SourcesJar
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     alias(libs.plugins.android.library)
-    alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.jetbrains.kotlin.compose)
     alias(libs.plugins.vanniktech.maven.publish)
 }
@@ -15,7 +16,6 @@ android {
     defaultConfig {
         minSdk = 23
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
 
         aarMetadata {
@@ -36,15 +36,16 @@ android {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
-    composeCompiler {
-        reportsDestination = layout.buildDirectory.dir("compose_reports")
-    }
 }
 
 kotlin {
     compilerOptions {
         jvmTarget.set(JvmTarget.JVM_17)
     }
+}
+
+composeCompiler {
+    reportsDestination = layout.buildDirectory.dir("compose_reports")
 }
 
 dependencies {
@@ -66,8 +67,8 @@ mavenPublishing {
     configure(
         AndroidSingleVariantLibrary(
             variant = "release",
-            sourcesJar = true,
-            publishJavadocJar = true,
+            javadocJar = JavadocJar.Javadoc(),
+            sourcesJar = SourcesJar.Sources(),
         ),
     )
 }
