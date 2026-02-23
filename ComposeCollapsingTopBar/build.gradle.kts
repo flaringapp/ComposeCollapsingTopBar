@@ -47,7 +47,6 @@ kotlin {
         commonMain.dependencies {
             implementation(libs.compose.multiplatform.foundation)
             implementation(libs.compose.multiplatform.ui)
-            implementation(libs.compose.multiplatform.uiToolingPreview)
         }
     }
 }
@@ -57,7 +56,6 @@ composeCompiler {
 }
 
 dependencies {
-    add("androidRuntimeClasspath", libs.compose.multiplatform.uiTooling)
     add("lintChecks", libs.slack.compose.linter)
 }
 
