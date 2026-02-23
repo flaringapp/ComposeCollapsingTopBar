@@ -5,20 +5,23 @@
 //  Created by Andrii Shpek on 23.02.2026.
 //
 
+import SampleShared
 import SwiftUI
 
-struct ContentView: View {
-    var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
-        }
-        .padding()
+struct ComposeView: UIViewControllerRepresentable {
+
+    func makeUIViewController(context: Context) -> UIViewController {
+        MainViewControllerKt.MainViewController()
     }
+
+    func updateUIViewController(_ uiViewController: UIViewController, context: Context) {}
 }
 
-#Preview {
-    ContentView()
+struct ContentView: View {
+
+    var body: some View {
+        ComposeView()
+            .ignoresSafeArea(edges: .all)
+            .ignoresSafeArea(.keyboard)  // Compose has own keyboard handler
+    }
 }
