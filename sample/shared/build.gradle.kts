@@ -24,6 +24,7 @@ kotlin {
     ).forEach {
         it.binaries.framework {
             baseName = "SampleShared"
+            isStatic = true
         }
     }
 

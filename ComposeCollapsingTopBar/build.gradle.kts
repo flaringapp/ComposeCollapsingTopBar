@@ -39,8 +39,7 @@ kotlin {
         iosSimulatorArm64(),
     ).forEach {
         it.binaries.framework {
-            baseName = "composeCollapsingTopBar"
-            isStatic = true
+            baseName = "ComposeCollapsingTopBar"
         }
     }
 
