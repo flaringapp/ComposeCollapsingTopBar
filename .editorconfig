@@ -73,6 +73,10 @@ ij_kotlin_name_count_to_use_star_import_for_members = 2147483647
 ij_kotlin_packages_to_use_import_on_demand = unset
 ij_kotlin_imports_layout = *,java.**,javax.**,kotlin.**,kotlinx.**,org.junit.**,^
 
+# Ignore formatting for generated CMP Res files
+[**/generated/resources/**/*.kt]
+ktlint = disabled
+
 [*.{yml,yaml}]
 indent_size = 2
 tab_width = 2
