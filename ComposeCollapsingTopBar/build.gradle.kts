@@ -68,7 +68,7 @@ mavenPublishing {
     configure(
         AndroidSingleVariantLibrary(
             variant = "release",
-            javadocJar = JavadocJar.Javadoc(),
+            javadocJar = JavadocJar.Dokka("dokkaGenerate"),
             sourcesJar = SourcesJar.Sources(),
         ),
     )
