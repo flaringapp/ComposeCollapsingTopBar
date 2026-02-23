@@ -37,11 +37,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.runtime.toMutableStateList
 import androidx.compose.ui.Modifier
-import com.flaringapp.compose.topbar.sample.ui.samples.CollapsingTopBarSample
-import com.flaringapp.compose.topbar.sample.ui.samples.CollapsingTopBarSampleGroups
-import com.flaringapp.compose.topbar.sample.ui.samples.gallery.SamplesGallery
-import com.flaringapp.compose.topbar.sample.ui.samples.gallery.SamplesGalleryGroup
-import com.flaringapp.compose.topbar.sample.ui.theme.ComposeCollapsingTopBarTheme
+import com.flaringapp.compose.topbar.sample.shared.ui.samples.CollapsingTopBarSample
+import com.flaringapp.compose.topbar.sample.shared.ui.samples.CollapsingTopBarSampleGroups
+import com.flaringapp.compose.topbar.sample.shared.ui.samples.gallery.SamplesGallery
+import com.flaringapp.compose.topbar.sample.shared.ui.samples.gallery.SamplesGalleryGroup
+import com.flaringapp.compose.topbar.sample.shared.ui.theme.ComposeCollapsingTopBarTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

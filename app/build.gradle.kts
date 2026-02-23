@@ -56,6 +56,7 @@ composeCompiler {
 
 dependencies {
     implementation(project(":ComposeCollapsingTopBar"))
+    implementation(project(":sample:shared"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.activity.compose)
