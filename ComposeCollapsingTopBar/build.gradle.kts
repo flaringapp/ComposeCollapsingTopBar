@@ -1,47 +1,55 @@
-import com.vanniktech.maven.publish.AndroidSingleVariantLibrary
 import com.vanniktech.maven.publish.JavadocJar
+import com.vanniktech.maven.publish.KotlinMultiplatform
 import com.vanniktech.maven.publish.SourcesJar
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
-    alias(libs.plugins.android.library)
+    alias(libs.plugins.android.kotlin.multiplatform.library)
+    alias(libs.plugins.jetbrains.kotlin.multiplatform)
     alias(libs.plugins.jetbrains.kotlin.compose)
+    alias(libs.plugins.jetbrains.compose.multiplatform)
     alias(libs.plugins.dokka)
     alias(libs.plugins.vanniktech.maven.publish)
 }
 
-android {
-    namespace = "com.flaringapp.compose.topbar"
-    compileSdk = 36
+kotlin {
+    jvmToolchain(17)
 
-    defaultConfig {
+    android {
+        namespace = "com.flaringapp.compose.topbar"
+        compileSdk = 36
         minSdk = 23
 
-        consumerProguardFiles("consumer-rules.pro")
+        @Suppress("UnstableApiUsage")
+        optimization {
+            minify = false
+            consumerKeepRules.apply {
+                publish = true
+                file("consumer-rules.pro")
+            }
+        }
 
         aarMetadata {
             minCompileSdk = minSdk
         }
     }
 
-    buildTypes {
-        release {
-            isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro",
-            )
+    listOf(
+        iosArm64(),
+        iosX64(),
+        iosSimulatorArm64(),
+    ).forEach {
+        it.binaries.framework {
+            baseName = "composeCollapsingTopBar"
+            isStatic = true
         }
     }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
-    }
-}
 
-kotlin {
-    compilerOptions {
-        jvmTarget.set(JvmTarget.JVM_17)
+    sourceSets {
+        commonMain.dependencies {
+            implementation(libs.compose.multiplatform.foundation)
+            implementation(libs.compose.multiplatform.ui)
+            implementation(libs.compose.multiplatform.uiToolingPreview)
+        }
     }
 }
 
@@ -50,24 +58,14 @@ composeCompiler {
 }
 
 dependencies {
-    implementation(platform(libs.androidx.compose.bom))
-    implementation(libs.androidx.compose.foundation)
-    implementation(libs.androidx.compose.ui)
-    implementation(libs.androidx.compose.ui.tooling.preview)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
-    androidTestImplementation(platform(libs.androidx.compose.bom))
-    androidTestImplementation(libs.androidx.compose.ui.test.junit4)
-    debugImplementation(libs.androidx.compose.ui.tooling)
-    debugImplementation(libs.androidx.compose.ui.test.manifest)
-
-    lintChecks(libs.slack.compose.linter)
+    add("androidRuntimeClasspath", libs.compose.multiplatform.uiTooling)
+    add("lintChecks", libs.slack.compose.linter)
 }
 
 mavenPublishing {
     configure(
-        AndroidSingleVariantLibrary(
-            variant = "release",
+        KotlinMultiplatform(
+            androidVariantsToPublish = listOf("release"),
             javadocJar = JavadocJar.Dokka("dokkaGenerate"),
             sourcesJar = SourcesJar.Sources(),
         ),

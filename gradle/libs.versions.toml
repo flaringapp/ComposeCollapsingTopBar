@@ -1,6 +1,7 @@
 [versions]
 agp = "9.0.1"
 kotlin = "2.3.10"
+composeMultiplatform = "1.10.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version = "1.17.0" }
@@ -18,12 +19,21 @@ androidx-compose-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-te
 androidx-compose-material3 = { group = "androidx.compose.material3", name = "material3" }
 androidx-compose-materialIconsCore = { group = "androidx.compose.material", name = "material-icons-core", version = "1.7.8" }
 
+compose-multiplatform-foundation = { group = "org.jetbrains.compose.foundation", name = "foundation", version.ref = "composeMultiplatform" }
+compose-multiplatform-ui = { group = "org.jetbrains.compose.ui", name = "ui", version.ref = "composeMultiplatform" }
+compose-multiplatform-uiTooling = { group = "org.jetbrains.compose.ui", name = "ui-tooling", version.ref = "composeMultiplatform" }
+compose-multiplatform-uiToolingPreview = { group = "org.jetbrains.compose.ui", name = "ui-tooling-preview", version.ref = "composeMultiplatform" }
+compose-multiplatform-materialIconsCore = { group = "org.jetbrains.compose.material", name = "material-icons-core", version = "1.7.3" }
+compose-multiplatform-material3 = { group = "org.jetbrains.compose.material3", name = "material3", version = "1.9.0" }
+
 slack-compose-linter = { group = "com.slack.lint.compose", name = "compose-lint-checks", version = "1.4.2" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
-android-library = { id = "com.android.library", version.ref = "agp" }
+android-kotlin-multiplatform-library = { id = "com.android.kotlin.multiplatform.library", version.ref = "agp" }
+jetbrains-kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 jetbrains-kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+jetbrains-compose-multiplatform = { id = "org.jetbrains.compose", version.ref = "composeMultiplatform" }
 dokka = { id = "org.jetbrains.dokka", version = "2.2.0-Beta" }
 ktlint = { id = "org.jlleitschuh.gradle.ktlint", version = "14.0.1" }
 vanniktech-maven-publish = { id = "com.vanniktech.maven.publish", version = "0.36.0" }
