@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.flaringapp.compose.topbar.sample
+package com.flaringapp.compose.topbar.sample.android
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
