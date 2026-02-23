@@ -48,8 +48,8 @@ fun SamplesGallery(
 ) {
     Column(
         modifier = modifier
-            .windowInsetsPadding(WindowInsets.screen)
             .verticalScroll(rememberScrollState())
+            .windowInsetsPadding(WindowInsets.screen)
             .padding(vertical = 24.dp),
         verticalArrangement = Arrangement.spacedBy(24.dp),
     ) {
