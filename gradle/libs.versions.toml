@@ -26,6 +26,7 @@ compose-multiplatform-uiToolingPreview = { group = "org.jetbrains.compose.ui", n
 compose-multiplatform-components-resources = { group = "org.jetbrains.compose.components", name = "components-resources", version.ref = "composeMultiplatform" }
 compose-multiplatform-materialIconsCore = { group = "org.jetbrains.compose.material", name = "material-icons-core", version = "1.7.3" }
 compose-multiplatform-material3 = { group = "org.jetbrains.compose.material3", name = "material3", version = "1.9.0" }
+compose-multiplatform-navigationEvent = { group = "org.jetbrains.androidx.navigationevent", name = "navigationevent-compose", version = "1.0.1" }
 
 slack-compose-linter = { group = "com.slack.lint.compose", name = "compose-lint-checks", version = "1.4.2" }
 
