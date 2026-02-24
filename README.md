@@ -1,10 +1,15 @@
 # ComposeCollapsingTopBar
 
-[![GitHub Release](https://img.shields.io/github/v/release/flaringapp/ComposeCollapsingTopBar?label=Release)](https://github.com/flaringapp/ComposeCollapsingTopBar/releases/latest)
 [![Maven Central](https://img.shields.io/maven-central/v/io.github.flaringapp/ComposeCollapsingTopBar)](https://central.sonatype.com/artifact/io.github.flaringapp/ComposeCollapsingTopBar)
-[![API](https://img.shields.io/badge/API-23%2B-green.svg)](https://android-arsenal.com/api?level=23)
+[![Build Status](https://img.shields.io/github/actions/workflow/status/patrykandpatrick/vico/build.yml?branch=master)](https://github.com/flaringapp/ComposeCollapsingTopBar/actions)
+[![Kotlin](https://img.shields.io/badge/Kotlin-2.3.10-slateblue.svg?logo=kotlin)](http://kotlinlang.org)
+[![Compose](https://img.shields.io/badge/Compose-1.10.1-dodgerblue.svg?logo=jetpackcompose)](https://www.jetbrains.com/lp/compose-multiplatform)
+![API](https://img.shields.io/badge/API-23%2B-forestgreen.svg)
 [![ktlint](https://img.shields.io/badge/ktlint%20code--style-%E2%9D%A4-FF4081)](https://pinterest.github.io/ktlint/)
 [![Licence](https://img.shields.io/github/license/flaringapp/ComposeCollapsingTopBar)](https://github.com/flaringapp/ComposeCollapsingTopBar/blob/main/LICENSE)
+
+![badge-Android](https://img.shields.io/badge/Platform-Android-forestgreen)
+![badge-iOS](https://img.shields.io/badge/Platform-iOS-silver)
 
 If you like this project, :star: star and :loudspeaker: share it!
 
