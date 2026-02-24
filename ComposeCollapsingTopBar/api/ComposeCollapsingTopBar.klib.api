@@ -1,0 +1,341 @@
+// Klib ABI Dump
+// Targets: [iosArm64, iosSimulatorArm64, iosX64]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <ComposeCollapsingTopBar:ComposeCollapsingTopBar>
+abstract fun interface com.flaringapp.compose.topbar.snap/CollapsingTopBarSnapScope { // com.flaringapp.compose.topbar.snap/CollapsingTopBarSnapScope|null[0]
+    abstract suspend fun snapWithProgress(kotlin/Boolean, kotlin.coroutines/SuspendFunction2<com.flaringapp.compose.topbar/CollapsingTopBarControls, kotlin/Float, kotlin/Unit>) // com.flaringapp.compose.topbar.snap/CollapsingTopBarSnapScope.snapWithProgress|snapWithProgress(kotlin.Boolean;kotlin.coroutines.SuspendFunction2<com.flaringapp.compose.topbar.CollapsingTopBarControls,kotlin.Float,kotlin.Unit>){}[0]
+}
+
+abstract fun interface com.flaringapp.compose.topbar/CollapsingTopBarProgressListener { // com.flaringapp.compose.topbar/CollapsingTopBarProgressListener|null[0]
+    abstract fun onProgressUpdate(kotlin/Float, kotlin/Float) // com.flaringapp.compose.topbar/CollapsingTopBarProgressListener.onProgressUpdate|onProgressUpdate(kotlin.Float;kotlin.Float){}[0]
+}
+
+abstract interface <#A: kotlin/Any?> com.flaringapp.compose.topbar.nestedscroll/CollapsingTopBarNestedScrollStrategy { // com.flaringapp.compose.topbar.nestedscroll/CollapsingTopBarNestedScrollStrategy|null[0]
+    abstract fun createHandlers(#A, androidx.compose.foundation.gestures/FlingBehavior, com.flaringapp.compose.topbar.snap/CollapsingTopBarSnapBehavior): kotlin.collections/List<com.flaringapp.compose.topbar.nestedscroll/CollapsingTopBarNestedScrollHandler> // com.flaringapp.compose.topbar.nestedscroll/CollapsingTopBarNestedScrollStrategy.createHandlers|createHandlers(1:0;androidx.compose.foundation.gestures.FlingBehavior;com.flaringapp.compose.topbar.snap.CollapsingTopBarSnapBehavior){}[0]
+}
+
+abstract interface com.flaringapp.compose.topbar.nestedcollapse/CollapsingTopBarColumnScope { // com.flaringapp.compose.topbar.nestedcollapse/CollapsingTopBarColumnScope|null[0]
+    abstract fun (androidx.compose.ui/Modifier).clipToCollapse(): androidx.compose.ui/Modifier // com.flaringapp.compose.topbar.nestedcollapse/CollapsingTopBarColumnScope.clipToCollapse|clipToCollapse@androidx.compose.ui.Modifier(){}[0]
+    abstract fun (androidx.compose.ui/Modifier).columnProgress(com.flaringapp.compose.topbar/CollapsingTopBarProgressListener): androidx.compose.ui/Modifier // com.flaringapp.compose.topbar.nestedcollapse/CollapsingTopBarColumnScope.columnProgress|columnProgress@androidx.compose.ui.Modifier(com.flaringapp.compose.topbar.CollapsingTopBarProgressListener){}[0]
+    abstract fun (androidx.compose.ui/Modifier).notCollapsible(): androidx.compose.ui/Modifier // com.flaringapp.compose.topbar.nestedcollapse/CollapsingTopBarColumnScope.notCollapsible|notCollapsible@androidx.compose.ui.Modifier(){}[0]
+    abstract fun (androidx.compose.ui/Modifier).pinWhenCollapsed(): androidx.compose.ui/Modifier // com.flaringapp.compose.topbar.nestedcollapse/CollapsingTopBarColumnScope.pinWhenCollapsed|pinWhenCollapsed@androidx.compose.ui.Modifier(){}[0]
+}
+
+abstract interface com.flaringapp.compose.topbar.nestedcollapse/CollapsingTopBarNestedCollapseElement { // com.flaringapp.compose.topbar.nestedcollapse/CollapsingTopBarNestedCollapseElement|null[0]
+    abstract val minHeight // com.flaringapp.compose.topbar.nestedcollapse/CollapsingTopBarNestedCollapseElement.minHeight|{}minHeight[0]
+        abstract fun <get-minHeight>(): kotlin/Int // com.flaringapp.compose.topbar.nestedcollapse/CollapsingTopBarNestedCollapseElement.minHeight.<get-minHeight>|<get-minHeight>(){}[0]
+}
+
+abstract interface com.flaringapp.compose.topbar.nestedscroll/CollapsingTopBarNestedScrollHandler : androidx.compose.ui.input.nestedscroll/NestedScrollConnection { // com.flaringapp.compose.topbar.nestedscroll/CollapsingTopBarNestedScrollHandler|null[0]
+    open suspend fun (androidx.compose.foundation.gestures/ScrollableState).fling(androidx.compose.foundation.gestures/FlingBehavior, kotlin/Float): kotlin/Float // com.flaringapp.compose.topbar.nestedscroll/CollapsingTopBarNestedScrollHandler.fling|fling@androidx.compose.foundation.gestures.ScrollableState(androidx.compose.foundation.gestures.FlingBehavior;kotlin.Float){}[0]
+}
+
+abstract interface com.flaringapp.compose.topbar.snap/CollapsingTopBarSnapBehavior { // com.flaringapp.compose.topbar.snap/CollapsingTopBarSnapBehavior|null[0]
+    abstract suspend fun (com.flaringapp.compose.topbar.snap/CollapsingTopBarSnapScope).snap(kotlin/Boolean) // com.flaringapp.compose.topbar.snap/CollapsingTopBarSnapBehavior.snap|snap@com.flaringapp.compose.topbar.snap.CollapsingTopBarSnapScope(kotlin.Boolean){}[0]
+}
+
+abstract interface com.flaringapp.compose.topbar/CollapsingTopBarControls { // com.flaringapp.compose.topbar/CollapsingTopBarControls|null[0]
+    abstract suspend fun collapse(androidx.compose.animation.core/AnimationSpec<kotlin/Float> = ...) // com.flaringapp.compose.topbar/CollapsingTopBarControls.collapse|collapse(androidx.compose.animation.core.AnimationSpec<kotlin.Float>){}[0]
+    abstract suspend fun expand(androidx.compose.animation.core/AnimationSpec<kotlin/Float> = ...) // com.flaringapp.compose.topbar/CollapsingTopBarControls.expand|expand(androidx.compose.animation.core.AnimationSpec<kotlin.Float>){}[0]
+    open suspend fun (androidx.compose.foundation.gestures/ScrollScope).animateHeightTo(kotlin/Float, kotlin/Float, androidx.compose.animation.core/AnimationSpec<kotlin/Float>) // com.flaringapp.compose.topbar/CollapsingTopBarControls.animateHeightTo|animateHeightTo@androidx.compose.foundation.gestures.ScrollScope(kotlin.Float;kotlin.Float;androidx.compose.animation.core.AnimationSpec<kotlin.Float>){}[0]
+    open suspend fun (androidx.compose.foundation.gestures/ScrollableState).animateHeightTo(kotlin/Float, kotlin/Float, androidx.compose.animation.core/AnimationSpec<kotlin/Float>) // com.flaringapp.compose.topbar/CollapsingTopBarControls.animateHeightTo|animateHeightTo@androidx.compose.foundation.gestures.ScrollableState(kotlin.Float;kotlin.Float;androidx.compose.animation.core.AnimationSpec<kotlin.Float>){}[0]
+
+    final object Companion { // com.flaringapp.compose.topbar/CollapsingTopBarControls.Companion|null[0]
+        final val DefaultAnimationSpec // com.flaringapp.compose.topbar/CollapsingTopBarControls.Companion.DefaultAnimationSpec|{}DefaultAnimationSpec[0]
+            final fun <get-DefaultAnimationSpec>(): androidx.compose.animation.core/AnimationSpec<kotlin/Float> // com.flaringapp.compose.topbar/CollapsingTopBarControls.Companion.DefaultAnimationSpec.<get-DefaultAnimationSpec>|<get-DefaultAnimationSpec>(){}[0]
+    }
+}
+
+abstract interface com.flaringapp.compose.topbar/CollapsingTopBarScope { // com.flaringapp.compose.topbar/CollapsingTopBarScope|null[0]
+    abstract fun (androidx.compose.ui/Modifier).floating(): androidx.compose.ui/Modifier // com.flaringapp.compose.topbar/CollapsingTopBarScope.floating|floating@androidx.compose.ui.Modifier(){}[0]
+    abstract fun (androidx.compose.ui/Modifier).nestedCollapse(com.flaringapp.compose.topbar.nestedcollapse/CollapsingTopBarNestedCollapseElement): androidx.compose.ui/Modifier // com.flaringapp.compose.topbar/CollapsingTopBarScope.nestedCollapse|nestedCollapse@androidx.compose.ui.Modifier(com.flaringapp.compose.topbar.nestedcollapse.CollapsingTopBarNestedCollapseElement){}[0]
+    abstract fun (androidx.compose.ui/Modifier).parallax(kotlin/Float): androidx.compose.ui/Modifier // com.flaringapp.compose.topbar/CollapsingTopBarScope.parallax|parallax@androidx.compose.ui.Modifier(kotlin.Float){}[0]
+    abstract fun (androidx.compose.ui/Modifier).progress(com.flaringapp.compose.topbar/CollapsingTopBarProgressListener): androidx.compose.ui/Modifier // com.flaringapp.compose.topbar/CollapsingTopBarScope.progress|progress@androidx.compose.ui.Modifier(com.flaringapp.compose.topbar.CollapsingTopBarProgressListener){}[0]
+}
+
+abstract class com.flaringapp.compose.topbar.nestedscroll/CollapsingTopBarNestedScrollExpand : com.flaringapp.compose.topbar.nestedscroll/CollapsingTopBarNestedScrollHandler { // com.flaringapp.compose.topbar.nestedscroll/CollapsingTopBarNestedScrollExpand|null[0]
+    constructor <init>() // com.flaringapp.compose.topbar.nestedscroll/CollapsingTopBarNestedScrollExpand.<init>|<init>(){}[0]
+
+    abstract val flingBehavior // com.flaringapp.compose.topbar.nestedscroll/CollapsingTopBarNestedScrollExpand.flingBehavior|{}flingBehavior[0]
+        abstract fun <get-flingBehavior>(): androidx.compose.foundation.gestures/FlingBehavior // com.flaringapp.compose.topbar.nestedscroll/CollapsingTopBarNestedScrollExpand.flingBehavior.<get-flingBehavior>|<get-flingBehavior>(){}[0]
+    abstract val state // com.flaringapp.compose.topbar.nestedscroll/CollapsingTopBarNestedScrollExpand.state|{}state[0]
+        abstract fun <get-state>(): androidx.compose.foundation.gestures/ScrollableState // com.flaringapp.compose.topbar.nestedscroll/CollapsingTopBarNestedScrollExpand.state.<get-state>|<get-state>(){}[0]
+
+    final fun expand(androidx.compose.ui.geometry/Offset): androidx.compose.ui.geometry/Offset // com.flaringapp.compose.topbar.nestedscroll/CollapsingTopBarNestedScrollExpand.expand|expand(androidx.compose.ui.geometry.Offset){}[0]
+    final suspend fun expand(androidx.compose.ui.unit/Velocity): androidx.compose.ui.unit/Velocity // com.flaringapp.compose.topbar.nestedscroll/CollapsingTopBarNestedScrollExpand.expand|expand(androidx.compose.ui.unit.Velocity){}[0]
+
+    final class Always : com.flaringapp.compose.topbar.nestedscroll/CollapsingTopBarNestedScrollExpand { // com.flaringapp.compose.topbar.nestedscroll/CollapsingTopBarNestedScrollExpand.Always|null[0]
+        constructor <init>(androidx.compose.foundation.gestures/ScrollableState, androidx.compose.foundation.gestures/FlingBehavior) // com.flaringapp.compose.topbar.nestedscroll/CollapsingTopBarNestedScrollExpand.Always.<init>|<init>(androidx.compose.foundation.gestures.ScrollableState;androidx.compose.foundation.gestures.FlingBehavior){}[0]
+
+        final val flingBehavior // com.flaringapp.compose.topbar.nestedscroll/CollapsingTopBarNestedScrollExpand.Always.flingBehavior|{}flingBehavior[0]
+            final fun <get-flingBehavior>(): androidx.compose.foundation.gestures/FlingBehavior // com.flaringapp.compose.topbar.nestedscroll/CollapsingTopBarNestedScrollExpand.Always.flingBehavior.<get-flingBehavior>|<get-flingBehavior>(){}[0]
+        final val state // com.flaringapp.compose.topbar.nestedscroll/CollapsingTopBarNestedScrollExpand.Always.state|{}state[0]
+            final fun <get-state>(): androidx.compose.foundation.gestures/ScrollableState // com.flaringapp.compose.topbar.nestedscroll/CollapsingTopBarNestedScrollExpand.Always.state.<get-state>|<get-state>(){}[0]
+
+        final fun onPreScroll(androidx.compose.ui.geometry/Offset, androidx.compose.ui.input.nestedscroll/NestedScrollSource): androidx.compose.ui.geometry/Offset // com.flaringapp.compose.topbar.nestedscroll/CollapsingTopBarNestedScrollExpand.Always.onPreScroll|onPreScroll(androidx.compose.ui.geometry.Offset;androidx.compose.ui.input.nestedscroll.NestedScrollSource){}[0]
+        final suspend fun onPreFling(androidx.compose.ui.unit/Velocity): androidx.compose.ui.unit/Velocity // com.flaringapp.compose.topbar.nestedscroll/CollapsingTopBarNestedScrollExpand.Always.onPreFling|onPreFling(androidx.compose.ui.unit.Velocity){}[0]
+    }
+
+    final class AtTop : com.flaringapp.compose.topbar.nestedscroll/CollapsingTopBarNestedScrollExpand { // com.flaringapp.compose.topbar.nestedscroll/CollapsingTopBarNestedScrollExpand.AtTop|null[0]
+        constructor <init>(androidx.compose.foundation.gestures/ScrollableState, androidx.compose.foundation.gestures/FlingBehavior) // com.flaringapp.compose.topbar.nestedscroll/CollapsingTopBarNestedScrollExpand.AtTop.<init>|<init>(androidx.compose.foundation.gestures.ScrollableState;androidx.compose.foundation.gestures.FlingBehavior){}[0]
+
+        final val flingBehavior // com.flaringapp.compose.topbar.nestedscroll/CollapsingTopBarNestedScrollExpand.AtTop.flingBehavior|{}flingBehavior[0]
+            final fun <get-flingBehavior>(): androidx.compose.foundation.gestures/FlingBehavior // com.flaringapp.compose.topbar.nestedscroll/CollapsingTopBarNestedScrollExpand.AtTop.flingBehavior.<get-flingBehavior>|<get-flingBehavior>(){}[0]
+        final val state // com.flaringapp.compose.topbar.nestedscroll/CollapsingTopBarNestedScrollExpand.AtTop.state|{}state[0]
+            final fun <get-state>(): androidx.compose.foundation.gestures/ScrollableState // com.flaringapp.compose.topbar.nestedscroll/CollapsingTopBarNestedScrollExpand.AtTop.state.<get-state>|<get-state>(){}[0]
+
+        final fun onPostScroll(androidx.compose.ui.geometry/Offset, androidx.compose.ui.geometry/Offset, androidx.compose.ui.input.nestedscroll/NestedScrollSource): androidx.compose.ui.geometry/Offset // com.flaringapp.compose.topbar.nestedscroll/CollapsingTopBarNestedScrollExpand.AtTop.onPostScroll|onPostScroll(androidx.compose.ui.geometry.Offset;androidx.compose.ui.geometry.Offset;androidx.compose.ui.input.nestedscroll.NestedScrollSource){}[0]
+        final suspend fun onPostFling(androidx.compose.ui.unit/Velocity, androidx.compose.ui.unit/Velocity): androidx.compose.ui.unit/Velocity // com.flaringapp.compose.topbar.nestedscroll/CollapsingTopBarNestedScrollExpand.AtTop.onPostFling|onPostFling(androidx.compose.ui.unit.Velocity;androidx.compose.ui.unit.Velocity){}[0]
+    }
+
+    final object Companion { // com.flaringapp.compose.topbar.nestedscroll/CollapsingTopBarNestedScrollExpand.Companion|null[0]
+        final fun of(androidx.compose.foundation.gestures/ScrollableState, androidx.compose.foundation.gestures/FlingBehavior, kotlin/Boolean): com.flaringapp.compose.topbar.nestedscroll/CollapsingTopBarNestedScrollHandler // com.flaringapp.compose.topbar.nestedscroll/CollapsingTopBarNestedScrollExpand.Companion.of|of(androidx.compose.foundation.gestures.ScrollableState;androidx.compose.foundation.gestures.FlingBehavior;kotlin.Boolean){}[0]
+    }
+}
+
+final class com.flaringapp.compose.topbar.dependent/CollapsingTopBarExitState : androidx.compose.foundation.gestures/ScrollableState, com.flaringapp.compose.topbar.snap/CollapsingTopBarSnapScope, com.flaringapp.compose.topbar/CollapsingTopBarControls { // com.flaringapp.compose.topbar.dependent/CollapsingTopBarExitState|null[0]
+    constructor <init>(kotlin/Boolean = ...) // com.flaringapp.compose.topbar.dependent/CollapsingTopBarExitState.<init>|<init>(kotlin.Boolean){}[0]
+
+    final val collapsedHeight // com.flaringapp.compose.topbar.dependent/CollapsingTopBarExitState.collapsedHeight|{}collapsedHeight[0]
+        final fun <get-collapsedHeight>(): kotlin/Float // com.flaringapp.compose.topbar.dependent/CollapsingTopBarExitState.collapsedHeight.<get-collapsedHeight>|<get-collapsedHeight>(){}[0]
+    final val exitHeight // com.flaringapp.compose.topbar.dependent/CollapsingTopBarExitState.exitHeight|{}exitHeight[0]
+        final fun <get-exitHeight>(): kotlin/Float // com.flaringapp.compose.topbar.dependent/CollapsingTopBarExitState.exitHeight.<get-exitHeight>|<get-exitHeight>(){}[0]
+    final val exitProgress // com.flaringapp.compose.topbar.dependent/CollapsingTopBarExitState.exitProgress|{}exitProgress[0]
+        final fun <get-exitProgress>(): kotlin/Float // com.flaringapp.compose.topbar.dependent/CollapsingTopBarExitState.exitProgress.<get-exitProgress>|<get-exitProgress>(){}[0]
+    final val isEnabled // com.flaringapp.compose.topbar.dependent/CollapsingTopBarExitState.isEnabled|{}isEnabled[0]
+        final fun <get-isEnabled>(): kotlin/Boolean // com.flaringapp.compose.topbar.dependent/CollapsingTopBarExitState.isEnabled.<get-isEnabled>|<get-isEnabled>(){}[0]
+    final val isFullyEntered // com.flaringapp.compose.topbar.dependent/CollapsingTopBarExitState.isFullyEntered|{}isFullyEntered[0]
+        final fun <get-isFullyEntered>(): kotlin/Boolean // com.flaringapp.compose.topbar.dependent/CollapsingTopBarExitState.isFullyEntered.<get-isFullyEntered>|<get-isFullyEntered>(){}[0]
+    final val isFullyExited // com.flaringapp.compose.topbar.dependent/CollapsingTopBarExitState.isFullyExited|{}isFullyExited[0]
+        final fun <get-isFullyExited>(): kotlin/Boolean // com.flaringapp.compose.topbar.dependent/CollapsingTopBarExitState.isFullyExited.<get-isFullyExited>|<get-isFullyExited>(){}[0]
+    final val isScrollInProgress // com.flaringapp.compose.topbar.dependent/CollapsingTopBarExitState.isScrollInProgress|{}isScrollInProgress[0]
+        final fun <get-isScrollInProgress>(): kotlin/Boolean // com.flaringapp.compose.topbar.dependent/CollapsingTopBarExitState.isScrollInProgress.<get-isScrollInProgress>|<get-isScrollInProgress>(){}[0]
+
+    final fun dispatchRawDelta(kotlin/Float): kotlin/Float // com.flaringapp.compose.topbar.dependent/CollapsingTopBarExitState.dispatchRawDelta|dispatchRawDelta(kotlin.Float){}[0]
+    final fun reset() // com.flaringapp.compose.topbar.dependent/CollapsingTopBarExitState.reset|reset(){}[0]
+    final suspend fun collapse(androidx.compose.animation.core/AnimationSpec<kotlin/Float>) // com.flaringapp.compose.topbar.dependent/CollapsingTopBarExitState.collapse|collapse(androidx.compose.animation.core.AnimationSpec<kotlin.Float>){}[0]
+    final suspend fun expand(androidx.compose.animation.core/AnimationSpec<kotlin/Float>) // com.flaringapp.compose.topbar.dependent/CollapsingTopBarExitState.expand|expand(androidx.compose.animation.core.AnimationSpec<kotlin.Float>){}[0]
+    final suspend fun scroll(androidx.compose.foundation/MutatePriority, kotlin.coroutines/SuspendFunction1<androidx.compose.foundation.gestures/ScrollScope, kotlin/Unit>) // com.flaringapp.compose.topbar.dependent/CollapsingTopBarExitState.scroll|scroll(androidx.compose.foundation.MutatePriority;kotlin.coroutines.SuspendFunction1<androidx.compose.foundation.gestures.ScrollScope,kotlin.Unit>){}[0]
+    final suspend fun snapWithProgress(kotlin/Boolean, kotlin.coroutines/SuspendFunction2<com.flaringapp.compose.topbar/CollapsingTopBarControls, kotlin/Float, kotlin/Unit>) // com.flaringapp.compose.topbar.dependent/CollapsingTopBarExitState.snapWithProgress|snapWithProgress(kotlin.Boolean;kotlin.coroutines.SuspendFunction2<com.flaringapp.compose.topbar.CollapsingTopBarControls,kotlin.Float,kotlin.Unit>){}[0]
+
+    final object Companion { // com.flaringapp.compose.topbar.dependent/CollapsingTopBarExitState.Companion|null[0]
+        final val Saver // com.flaringapp.compose.topbar.dependent/CollapsingTopBarExitState.Companion.Saver|{}Saver[0]
+            final fun <get-Saver>(): androidx.compose.runtime.saveable/Saver<com.flaringapp.compose.topbar.dependent/CollapsingTopBarExitState, kotlin/Float> // com.flaringapp.compose.topbar.dependent/CollapsingTopBarExitState.Companion.Saver.<get-Saver>|<get-Saver>(){}[0]
+    }
+}
+
+final class com.flaringapp.compose.topbar.nestedcollapse/CollapsingTopBarNestedCollapseState : com.flaringapp.compose.topbar.nestedcollapse/CollapsingTopBarNestedCollapseElement { // com.flaringapp.compose.topbar.nestedcollapse/CollapsingTopBarNestedCollapseState|null[0]
+    constructor <init>() // com.flaringapp.compose.topbar.nestedcollapse/CollapsingTopBarNestedCollapseState.<init>|<init>(){}[0]
+
+    final var minHeight // com.flaringapp.compose.topbar.nestedcollapse/CollapsingTopBarNestedCollapseState.minHeight|{}minHeight[0]
+        final fun <get-minHeight>(): kotlin/Int // com.flaringapp.compose.topbar.nestedcollapse/CollapsingTopBarNestedCollapseState.minHeight.<get-minHeight>|<get-minHeight>(){}[0]
+        final fun <set-minHeight>(kotlin/Int) // com.flaringapp.compose.topbar.nestedcollapse/CollapsingTopBarNestedCollapseState.minHeight.<set-minHeight>|<set-minHeight>(kotlin.Int){}[0]
+}
+
+final class com.flaringapp.compose.topbar.nestedscroll/CollapsingTopBarNestedScrollCollapse : com.flaringapp.compose.topbar.nestedscroll/CollapsingTopBarNestedScrollHandler { // com.flaringapp.compose.topbar.nestedscroll/CollapsingTopBarNestedScrollCollapse|null[0]
+    constructor <init>(androidx.compose.foundation.gestures/ScrollableState, androidx.compose.foundation.gestures/FlingBehavior) // com.flaringapp.compose.topbar.nestedscroll/CollapsingTopBarNestedScrollCollapse.<init>|<init>(androidx.compose.foundation.gestures.ScrollableState;androidx.compose.foundation.gestures.FlingBehavior){}[0]
+
+    final fun onPreScroll(androidx.compose.ui.geometry/Offset, androidx.compose.ui.input.nestedscroll/NestedScrollSource): androidx.compose.ui.geometry/Offset // com.flaringapp.compose.topbar.nestedscroll/CollapsingTopBarNestedScrollCollapse.onPreScroll|onPreScroll(androidx.compose.ui.geometry.Offset;androidx.compose.ui.input.nestedscroll.NestedScrollSource){}[0]
+    final suspend fun onPreFling(androidx.compose.ui.unit/Velocity): androidx.compose.ui.unit/Velocity // com.flaringapp.compose.topbar.nestedscroll/CollapsingTopBarNestedScrollCollapse.onPreFling|onPreFling(androidx.compose.ui.unit.Velocity){}[0]
+}
+
+final class com.flaringapp.compose.topbar.nestedscroll/CollapsingTopBarNestedScrollSnap : com.flaringapp.compose.topbar.nestedscroll/CollapsingTopBarNestedScrollHandler { // com.flaringapp.compose.topbar.nestedscroll/CollapsingTopBarNestedScrollSnap|null[0]
+    constructor <init>(com.flaringapp.compose.topbar.snap/CollapsingTopBarSnapBehavior, com.flaringapp.compose.topbar.snap/CollapsingTopBarSnapScope) // com.flaringapp.compose.topbar.nestedscroll/CollapsingTopBarNestedScrollSnap.<init>|<init>(com.flaringapp.compose.topbar.snap.CollapsingTopBarSnapBehavior;com.flaringapp.compose.topbar.snap.CollapsingTopBarSnapScope){}[0]
+
+    final suspend fun onPostFling(androidx.compose.ui.unit/Velocity, androidx.compose.ui.unit/Velocity): androidx.compose.ui.unit/Velocity // com.flaringapp.compose.topbar.nestedscroll/CollapsingTopBarNestedScrollSnap.onPostFling|onPostFling(androidx.compose.ui.unit.Velocity;androidx.compose.ui.unit.Velocity){}[0]
+}
+
+final class com.flaringapp.compose.topbar.nestedscroll/MultiNestedScrollConnection : androidx.compose.ui.input.nestedscroll/NestedScrollConnection { // com.flaringapp.compose.topbar.nestedscroll/MultiNestedScrollConnection|null[0]
+    constructor <init>(kotlin.collections/List<androidx.compose.ui.input.nestedscroll/NestedScrollConnection>) // com.flaringapp.compose.topbar.nestedscroll/MultiNestedScrollConnection.<init>|<init>(kotlin.collections.List<androidx.compose.ui.input.nestedscroll.NestedScrollConnection>){}[0]
+
+    final fun onPostScroll(androidx.compose.ui.geometry/Offset, androidx.compose.ui.geometry/Offset, androidx.compose.ui.input.nestedscroll/NestedScrollSource): androidx.compose.ui.geometry/Offset // com.flaringapp.compose.topbar.nestedscroll/MultiNestedScrollConnection.onPostScroll|onPostScroll(androidx.compose.ui.geometry.Offset;androidx.compose.ui.geometry.Offset;androidx.compose.ui.input.nestedscroll.NestedScrollSource){}[0]
+    final fun onPreScroll(androidx.compose.ui.geometry/Offset, androidx.compose.ui.input.nestedscroll/NestedScrollSource): androidx.compose.ui.geometry/Offset // com.flaringapp.compose.topbar.nestedscroll/MultiNestedScrollConnection.onPreScroll|onPreScroll(androidx.compose.ui.geometry.Offset;androidx.compose.ui.input.nestedscroll.NestedScrollSource){}[0]
+    final suspend fun onPostFling(androidx.compose.ui.unit/Velocity, androidx.compose.ui.unit/Velocity): androidx.compose.ui.unit/Velocity // com.flaringapp.compose.topbar.nestedscroll/MultiNestedScrollConnection.onPostFling|onPostFling(androidx.compose.ui.unit.Velocity;androidx.compose.ui.unit.Velocity){}[0]
+    final suspend fun onPreFling(androidx.compose.ui.unit/Velocity): androidx.compose.ui.unit/Velocity // com.flaringapp.compose.topbar.nestedscroll/MultiNestedScrollConnection.onPreFling|onPreFling(androidx.compose.ui.unit.Velocity){}[0]
+}
+
+final class com.flaringapp.compose.topbar.scaffold/CollapsingTopBarScaffoldScrollMode : com.flaringapp.compose.topbar.nestedscroll/CollapsingTopBarNestedScrollStrategy<com.flaringapp.compose.topbar.scaffold/CollapsingTopBarScaffoldState> { // com.flaringapp.compose.topbar.scaffold/CollapsingTopBarScaffoldScrollMode|null[0]
+    final val canExit // com.flaringapp.compose.topbar.scaffold/CollapsingTopBarScaffoldScrollMode.canExit|{}canExit[0]
+        final fun <get-canExit>(): kotlin/Boolean // com.flaringapp.compose.topbar.scaffold/CollapsingTopBarScaffoldScrollMode.canExit.<get-canExit>|<get-canExit>(){}[0]
+    final val exit // com.flaringapp.compose.topbar.scaffold/CollapsingTopBarScaffoldScrollMode.exit|{}exit[0]
+        final fun <get-exit>(): com.flaringapp.compose.topbar.scaffold/CollapsingTopBarScaffoldScrollMode.Exit? // com.flaringapp.compose.topbar.scaffold/CollapsingTopBarScaffoldScrollMode.exit.<get-exit>|<get-exit>(){}[0]
+    final val expandAlways // com.flaringapp.compose.topbar.scaffold/CollapsingTopBarScaffoldScrollMode.expandAlways|{}expandAlways[0]
+        final fun <get-expandAlways>(): kotlin/Boolean // com.flaringapp.compose.topbar.scaffold/CollapsingTopBarScaffoldScrollMode.expandAlways.<get-expandAlways>|<get-expandAlways>(){}[0]
+
+    final fun component1(): kotlin/Boolean // com.flaringapp.compose.topbar.scaffold/CollapsingTopBarScaffoldScrollMode.component1|component1(){}[0]
+    final fun component2(): com.flaringapp.compose.topbar.scaffold/CollapsingTopBarScaffoldScrollMode.Exit? // com.flaringapp.compose.topbar.scaffold/CollapsingTopBarScaffoldScrollMode.component2|component2(){}[0]
+    final fun createHandlers(com.flaringapp.compose.topbar.scaffold/CollapsingTopBarScaffoldState, androidx.compose.foundation.gestures/FlingBehavior, com.flaringapp.compose.topbar.snap/CollapsingTopBarSnapBehavior): kotlin.collections/List<com.flaringapp.compose.topbar.nestedscroll/CollapsingTopBarNestedScrollHandler> // com.flaringapp.compose.topbar.scaffold/CollapsingTopBarScaffoldScrollMode.createHandlers|createHandlers(com.flaringapp.compose.topbar.scaffold.CollapsingTopBarScaffoldState;androidx.compose.foundation.gestures.FlingBehavior;com.flaringapp.compose.topbar.snap.CollapsingTopBarSnapBehavior){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // com.flaringapp.compose.topbar.scaffold/CollapsingTopBarScaffoldScrollMode.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // com.flaringapp.compose.topbar.scaffold/CollapsingTopBarScaffoldScrollMode.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // com.flaringapp.compose.topbar.scaffold/CollapsingTopBarScaffoldScrollMode.toString|toString(){}[0]
+
+    final class Exit { // com.flaringapp.compose.topbar.scaffold/CollapsingTopBarScaffoldScrollMode.Exit|null[0]
+        final val enterAlways // com.flaringapp.compose.topbar.scaffold/CollapsingTopBarScaffoldScrollMode.Exit.enterAlways|{}enterAlways[0]
+            final fun <get-enterAlways>(): kotlin/Boolean // com.flaringapp.compose.topbar.scaffold/CollapsingTopBarScaffoldScrollMode.Exit.enterAlways.<get-enterAlways>|<get-enterAlways>(){}[0]
+
+        final fun component1(): kotlin/Boolean // com.flaringapp.compose.topbar.scaffold/CollapsingTopBarScaffoldScrollMode.Exit.component1|component1(){}[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // com.flaringapp.compose.topbar.scaffold/CollapsingTopBarScaffoldScrollMode.Exit.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // com.flaringapp.compose.topbar.scaffold/CollapsingTopBarScaffoldScrollMode.Exit.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // com.flaringapp.compose.topbar.scaffold/CollapsingTopBarScaffoldScrollMode.Exit.toString|toString(){}[0]
+    }
+
+    final object Companion { // com.flaringapp.compose.topbar.scaffold/CollapsingTopBarScaffoldScrollMode.Companion|null[0]
+        final fun collapse(kotlin/Boolean, androidx.compose.runtime/Composer?, kotlin/Int): com.flaringapp.compose.topbar.scaffold/CollapsingTopBarScaffoldScrollMode // com.flaringapp.compose.topbar.scaffold/CollapsingTopBarScaffoldScrollMode.Companion.collapse|collapse(kotlin.Boolean;androidx.compose.runtime.Composer?;kotlin.Int){}[0]
+        final fun collapseAndExit(kotlin/Boolean, androidx.compose.runtime/Composer?, kotlin/Int): com.flaringapp.compose.topbar.scaffold/CollapsingTopBarScaffoldScrollMode // com.flaringapp.compose.topbar.scaffold/CollapsingTopBarScaffoldScrollMode.Companion.collapseAndExit|collapseAndExit(kotlin.Boolean;androidx.compose.runtime.Composer?;kotlin.Int){}[0]
+        final fun enterAlwaysCollapsed(androidx.compose.runtime/Composer?, kotlin/Int): com.flaringapp.compose.topbar.scaffold/CollapsingTopBarScaffoldScrollMode // com.flaringapp.compose.topbar.scaffold/CollapsingTopBarScaffoldScrollMode.Companion.enterAlwaysCollapsed|enterAlwaysCollapsed(androidx.compose.runtime.Composer?;kotlin.Int){}[0]
+    }
+}
+
+final class com.flaringapp.compose.topbar.scaffold/CollapsingTopBarScaffoldState : com.flaringapp.compose.topbar.snap/CollapsingTopBarSnapScope, com.flaringapp.compose.topbar/CollapsingTopBarControls { // com.flaringapp.compose.topbar.scaffold/CollapsingTopBarScaffoldState|null[0]
+    final val exitState // com.flaringapp.compose.topbar.scaffold/CollapsingTopBarScaffoldState.exitState|{}exitState[0]
+        final fun <get-exitState>(): com.flaringapp.compose.topbar.dependent/CollapsingTopBarExitState // com.flaringapp.compose.topbar.scaffold/CollapsingTopBarScaffoldState.exitState.<get-exitState>|<get-exitState>(){}[0]
+    final val isCollapsed // com.flaringapp.compose.topbar.scaffold/CollapsingTopBarScaffoldState.isCollapsed|{}isCollapsed[0]
+        final fun <get-isCollapsed>(): kotlin/Boolean // com.flaringapp.compose.topbar.scaffold/CollapsingTopBarScaffoldState.isCollapsed.<get-isCollapsed>|<get-isCollapsed>(){}[0]
+    final val isExpanded // com.flaringapp.compose.topbar.scaffold/CollapsingTopBarScaffoldState.isExpanded|{}isExpanded[0]
+        final fun <get-isExpanded>(): kotlin/Boolean // com.flaringapp.compose.topbar.scaffold/CollapsingTopBarScaffoldState.isExpanded.<get-isExpanded>|<get-isExpanded>(){}[0]
+    final val topBarState // com.flaringapp.compose.topbar.scaffold/CollapsingTopBarScaffoldState.topBarState|{}topBarState[0]
+        final fun <get-topBarState>(): com.flaringapp.compose.topbar/CollapsingTopBarState // com.flaringapp.compose.topbar.scaffold/CollapsingTopBarScaffoldState.topBarState.<get-topBarState>|<get-topBarState>(){}[0]
+    final val totalTopBarHeight // com.flaringapp.compose.topbar.scaffold/CollapsingTopBarScaffoldState.totalTopBarHeight|{}totalTopBarHeight[0]
+        final fun <get-totalTopBarHeight>(): kotlin/Float // com.flaringapp.compose.topbar.scaffold/CollapsingTopBarScaffoldState.totalTopBarHeight.<get-totalTopBarHeight>|<get-totalTopBarHeight>(){}[0]
+
+    final suspend fun collapse(androidx.compose.animation.core/AnimationSpec<kotlin/Float>) // com.flaringapp.compose.topbar.scaffold/CollapsingTopBarScaffoldState.collapse|collapse(androidx.compose.animation.core.AnimationSpec<kotlin.Float>){}[0]
+    final suspend fun expand(androidx.compose.animation.core/AnimationSpec<kotlin/Float>) // com.flaringapp.compose.topbar.scaffold/CollapsingTopBarScaffoldState.expand|expand(androidx.compose.animation.core.AnimationSpec<kotlin.Float>){}[0]
+    final suspend fun snapWithProgress(kotlin/Boolean, kotlin.coroutines/SuspendFunction2<com.flaringapp.compose.topbar/CollapsingTopBarControls, kotlin/Float, kotlin/Unit>) // com.flaringapp.compose.topbar.scaffold/CollapsingTopBarScaffoldState.snapWithProgress|snapWithProgress(kotlin.Boolean;kotlin.coroutines.SuspendFunction2<com.flaringapp.compose.topbar.CollapsingTopBarControls,kotlin.Float,kotlin.Unit>){}[0]
+
+    final object Companion { // com.flaringapp.compose.topbar.scaffold/CollapsingTopBarScaffoldState.Companion|null[0]
+        final val Saver // com.flaringapp.compose.topbar.scaffold/CollapsingTopBarScaffoldState.Companion.Saver|{}Saver[0]
+            final fun <get-Saver>(): androidx.compose.runtime.saveable/Saver<com.flaringapp.compose.topbar.scaffold/CollapsingTopBarScaffoldState, *> // com.flaringapp.compose.topbar.scaffold/CollapsingTopBarScaffoldState.Companion.Saver.<get-Saver>|<get-Saver>(){}[0]
+    }
+}
+
+final class com.flaringapp.compose.topbar.snap/CollapsingTopBarThresholdSnapBehavior : com.flaringapp.compose.topbar.snap/CollapsingTopBarSnapBehavior { // com.flaringapp.compose.topbar.snap/CollapsingTopBarThresholdSnapBehavior|null[0]
+    constructor <init>(kotlin/Float = ..., androidx.compose.animation.core/AnimationSpec<kotlin/Float> = ...) // com.flaringapp.compose.topbar.snap/CollapsingTopBarThresholdSnapBehavior.<init>|<init>(kotlin.Float;androidx.compose.animation.core.AnimationSpec<kotlin.Float>){}[0]
+
+    final suspend fun (com.flaringapp.compose.topbar.snap/CollapsingTopBarSnapScope).snap(kotlin/Boolean) // com.flaringapp.compose.topbar.snap/CollapsingTopBarThresholdSnapBehavior.snap|snap@com.flaringapp.compose.topbar.snap.CollapsingTopBarSnapScope(kotlin.Boolean){}[0]
+}
+
+final class com.flaringapp.compose.topbar/CollapsingTopBarLayoutInfo { // com.flaringapp.compose.topbar/CollapsingTopBarLayoutInfo|null[0]
+    constructor <init>(kotlin/Float, kotlin/Int, kotlin/Int) // com.flaringapp.compose.topbar/CollapsingTopBarLayoutInfo.<init>|<init>(kotlin.Float;kotlin.Int;kotlin.Int){}[0]
+
+    final val collapseHeightDelta // com.flaringapp.compose.topbar/CollapsingTopBarLayoutInfo.collapseHeightDelta|{}collapseHeightDelta[0]
+        final fun <get-collapseHeightDelta>(): kotlin/Float // com.flaringapp.compose.topbar/CollapsingTopBarLayoutInfo.collapseHeightDelta.<get-collapseHeightDelta>|<get-collapseHeightDelta>(){}[0]
+    final val collapseProgress // com.flaringapp.compose.topbar/CollapsingTopBarLayoutInfo.collapseProgress|{}collapseProgress[0]
+        final fun <get-collapseProgress>(): kotlin/Float // com.flaringapp.compose.topbar/CollapsingTopBarLayoutInfo.collapseProgress.<get-collapseProgress>|<get-collapseProgress>(){}[0]
+    final val collapsedHeight // com.flaringapp.compose.topbar/CollapsingTopBarLayoutInfo.collapsedHeight|{}collapsedHeight[0]
+        final fun <get-collapsedHeight>(): kotlin/Int // com.flaringapp.compose.topbar/CollapsingTopBarLayoutInfo.collapsedHeight.<get-collapsedHeight>|<get-collapsedHeight>(){}[0]
+    final val collapsibleDistance // com.flaringapp.compose.topbar/CollapsingTopBarLayoutInfo.collapsibleDistance|{}collapsibleDistance[0]
+        final fun <get-collapsibleDistance>(): kotlin/Int // com.flaringapp.compose.topbar/CollapsingTopBarLayoutInfo.collapsibleDistance.<get-collapsibleDistance>|<get-collapsibleDistance>(){}[0]
+    final val expandHeightDelta // com.flaringapp.compose.topbar/CollapsingTopBarLayoutInfo.expandHeightDelta|{}expandHeightDelta[0]
+        final fun <get-expandHeightDelta>(): kotlin/Float // com.flaringapp.compose.topbar/CollapsingTopBarLayoutInfo.expandHeightDelta.<get-expandHeightDelta>|<get-expandHeightDelta>(){}[0]
+    final val expandedHeight // com.flaringapp.compose.topbar/CollapsingTopBarLayoutInfo.expandedHeight|{}expandedHeight[0]
+        final fun <get-expandedHeight>(): kotlin/Int // com.flaringapp.compose.topbar/CollapsingTopBarLayoutInfo.expandedHeight.<get-expandedHeight>|<get-expandedHeight>(){}[0]
+    final val height // com.flaringapp.compose.topbar/CollapsingTopBarLayoutInfo.height|{}height[0]
+        final fun <get-height>(): kotlin/Float // com.flaringapp.compose.topbar/CollapsingTopBarLayoutInfo.height.<get-height>|<get-height>(){}[0]
+    final val isCollapsed // com.flaringapp.compose.topbar/CollapsingTopBarLayoutInfo.isCollapsed|{}isCollapsed[0]
+        final fun <get-isCollapsed>(): kotlin/Boolean // com.flaringapp.compose.topbar/CollapsingTopBarLayoutInfo.isCollapsed.<get-isCollapsed>|<get-isCollapsed>(){}[0]
+    final val isExpanded // com.flaringapp.compose.topbar/CollapsingTopBarLayoutInfo.isExpanded|{}isExpanded[0]
+        final fun <get-isExpanded>(): kotlin/Boolean // com.flaringapp.compose.topbar/CollapsingTopBarLayoutInfo.isExpanded.<get-isExpanded>|<get-isExpanded>(){}[0]
+
+    final fun component1(): kotlin/Float // com.flaringapp.compose.topbar/CollapsingTopBarLayoutInfo.component1|component1(){}[0]
+    final fun component2(): kotlin/Int // com.flaringapp.compose.topbar/CollapsingTopBarLayoutInfo.component2|component2(){}[0]
+    final fun component3(): kotlin/Int // com.flaringapp.compose.topbar/CollapsingTopBarLayoutInfo.component3|component3(){}[0]
+    final fun copy(kotlin/Float = ..., kotlin/Int = ..., kotlin/Int = ...): com.flaringapp.compose.topbar/CollapsingTopBarLayoutInfo // com.flaringapp.compose.topbar/CollapsingTopBarLayoutInfo.copy|copy(kotlin.Float;kotlin.Int;kotlin.Int){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // com.flaringapp.compose.topbar/CollapsingTopBarLayoutInfo.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // com.flaringapp.compose.topbar/CollapsingTopBarLayoutInfo.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // com.flaringapp.compose.topbar/CollapsingTopBarLayoutInfo.toString|toString(){}[0]
+}
+
+final class com.flaringapp.compose.topbar/CollapsingTopBarState : androidx.compose.foundation.gestures/ScrollableState, com.flaringapp.compose.topbar.snap/CollapsingTopBarSnapScope, com.flaringapp.compose.topbar/CollapsingTopBarControls { // com.flaringapp.compose.topbar/CollapsingTopBarState|null[0]
+    constructor <init>(kotlin/Boolean = ...) // com.flaringapp.compose.topbar/CollapsingTopBarState.<init>|<init>(kotlin.Boolean){}[0]
+
+    final val isCollapsed // com.flaringapp.compose.topbar/CollapsingTopBarState.isCollapsed|{}isCollapsed[0]
+        final fun <get-isCollapsed>(): kotlin/Boolean // com.flaringapp.compose.topbar/CollapsingTopBarState.isCollapsed.<get-isCollapsed>|<get-isCollapsed>(){}[0]
+    final val isExpanded // com.flaringapp.compose.topbar/CollapsingTopBarState.isExpanded|{}isExpanded[0]
+        final fun <get-isExpanded>(): kotlin/Boolean // com.flaringapp.compose.topbar/CollapsingTopBarState.isExpanded.<get-isExpanded>|<get-isExpanded>(){}[0]
+    final val isScrollInProgress // com.flaringapp.compose.topbar/CollapsingTopBarState.isScrollInProgress|{}isScrollInProgress[0]
+        final fun <get-isScrollInProgress>(): kotlin/Boolean // com.flaringapp.compose.topbar/CollapsingTopBarState.isScrollInProgress.<get-isScrollInProgress>|<get-isScrollInProgress>(){}[0]
+    final val layoutInfo // com.flaringapp.compose.topbar/CollapsingTopBarState.layoutInfo|{}layoutInfo[0]
+        final fun <get-layoutInfo>(): com.flaringapp.compose.topbar/CollapsingTopBarLayoutInfo // com.flaringapp.compose.topbar/CollapsingTopBarState.layoutInfo.<get-layoutInfo>|<get-layoutInfo>(){}[0]
+
+    final fun dispatchRawDelta(kotlin/Float): kotlin/Float // com.flaringapp.compose.topbar/CollapsingTopBarState.dispatchRawDelta|dispatchRawDelta(kotlin.Float){}[0]
+    final suspend fun collapse(androidx.compose.animation.core/AnimationSpec<kotlin/Float>) // com.flaringapp.compose.topbar/CollapsingTopBarState.collapse|collapse(androidx.compose.animation.core.AnimationSpec<kotlin.Float>){}[0]
+    final suspend fun expand(androidx.compose.animation.core/AnimationSpec<kotlin/Float>) // com.flaringapp.compose.topbar/CollapsingTopBarState.expand|expand(androidx.compose.animation.core.AnimationSpec<kotlin.Float>){}[0]
+    final suspend fun scroll(androidx.compose.foundation/MutatePriority, kotlin.coroutines/SuspendFunction1<androidx.compose.foundation.gestures/ScrollScope, kotlin/Unit>) // com.flaringapp.compose.topbar/CollapsingTopBarState.scroll|scroll(androidx.compose.foundation.MutatePriority;kotlin.coroutines.SuspendFunction1<androidx.compose.foundation.gestures.ScrollScope,kotlin.Unit>){}[0]
+    final suspend fun snapWithProgress(kotlin/Boolean, kotlin.coroutines/SuspendFunction2<com.flaringapp.compose.topbar/CollapsingTopBarControls, kotlin/Float, kotlin/Unit>) // com.flaringapp.compose.topbar/CollapsingTopBarState.snapWithProgress|snapWithProgress(kotlin.Boolean;kotlin.coroutines.SuspendFunction2<com.flaringapp.compose.topbar.CollapsingTopBarControls,kotlin.Float,kotlin.Unit>){}[0]
+
+    final object Companion { // com.flaringapp.compose.topbar/CollapsingTopBarState.Companion|null[0]
+        final val Saver // com.flaringapp.compose.topbar/CollapsingTopBarState.Companion.Saver|{}Saver[0]
+            final fun <get-Saver>(): androidx.compose.runtime.saveable/Saver<com.flaringapp.compose.topbar/CollapsingTopBarState, kotlin/Float> // com.flaringapp.compose.topbar/CollapsingTopBarState.Companion.Saver.<get-Saver>|<get-Saver>(){}[0]
+    }
+}
+
+sealed class com.flaringapp.compose.topbar.nestedcollapse/CollapsingTopBarColumnDirection { // com.flaringapp.compose.topbar.nestedcollapse/CollapsingTopBarColumnDirection|null[0]
+    final object BottomUp : com.flaringapp.compose.topbar.nestedcollapse/CollapsingTopBarColumnDirection { // com.flaringapp.compose.topbar.nestedcollapse/CollapsingTopBarColumnDirection.BottomUp|null[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // com.flaringapp.compose.topbar.nestedcollapse/CollapsingTopBarColumnDirection.BottomUp.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // com.flaringapp.compose.topbar.nestedcollapse/CollapsingTopBarColumnDirection.BottomUp.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // com.flaringapp.compose.topbar.nestedcollapse/CollapsingTopBarColumnDirection.BottomUp.toString|toString(){}[0]
+    }
+
+    final object TopToBottom : com.flaringapp.compose.topbar.nestedcollapse/CollapsingTopBarColumnDirection { // com.flaringapp.compose.topbar.nestedcollapse/CollapsingTopBarColumnDirection.TopToBottom|null[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // com.flaringapp.compose.topbar.nestedcollapse/CollapsingTopBarColumnDirection.TopToBottom.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // com.flaringapp.compose.topbar.nestedcollapse/CollapsingTopBarColumnDirection.TopToBottom.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // com.flaringapp.compose.topbar.nestedcollapse/CollapsingTopBarColumnDirection.TopToBottom.toString|toString(){}[0]
+    }
+}
+
+final object com.flaringapp.compose.topbar.snap/CollapsingTopBarNoSnapBehavior : com.flaringapp.compose.topbar.snap/CollapsingTopBarSnapBehavior { // com.flaringapp.compose.topbar.snap/CollapsingTopBarNoSnapBehavior|null[0]
+    final suspend fun (com.flaringapp.compose.topbar.snap/CollapsingTopBarSnapScope).snap(kotlin/Boolean) // com.flaringapp.compose.topbar.snap/CollapsingTopBarNoSnapBehavior.snap|snap@com.flaringapp.compose.topbar.snap.CollapsingTopBarSnapScope(kotlin.Boolean){}[0]
+}
+
+final val com.flaringapp.compose.topbar.dependent/com_flaringapp_compose_topbar_dependent_CollapsingTopBarExitState$stableprop // com.flaringapp.compose.topbar.dependent/com_flaringapp_compose_topbar_dependent_CollapsingTopBarExitState$stableprop|#static{}com_flaringapp_compose_topbar_dependent_CollapsingTopBarExitState$stableprop[0]
+final val com.flaringapp.compose.topbar.nestedcollapse/com_flaringapp_compose_topbar_nestedcollapse_CollapsingTopBarColumnDirection$stableprop // com.flaringapp.compose.topbar.nestedcollapse/com_flaringapp_compose_topbar_nestedcollapse_CollapsingTopBarColumnDirection$stableprop|#static{}com_flaringapp_compose_topbar_nestedcollapse_CollapsingTopBarColumnDirection$stableprop[0]
+final val com.flaringapp.compose.topbar.nestedcollapse/com_flaringapp_compose_topbar_nestedcollapse_CollapsingTopBarColumnDirection_BottomUp$stableprop // com.flaringapp.compose.topbar.nestedcollapse/com_flaringapp_compose_topbar_nestedcollapse_CollapsingTopBarColumnDirection_BottomUp$stableprop|#static{}com_flaringapp_compose_topbar_nestedcollapse_CollapsingTopBarColumnDirection_BottomUp$stableprop[0]
+final val com.flaringapp.compose.topbar.nestedcollapse/com_flaringapp_compose_topbar_nestedcollapse_CollapsingTopBarColumnDirection_TopToBottom$stableprop // com.flaringapp.compose.topbar.nestedcollapse/com_flaringapp_compose_topbar_nestedcollapse_CollapsingTopBarColumnDirection_TopToBottom$stableprop|#static{}com_flaringapp_compose_topbar_nestedcollapse_CollapsingTopBarColumnDirection_TopToBottom$stableprop[0]
+final val com.flaringapp.compose.topbar.nestedcollapse/com_flaringapp_compose_topbar_nestedcollapse_CollapsingTopBarNestedCollapseState$stableprop // com.flaringapp.compose.topbar.nestedcollapse/com_flaringapp_compose_topbar_nestedcollapse_CollapsingTopBarNestedCollapseState$stableprop|#static{}com_flaringapp_compose_topbar_nestedcollapse_CollapsingTopBarNestedCollapseState$stableprop[0]
+final val com.flaringapp.compose.topbar.nestedscroll/com_flaringapp_compose_topbar_nestedscroll_CollapsingTopBarNestedScrollCollapse$stableprop // com.flaringapp.compose.topbar.nestedscroll/com_flaringapp_compose_topbar_nestedscroll_CollapsingTopBarNestedScrollCollapse$stableprop|#static{}com_flaringapp_compose_topbar_nestedscroll_CollapsingTopBarNestedScrollCollapse$stableprop[0]
+final val com.flaringapp.compose.topbar.nestedscroll/com_flaringapp_compose_topbar_nestedscroll_CollapsingTopBarNestedScrollExpand$stableprop // com.flaringapp.compose.topbar.nestedscroll/com_flaringapp_compose_topbar_nestedscroll_CollapsingTopBarNestedScrollExpand$stableprop|#static{}com_flaringapp_compose_topbar_nestedscroll_CollapsingTopBarNestedScrollExpand$stableprop[0]
+final val com.flaringapp.compose.topbar.nestedscroll/com_flaringapp_compose_topbar_nestedscroll_CollapsingTopBarNestedScrollExpand_Always$stableprop // com.flaringapp.compose.topbar.nestedscroll/com_flaringapp_compose_topbar_nestedscroll_CollapsingTopBarNestedScrollExpand_Always$stableprop|#static{}com_flaringapp_compose_topbar_nestedscroll_CollapsingTopBarNestedScrollExpand_Always$stableprop[0]
+final val com.flaringapp.compose.topbar.nestedscroll/com_flaringapp_compose_topbar_nestedscroll_CollapsingTopBarNestedScrollExpand_AtTop$stableprop // com.flaringapp.compose.topbar.nestedscroll/com_flaringapp_compose_topbar_nestedscroll_CollapsingTopBarNestedScrollExpand_AtTop$stableprop|#static{}com_flaringapp_compose_topbar_nestedscroll_CollapsingTopBarNestedScrollExpand_AtTop$stableprop[0]
+final val com.flaringapp.compose.topbar.nestedscroll/com_flaringapp_compose_topbar_nestedscroll_CollapsingTopBarNestedScrollSnap$stableprop // com.flaringapp.compose.topbar.nestedscroll/com_flaringapp_compose_topbar_nestedscroll_CollapsingTopBarNestedScrollSnap$stableprop|#static{}com_flaringapp_compose_topbar_nestedscroll_CollapsingTopBarNestedScrollSnap$stableprop[0]
+final val com.flaringapp.compose.topbar.nestedscroll/com_flaringapp_compose_topbar_nestedscroll_MultiNestedScrollConnection$stableprop // com.flaringapp.compose.topbar.nestedscroll/com_flaringapp_compose_topbar_nestedscroll_MultiNestedScrollConnection$stableprop|#static{}com_flaringapp_compose_topbar_nestedscroll_MultiNestedScrollConnection$stableprop[0]
+final val com.flaringapp.compose.topbar.scaffold/com_flaringapp_compose_topbar_scaffold_CollapsingTopBarScaffoldScrollMode$stableprop // com.flaringapp.compose.topbar.scaffold/com_flaringapp_compose_topbar_scaffold_CollapsingTopBarScaffoldScrollMode$stableprop|#static{}com_flaringapp_compose_topbar_scaffold_CollapsingTopBarScaffoldScrollMode$stableprop[0]
+final val com.flaringapp.compose.topbar.scaffold/com_flaringapp_compose_topbar_scaffold_CollapsingTopBarScaffoldScrollMode_Exit$stableprop // com.flaringapp.compose.topbar.scaffold/com_flaringapp_compose_topbar_scaffold_CollapsingTopBarScaffoldScrollMode_Exit$stableprop|#static{}com_flaringapp_compose_topbar_scaffold_CollapsingTopBarScaffoldScrollMode_Exit$stableprop[0]
+final val com.flaringapp.compose.topbar.scaffold/com_flaringapp_compose_topbar_scaffold_CollapsingTopBarScaffoldState$stableprop // com.flaringapp.compose.topbar.scaffold/com_flaringapp_compose_topbar_scaffold_CollapsingTopBarScaffoldState$stableprop|#static{}com_flaringapp_compose_topbar_scaffold_CollapsingTopBarScaffoldState$stableprop[0]
+final val com.flaringapp.compose.topbar.snap/com_flaringapp_compose_topbar_snap_CollapsingTopBarNoSnapBehavior$stableprop // com.flaringapp.compose.topbar.snap/com_flaringapp_compose_topbar_snap_CollapsingTopBarNoSnapBehavior$stableprop|#static{}com_flaringapp_compose_topbar_snap_CollapsingTopBarNoSnapBehavior$stableprop[0]
+final val com.flaringapp.compose.topbar.snap/com_flaringapp_compose_topbar_snap_CollapsingTopBarThresholdSnapBehavior$stableprop // com.flaringapp.compose.topbar.snap/com_flaringapp_compose_topbar_snap_CollapsingTopBarThresholdSnapBehavior$stableprop|#static{}com_flaringapp_compose_topbar_snap_CollapsingTopBarThresholdSnapBehavior$stableprop[0]
+final val com.flaringapp.compose.topbar/com_flaringapp_compose_topbar_CollapsingTopBarLayoutInfo$stableprop // com.flaringapp.compose.topbar/com_flaringapp_compose_topbar_CollapsingTopBarLayoutInfo$stableprop|#static{}com_flaringapp_compose_topbar_CollapsingTopBarLayoutInfo$stableprop[0]
+final val com.flaringapp.compose.topbar/com_flaringapp_compose_topbar_CollapsingTopBarState$stableprop // com.flaringapp.compose.topbar/com_flaringapp_compose_topbar_CollapsingTopBarState$stableprop|#static{}com_flaringapp_compose_topbar_CollapsingTopBarState$stableprop[0]
+
+final fun (androidx.compose.ui/Modifier).com.flaringapp.compose.topbar.dependent/collapsingTopBarDependentStateConnection(com.flaringapp.compose.topbar/CollapsingTopBarState, kotlin/Function1<com.flaringapp.compose.topbar/CollapsingTopBarLayoutInfo, kotlin/Unit>): androidx.compose.ui/Modifier // com.flaringapp.compose.topbar.dependent/collapsingTopBarDependentStateConnection|collapsingTopBarDependentStateConnection@androidx.compose.ui.Modifier(com.flaringapp.compose.topbar.CollapsingTopBarState;kotlin.Function1<com.flaringapp.compose.topbar.CollapsingTopBarLayoutInfo,kotlin.Unit>){}[0]
+final fun (androidx.compose.ui/Modifier).com.flaringapp.compose.topbar.dependent/collapsingTopBarExitStateConnection(com.flaringapp.compose.topbar/CollapsingTopBarState, com.flaringapp.compose.topbar.dependent/CollapsingTopBarExitState): androidx.compose.ui/Modifier // com.flaringapp.compose.topbar.dependent/collapsingTopBarExitStateConnection|collapsingTopBarExitStateConnection@androidx.compose.ui.Modifier(com.flaringapp.compose.topbar.CollapsingTopBarState;com.flaringapp.compose.topbar.dependent.CollapsingTopBarExitState){}[0]
+final fun (com.flaringapp.compose.topbar/CollapsingTopBarScope).com.flaringapp.compose.topbar.nestedcollapse/CollapsingTopBarColumn(com.flaringapp.compose.topbar/CollapsingTopBarState, androidx.compose.ui/Modifier?, com.flaringapp.compose.topbar.nestedcollapse/CollapsingTopBarColumnDirection?, kotlin/Function3<com.flaringapp.compose.topbar.nestedcollapse/CollapsingTopBarColumnScope, androidx.compose.runtime/Composer, kotlin/Int, kotlin/Unit>, androidx.compose.runtime/Composer?, kotlin/Int, kotlin/Int) // com.flaringapp.compose.topbar.nestedcollapse/CollapsingTopBarColumn|CollapsingTopBarColumn@com.flaringapp.compose.topbar.CollapsingTopBarScope(com.flaringapp.compose.topbar.CollapsingTopBarState;androidx.compose.ui.Modifier?;com.flaringapp.compose.topbar.nestedcollapse.CollapsingTopBarColumnDirection?;kotlin.Function3<com.flaringapp.compose.topbar.nestedcollapse.CollapsingTopBarColumnScope,androidx.compose.runtime.Composer,kotlin.Int,kotlin.Unit>;androidx.compose.runtime.Composer?;kotlin.Int;kotlin.Int){}[0]
+final fun <#A: kotlin/Any?> (com.flaringapp.compose.topbar.nestedscroll/CollapsingTopBarNestedScrollStrategy<#A>).com.flaringapp.compose.topbar.nestedscroll/rememberNestedScrollConnection(#A, androidx.compose.foundation.gestures/FlingBehavior?, com.flaringapp.compose.topbar.snap/CollapsingTopBarSnapBehavior?, androidx.compose.runtime/Composer?, kotlin/Int, kotlin/Int): androidx.compose.ui.input.nestedscroll/NestedScrollConnection // com.flaringapp.compose.topbar.nestedscroll/rememberNestedScrollConnection|rememberNestedScrollConnection@com.flaringapp.compose.topbar.nestedscroll.CollapsingTopBarNestedScrollStrategy<0:0>(0:0;androidx.compose.foundation.gestures.FlingBehavior?;com.flaringapp.compose.topbar.snap.CollapsingTopBarSnapBehavior?;androidx.compose.runtime.Composer?;kotlin.Int;kotlin.Int){0§<kotlin.Any?>}[0]
+final fun com.flaringapp.compose.topbar.dependent/com_flaringapp_compose_topbar_dependent_CollapsingTopBarExitState$stableprop_getter(): kotlin/Int // com.flaringapp.compose.topbar.dependent/com_flaringapp_compose_topbar_dependent_CollapsingTopBarExitState$stableprop_getter|com_flaringapp_compose_topbar_dependent_CollapsingTopBarExitState$stableprop_getter(){}[0]
+final fun com.flaringapp.compose.topbar.dependent/rememberCollapsingTopBarExitState(kotlin/Boolean, androidx.compose.runtime/Composer?, kotlin/Int, kotlin/Int): com.flaringapp.compose.topbar.dependent/CollapsingTopBarExitState // com.flaringapp.compose.topbar.dependent/rememberCollapsingTopBarExitState|rememberCollapsingTopBarExitState(kotlin.Boolean;androidx.compose.runtime.Composer?;kotlin.Int;kotlin.Int){}[0]
+final fun com.flaringapp.compose.topbar.nestedcollapse/com_flaringapp_compose_topbar_nestedcollapse_CollapsingTopBarColumnDirection$stableprop_getter(): kotlin/Int // com.flaringapp.compose.topbar.nestedcollapse/com_flaringapp_compose_topbar_nestedcollapse_CollapsingTopBarColumnDirection$stableprop_getter|com_flaringapp_compose_topbar_nestedcollapse_CollapsingTopBarColumnDirection$stableprop_getter(){}[0]
+final fun com.flaringapp.compose.topbar.nestedcollapse/com_flaringapp_compose_topbar_nestedcollapse_CollapsingTopBarColumnDirection_BottomUp$stableprop_getter(): kotlin/Int // com.flaringapp.compose.topbar.nestedcollapse/com_flaringapp_compose_topbar_nestedcollapse_CollapsingTopBarColumnDirection_BottomUp$stableprop_getter|com_flaringapp_compose_topbar_nestedcollapse_CollapsingTopBarColumnDirection_BottomUp$stableprop_getter(){}[0]
+final fun com.flaringapp.compose.topbar.nestedcollapse/com_flaringapp_compose_topbar_nestedcollapse_CollapsingTopBarColumnDirection_TopToBottom$stableprop_getter(): kotlin/Int // com.flaringapp.compose.topbar.nestedcollapse/com_flaringapp_compose_topbar_nestedcollapse_CollapsingTopBarColumnDirection_TopToBottom$stableprop_getter|com_flaringapp_compose_topbar_nestedcollapse_CollapsingTopBarColumnDirection_TopToBottom$stableprop_getter(){}[0]
+final fun com.flaringapp.compose.topbar.nestedcollapse/com_flaringapp_compose_topbar_nestedcollapse_CollapsingTopBarNestedCollapseState$stableprop_getter(): kotlin/Int // com.flaringapp.compose.topbar.nestedcollapse/com_flaringapp_compose_topbar_nestedcollapse_CollapsingTopBarNestedCollapseState$stableprop_getter|com_flaringapp_compose_topbar_nestedcollapse_CollapsingTopBarNestedCollapseState$stableprop_getter(){}[0]
+final fun com.flaringapp.compose.topbar.nestedcollapse/rememberCollapsingTopBarNestedCollapseState(androidx.compose.runtime/Composer?, kotlin/Int): com.flaringapp.compose.topbar.nestedcollapse/CollapsingTopBarNestedCollapseState // com.flaringapp.compose.topbar.nestedcollapse/rememberCollapsingTopBarNestedCollapseState|rememberCollapsingTopBarNestedCollapseState(androidx.compose.runtime.Composer?;kotlin.Int){}[0]
+final fun com.flaringapp.compose.topbar.nestedscroll/com_flaringapp_compose_topbar_nestedscroll_CollapsingTopBarNestedScrollCollapse$stableprop_getter(): kotlin/Int // com.flaringapp.compose.topbar.nestedscroll/com_flaringapp_compose_topbar_nestedscroll_CollapsingTopBarNestedScrollCollapse$stableprop_getter|com_flaringapp_compose_topbar_nestedscroll_CollapsingTopBarNestedScrollCollapse$stableprop_getter(){}[0]
+final fun com.flaringapp.compose.topbar.nestedscroll/com_flaringapp_compose_topbar_nestedscroll_CollapsingTopBarNestedScrollExpand$stableprop_getter(): kotlin/Int // com.flaringapp.compose.topbar.nestedscroll/com_flaringapp_compose_topbar_nestedscroll_CollapsingTopBarNestedScrollExpand$stableprop_getter|com_flaringapp_compose_topbar_nestedscroll_CollapsingTopBarNestedScrollExpand$stableprop_getter(){}[0]
+final fun com.flaringapp.compose.topbar.nestedscroll/com_flaringapp_compose_topbar_nestedscroll_CollapsingTopBarNestedScrollExpand_Always$stableprop_getter(): kotlin/Int // com.flaringapp.compose.topbar.nestedscroll/com_flaringapp_compose_topbar_nestedscroll_CollapsingTopBarNestedScrollExpand_Always$stableprop_getter|com_flaringapp_compose_topbar_nestedscroll_CollapsingTopBarNestedScrollExpand_Always$stableprop_getter(){}[0]
+final fun com.flaringapp.compose.topbar.nestedscroll/com_flaringapp_compose_topbar_nestedscroll_CollapsingTopBarNestedScrollExpand_AtTop$stableprop_getter(): kotlin/Int // com.flaringapp.compose.topbar.nestedscroll/com_flaringapp_compose_topbar_nestedscroll_CollapsingTopBarNestedScrollExpand_AtTop$stableprop_getter|com_flaringapp_compose_topbar_nestedscroll_CollapsingTopBarNestedScrollExpand_AtTop$stableprop_getter(){}[0]
+final fun com.flaringapp.compose.topbar.nestedscroll/com_flaringapp_compose_topbar_nestedscroll_CollapsingTopBarNestedScrollSnap$stableprop_getter(): kotlin/Int // com.flaringapp.compose.topbar.nestedscroll/com_flaringapp_compose_topbar_nestedscroll_CollapsingTopBarNestedScrollSnap$stableprop_getter|com_flaringapp_compose_topbar_nestedscroll_CollapsingTopBarNestedScrollSnap$stableprop_getter(){}[0]
+final fun com.flaringapp.compose.topbar.nestedscroll/com_flaringapp_compose_topbar_nestedscroll_MultiNestedScrollConnection$stableprop_getter(): kotlin/Int // com.flaringapp.compose.topbar.nestedscroll/com_flaringapp_compose_topbar_nestedscroll_MultiNestedScrollConnection$stableprop_getter|com_flaringapp_compose_topbar_nestedscroll_MultiNestedScrollConnection$stableprop_getter(){}[0]
+final fun com.flaringapp.compose.topbar.scaffold/CollapsingTopBarScaffold(com.flaringapp.compose.topbar.scaffold/CollapsingTopBarScaffoldScrollMode, androidx.compose.ui/Modifier?, com.flaringapp.compose.topbar.scaffold/CollapsingTopBarScaffoldState?, kotlin/Boolean, com.flaringapp.compose.topbar.snap/CollapsingTopBarSnapBehavior?, androidx.compose.ui/Modifier?, kotlin/Boolean, kotlin/Function4<com.flaringapp.compose.topbar/CollapsingTopBarScope, com.flaringapp.compose.topbar/CollapsingTopBarState, androidx.compose.runtime/Composer, kotlin/Int, kotlin/Unit>, kotlin/Function2<androidx.compose.runtime/Composer, kotlin/Int, kotlin/Unit>, androidx.compose.runtime/Composer?, kotlin/Int, kotlin/Int) // com.flaringapp.compose.topbar.scaffold/CollapsingTopBarScaffold|CollapsingTopBarScaffold(com.flaringapp.compose.topbar.scaffold.CollapsingTopBarScaffoldScrollMode;androidx.compose.ui.Modifier?;com.flaringapp.compose.topbar.scaffold.CollapsingTopBarScaffoldState?;kotlin.Boolean;com.flaringapp.compose.topbar.snap.CollapsingTopBarSnapBehavior?;androidx.compose.ui.Modifier?;kotlin.Boolean;kotlin.Function4<com.flaringapp.compose.topbar.CollapsingTopBarScope,com.flaringapp.compose.topbar.CollapsingTopBarState,androidx.compose.runtime.Composer,kotlin.Int,kotlin.Unit>;kotlin.Function2<androidx.compose.runtime.Composer,kotlin.Int,kotlin.Unit>;androidx.compose.runtime.Composer?;kotlin.Int;kotlin.Int){}[0]
+final fun com.flaringapp.compose.topbar.scaffold/com_flaringapp_compose_topbar_scaffold_CollapsingTopBarScaffoldScrollMode$stableprop_getter(): kotlin/Int // com.flaringapp.compose.topbar.scaffold/com_flaringapp_compose_topbar_scaffold_CollapsingTopBarScaffoldScrollMode$stableprop_getter|com_flaringapp_compose_topbar_scaffold_CollapsingTopBarScaffoldScrollMode$stableprop_getter(){}[0]
+final fun com.flaringapp.compose.topbar.scaffold/com_flaringapp_compose_topbar_scaffold_CollapsingTopBarScaffoldScrollMode_Exit$stableprop_getter(): kotlin/Int // com.flaringapp.compose.topbar.scaffold/com_flaringapp_compose_topbar_scaffold_CollapsingTopBarScaffoldScrollMode_Exit$stableprop_getter|com_flaringapp_compose_topbar_scaffold_CollapsingTopBarScaffoldScrollMode_Exit$stableprop_getter(){}[0]
+final fun com.flaringapp.compose.topbar.scaffold/com_flaringapp_compose_topbar_scaffold_CollapsingTopBarScaffoldState$stableprop_getter(): kotlin/Int // com.flaringapp.compose.topbar.scaffold/com_flaringapp_compose_topbar_scaffold_CollapsingTopBarScaffoldState$stableprop_getter|com_flaringapp_compose_topbar_scaffold_CollapsingTopBarScaffoldState$stableprop_getter(){}[0]
+final fun com.flaringapp.compose.topbar.scaffold/rememberCollapsingTopBarScaffoldState(kotlin/Boolean, androidx.compose.runtime/Composer?, kotlin/Int, kotlin/Int): com.flaringapp.compose.topbar.scaffold/CollapsingTopBarScaffoldState // com.flaringapp.compose.topbar.scaffold/rememberCollapsingTopBarScaffoldState|rememberCollapsingTopBarScaffoldState(kotlin.Boolean;androidx.compose.runtime.Composer?;kotlin.Int;kotlin.Int){}[0]
+final fun com.flaringapp.compose.topbar.snap/com_flaringapp_compose_topbar_snap_CollapsingTopBarNoSnapBehavior$stableprop_getter(): kotlin/Int // com.flaringapp.compose.topbar.snap/com_flaringapp_compose_topbar_snap_CollapsingTopBarNoSnapBehavior$stableprop_getter|com_flaringapp_compose_topbar_snap_CollapsingTopBarNoSnapBehavior$stableprop_getter(){}[0]
+final fun com.flaringapp.compose.topbar.snap/com_flaringapp_compose_topbar_snap_CollapsingTopBarThresholdSnapBehavior$stableprop_getter(): kotlin/Int // com.flaringapp.compose.topbar.snap/com_flaringapp_compose_topbar_snap_CollapsingTopBarThresholdSnapBehavior$stableprop_getter|com_flaringapp_compose_topbar_snap_CollapsingTopBarThresholdSnapBehavior$stableprop_getter(){}[0]
+final fun com.flaringapp.compose.topbar.snap/rememberCollapsingTopBarSnapBehavior(kotlin/Float, androidx.compose.animation.core/AnimationSpec<kotlin/Float>?, androidx.compose.runtime/Composer?, kotlin/Int, kotlin/Int): com.flaringapp.compose.topbar.snap/CollapsingTopBarSnapBehavior // com.flaringapp.compose.topbar.snap/rememberCollapsingTopBarSnapBehavior|rememberCollapsingTopBarSnapBehavior(kotlin.Float;androidx.compose.animation.core.AnimationSpec<kotlin.Float>?;androidx.compose.runtime.Composer?;kotlin.Int;kotlin.Int){}[0]
+final fun com.flaringapp.compose.topbar/CollapsingTopBar(androidx.compose.ui/Modifier?, com.flaringapp.compose.topbar/CollapsingTopBarState?, kotlin/Boolean, kotlin/Function3<com.flaringapp.compose.topbar/CollapsingTopBarScope, androidx.compose.runtime/Composer, kotlin/Int, kotlin/Unit>, androidx.compose.runtime/Composer?, kotlin/Int, kotlin/Int) // com.flaringapp.compose.topbar/CollapsingTopBar|CollapsingTopBar(androidx.compose.ui.Modifier?;com.flaringapp.compose.topbar.CollapsingTopBarState?;kotlin.Boolean;kotlin.Function3<com.flaringapp.compose.topbar.CollapsingTopBarScope,androidx.compose.runtime.Composer,kotlin.Int,kotlin.Unit>;androidx.compose.runtime.Composer?;kotlin.Int;kotlin.Int){}[0]
+final fun com.flaringapp.compose.topbar/com_flaringapp_compose_topbar_CollapsingTopBarLayoutInfo$stableprop_getter(): kotlin/Int // com.flaringapp.compose.topbar/com_flaringapp_compose_topbar_CollapsingTopBarLayoutInfo$stableprop_getter|com_flaringapp_compose_topbar_CollapsingTopBarLayoutInfo$stableprop_getter(){}[0]
+final fun com.flaringapp.compose.topbar/com_flaringapp_compose_topbar_CollapsingTopBarState$stableprop_getter(): kotlin/Int // com.flaringapp.compose.topbar/com_flaringapp_compose_topbar_CollapsingTopBarState$stableprop_getter|com_flaringapp_compose_topbar_CollapsingTopBarState$stableprop_getter(){}[0]
+final fun com.flaringapp.compose.topbar/rememberCollapsingTopBarState(kotlin/Boolean, androidx.compose.runtime/Composer?, kotlin/Int, kotlin/Int): com.flaringapp.compose.topbar/CollapsingTopBarState // com.flaringapp.compose.topbar/rememberCollapsingTopBarState|rememberCollapsingTopBarState(kotlin.Boolean;androidx.compose.runtime.Composer?;kotlin.Int;kotlin.Int){}[0]
