@@ -39,13 +39,13 @@ import com.flaringapp.compose.topbar.snap.CollapsingTopBarSnapScope
  * @see enterAlwaysCollapsed
  */
 @ConsistentCopyVisibility
-data class CollapsingTopBarScaffoldScrollMode @RememberInComposition internal constructor(
+public data class CollapsingTopBarScaffoldScrollMode @RememberInComposition internal constructor(
     val expandAlways: Boolean,
     val exit: Exit? = null,
 ) : CollapsingTopBarNestedScrollStrategy<CollapsingTopBarScaffoldState> {
 
     @ConsistentCopyVisibility
-    data class Exit @RememberInComposition internal constructor(
+    public data class Exit @RememberInComposition internal constructor(
         val enterAlways: Boolean,
     )
 
@@ -106,7 +106,7 @@ data class CollapsingTopBarScaffoldScrollMode @RememberInComposition internal co
         }
     }
 
-    companion object {
+    public companion object {
 
         /**
          * Create and remember scroll mode in which top bar just collapses, and never exits.
@@ -115,7 +115,7 @@ data class CollapsingTopBarScaffoldScrollMode @RememberInComposition internal co
          * scrolls upwards, or only when scrollable content underneath is fully scrolled to the top.
          */
         @Composable
-        fun collapse(
+        public fun collapse(
             expandAlways: Boolean,
         ): CollapsingTopBarScaffoldScrollMode = remember(expandAlways) {
             CollapsingTopBarScaffoldScrollMode(
@@ -133,7 +133,7 @@ data class CollapsingTopBarScaffoldScrollMode @RememberInComposition internal co
          * scrolls upwards, or only when scrollable content underneath is fully scrolled to the top.
          */
         @Composable
-        fun collapseAndExit(
+        public fun collapseAndExit(
             expandAlways: Boolean,
         ): CollapsingTopBarScaffoldScrollMode = remember(expandAlways) {
             CollapsingTopBarScaffoldScrollMode(
@@ -153,7 +153,7 @@ data class CollapsingTopBarScaffoldScrollMode @RememberInComposition internal co
          * expanded`.
          */
         @Composable
-        fun enterAlwaysCollapsed(): CollapsingTopBarScaffoldScrollMode = remember {
+        public fun enterAlwaysCollapsed(): CollapsingTopBarScaffoldScrollMode = remember {
             CollapsingTopBarScaffoldScrollMode(
                 expandAlways = false,
                 exit = Exit(

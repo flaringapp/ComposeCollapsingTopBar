@@ -32,7 +32,7 @@ import androidx.compose.ui.unit.Velocity
  * @param state the scrollable top bar state that collapses.
  * @param flingBehavior the fling behavior to be used for animating [state] fling.
  */
-class CollapsingTopBarNestedScrollCollapse(
+public class CollapsingTopBarNestedScrollCollapse(
     private val state: ScrollableState,
     private val flingBehavior: FlingBehavior,
 ) : CollapsingTopBarNestedScrollHandler {

@@ -74,7 +74,7 @@ import kotlin.math.min
  * @param content the content of this top bar column.
  */
 @Composable
-fun CollapsingTopBarScope.CollapsingTopBarColumn(
+public fun CollapsingTopBarScope.CollapsingTopBarColumn(
     state: CollapsingTopBarState,
     modifier: Modifier = Modifier,
     collapseDirection: CollapsingTopBarColumnDirection = CollapsingTopBarColumnDirection.BottomUp,
@@ -303,9 +303,9 @@ private class CollapsingTopBarColumnMeasurePolicy(
     }
 }
 
-sealed class CollapsingTopBarColumnDirection {
-    data object BottomUp : CollapsingTopBarColumnDirection()
-    data object TopToBottom : CollapsingTopBarColumnDirection()
+public sealed class CollapsingTopBarColumnDirection {
+    public data object BottomUp : CollapsingTopBarColumnDirection()
+    public data object TopToBottom : CollapsingTopBarColumnDirection()
 }
 
 /**
@@ -313,7 +313,7 @@ sealed class CollapsingTopBarColumnDirection {
  */
 @LayoutScopeMarker
 @Immutable
-interface CollapsingTopBarColumnScope {
+public interface CollapsingTopBarColumnScope {
 
     /**
      * Registers a progress listener to be notified every time top bar column collapse height
@@ -323,20 +323,20 @@ interface CollapsingTopBarColumnScope {
      *
      * @see CollapsingTopBarProgressListener
      */
-    fun Modifier.columnProgress(listener: CollapsingTopBarProgressListener): Modifier
+    public fun Modifier.columnProgress(listener: CollapsingTopBarProgressListener): Modifier
 
     /**
      * Prevent the element from collapsing and make it pin to the bottom of column as it collapses.
      * The height of all not collapsible elements form a total minimum (collapsed) height of column.
      */
-    fun Modifier.notCollapsible(): Modifier
+    public fun Modifier.notCollapsible(): Modifier
 
     /**
      * Clip element draw area as it collapses so that it does not draw underneath the element above.
      *
      * **Has no effect if applied together with [notCollapsible].**
      */
-    fun Modifier.clipToCollapse(): Modifier
+    public fun Modifier.clipToCollapse(): Modifier
 
     /**
      * Move element further in the collapse direction after it has collapsed, like 'pinning' to the
@@ -345,7 +345,7 @@ interface CollapsingTopBarColumnScope {
      * Has no effect if combined with [notCollapsible], and makes no sense to use in combination
      * with [clipToCollapse].
      */
-    fun Modifier.pinWhenCollapsed(): Modifier
+    public fun Modifier.pinWhenCollapsed(): Modifier
 }
 
 private object CollapsingTopBarColumnScopeInstance : CollapsingTopBarColumnScope {

@@ -15,6 +15,8 @@ plugins {
 kotlin {
     jvmToolchain(17)
 
+    explicitApi()
+
     android {
         namespace = "com.flaringapp.compose.topbar"
         compileSdk = 36

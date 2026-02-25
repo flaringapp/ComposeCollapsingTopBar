@@ -44,7 +44,7 @@ import com.flaringapp.compose.topbar.snap.CollapsingTopBarSnapBehavior
  * @see MultiNestedScrollConnection
  */
 @Composable
-fun <STATE> CollapsingTopBarNestedScrollStrategy<STATE>.rememberNestedScrollConnection(
+public fun <STATE> CollapsingTopBarNestedScrollStrategy<STATE>.rememberNestedScrollConnection(
     state: STATE,
     flingBehavior: FlingBehavior = ScrollableDefaults.flingBehavior(),
     snapBehavior: CollapsingTopBarSnapBehavior = CollapsingTopBarNoSnapBehavior,
@@ -69,7 +69,7 @@ fun <STATE> CollapsingTopBarNestedScrollStrategy<STATE>.rememberNestedScrollConn
  * @see MultiNestedScrollConnection
  */
 @Immutable
-interface CollapsingTopBarNestedScrollStrategy<STATE> {
+public interface CollapsingTopBarNestedScrollStrategy<STATE> {
 
     /**
      * Creates a sequence of scroll handlers to process nested scroll.
@@ -82,7 +82,7 @@ interface CollapsingTopBarNestedScrollStrategy<STATE> {
      *
      * @see CollapsingTopBarNestedScrollHandler
      */
-    fun createHandlers(
+    public fun createHandlers(
         state: STATE,
         flingBehavior: FlingBehavior,
         snapBehavior: CollapsingTopBarSnapBehavior,

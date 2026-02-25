@@ -32,11 +32,11 @@ import androidx.compose.ui.geometry.Offset
  * [collapse] and [expand], as well as provides animation utility methods.
  */
 @Stable
-interface CollapsingTopBarControls {
+public interface CollapsingTopBarControls {
 
-    companion object {
+    public companion object {
 
-        val DefaultAnimationSpec: AnimationSpec<Float> = spring(
+        public val DefaultAnimationSpec: AnimationSpec<Float> = spring(
             stiffness = Spring.StiffnessMediumLow,
             visibilityThreshold = Offset.VisibilityThreshold.y,
         )
@@ -47,7 +47,7 @@ interface CollapsingTopBarControls {
      *
      * @param animationSpec the animation spec of expand animation.
      */
-    suspend fun expand(
+    public suspend fun expand(
         animationSpec: AnimationSpec<Float> = DefaultAnimationSpec,
     )
 
@@ -56,7 +56,7 @@ interface CollapsingTopBarControls {
      *
      * @param animationSpec the animation spec of collapse animation.
      */
-    suspend fun collapse(
+    public suspend fun collapse(
         animationSpec: AnimationSpec<Float> = DefaultAnimationSpec,
     )
 
@@ -68,7 +68,7 @@ interface CollapsingTopBarControls {
      * @param targetHeight the target height of top bar to animate to.
      * @param animationSpec the animation spec of height animation.
      */
-    suspend fun ScrollableState.animateHeightTo(
+    public suspend fun ScrollableState.animateHeightTo(
         currentHeight: Float,
         targetHeight: Float,
         animationSpec: AnimationSpec<Float>,
@@ -89,7 +89,7 @@ interface CollapsingTopBarControls {
      * @param targetHeight the target height of top bar to animate to.
      * @param animationSpec the animation spec of height animation.
      */
-    suspend fun ScrollScope.animateHeightTo(
+    public suspend fun ScrollScope.animateHeightTo(
         currentHeight: Float,
         targetHeight: Float,
         animationSpec: AnimationSpec<Float>,

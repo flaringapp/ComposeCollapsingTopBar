@@ -24,9 +24,9 @@ import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
  * A contract for single top bar nested scroll handler responsible for processing single logical
  * operation (e.g. expanding). A perfect place to define common extensions for all handlers.
  */
-interface CollapsingTopBarNestedScrollHandler : NestedScrollConnection {
+public interface CollapsingTopBarNestedScrollHandler : NestedScrollConnection {
 
-    suspend fun ScrollableState.fling(
+    public suspend fun ScrollableState.fling(
         flingBehavior: FlingBehavior,
         velocity: Float,
     ): Float {

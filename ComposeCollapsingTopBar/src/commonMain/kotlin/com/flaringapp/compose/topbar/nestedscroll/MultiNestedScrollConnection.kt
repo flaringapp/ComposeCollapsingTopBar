@@ -26,7 +26,7 @@ import androidx.compose.ui.unit.Velocity
  * while respecting their order: each subsequent delegate will receive available scroll minus
  * the amount consumed by all previous delegates.
  */
-class MultiNestedScrollConnection(
+public class MultiNestedScrollConnection(
     private val delegates: List<NestedScrollConnection>,
 ) : NestedScrollConnection {
 

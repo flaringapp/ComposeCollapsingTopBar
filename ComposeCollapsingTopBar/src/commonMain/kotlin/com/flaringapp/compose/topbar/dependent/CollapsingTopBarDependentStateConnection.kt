@@ -38,7 +38,7 @@ import com.flaringapp.compose.topbar.CollapsingTopBarState
  * @param update the action for updating custom derived state on re-measurement, when [state]
  * layout info is updated.
  */
-fun Modifier.collapsingTopBarDependentStateConnection(
+public fun Modifier.collapsingTopBarDependentStateConnection(
     state: CollapsingTopBarState,
     update: (layoutInfo: CollapsingTopBarLayoutInfo) -> Unit,
 ): Modifier = this.layout { measurable, constraints ->

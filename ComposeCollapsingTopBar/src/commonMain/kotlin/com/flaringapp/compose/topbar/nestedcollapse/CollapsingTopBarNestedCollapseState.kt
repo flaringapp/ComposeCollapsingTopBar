@@ -26,7 +26,7 @@ import com.flaringapp.compose.topbar.CollapsingTopBar
  * Creates a [CollapsingTopBarNestedCollapseState] that is remembered across compositions.
  */
 @Composable
-fun rememberCollapsingTopBarNestedCollapseState(): CollapsingTopBarNestedCollapseState {
+public fun rememberCollapsingTopBarNestedCollapseState(): CollapsingTopBarNestedCollapseState {
     return remember {
         CollapsingTopBarNestedCollapseState()
     }
@@ -40,12 +40,12 @@ fun rememberCollapsingTopBarNestedCollapseState(): CollapsingTopBarNestedCollaps
  * @see CollapsingTopBarColumn
  */
 @Stable
-interface CollapsingTopBarNestedCollapseElement {
+public interface CollapsingTopBarNestedCollapseElement {
 
     /**
      * The minimum height of this nested collapse element.
      */
-    val minHeight: Int
+    public val minHeight: Int
 }
 
 /**
@@ -55,7 +55,7 @@ interface CollapsingTopBarNestedCollapseElement {
  * In most cases, this will be created via [rememberCollapsingTopBarNestedCollapseState].
  */
 @Stable
-class CollapsingTopBarNestedCollapseState @RememberInComposition constructor() :
+public class CollapsingTopBarNestedCollapseState @RememberInComposition constructor() :
     CollapsingTopBarNestedCollapseElement {
 
     /**

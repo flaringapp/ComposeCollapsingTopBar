@@ -19,7 +19,7 @@ package com.flaringapp.compose.topbar
 /**
  * Receives collapsing progress updates in [onProgressUpdate].
  */
-fun interface CollapsingTopBarProgressListener {
+public fun interface CollapsingTopBarProgressListener {
 
     /**
      * Callback to collapsing progress update.
@@ -27,7 +27,7 @@ fun interface CollapsingTopBarProgressListener {
      * @param totalProgress progress of total top bar collapsing.
      * @param itemProgress progress of target item collapsing.
      */
-    fun onProgressUpdate(
+    public fun onProgressUpdate(
         totalProgress: Float,
         itemProgress: Float,
     )
