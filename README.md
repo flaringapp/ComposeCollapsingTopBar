@@ -13,10 +13,11 @@
 
 If you like this project, :star: star and :loudspeaker: share it!
 
-ComposeCollapsingTopBar is the ultimate Jetpack Compose library for creating versatile collapsing
-header UIs. It provides the capability to build custom top bars with automatic height adjustment,
-featuring common scroll modes, snapping, and offering plenty of customization options. It's designed
-with ease of use and optimization in mind while providing features similar to `CoordinatorLayout`.
+ComposeCollapsingTopBar is the ultimate Compose Multiplatform library for creating versatile
+collapsing header UIs. It provides the capability to build custom top bars with automatic height
+adjustment, featuring common scroll modes, snapping, and offering plenty of customization options.
+It's designed with ease of use and optimization in mind while providing features similar to
+`CoordinatorLayout`.
 
 ![](/docs/assets/cover_collapsing_stack.gif)
 &nbsp;&nbsp;
