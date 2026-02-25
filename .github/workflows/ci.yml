@@ -1,8 +1,10 @@
-name: Run PR checks
+name: Run quality checks
 
 on:
+  push:
+    branches:
+      - main
   pull_request:
-    branches: [ main ]
 
 jobs:
   lint_verify:
@@ -27,3 +29,6 @@ jobs:
 
       - name: Run Android Linter
         run: ./gradlew lintRelease
+
+      - name: Check binary compatibility
+        run: ./gradlew checkLegacyAbi || { exit_code=$?; printf "*** This PR changes public API. If this change is intentional, run './gradlew updateLegacyAbi' and commit the new API files. ***"; exit $exit_code; }
