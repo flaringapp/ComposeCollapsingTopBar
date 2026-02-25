@@ -43,7 +43,7 @@ import com.flaringapp.compose.topbar.snap.CollapsingTopBarSnapScope
  * [CollapsingTopBarScaffoldScrollMode] that may exit, then initially it's fully exited.
  */
 @Composable
-fun rememberCollapsingTopBarScaffoldState(
+public fun rememberCollapsingTopBarScaffoldState(
     isExpanded: Boolean = true,
 ): CollapsingTopBarScaffoldState {
     return rememberSaveable(saver = CollapsingTopBarScaffoldState.Saver) {
@@ -63,9 +63,9 @@ fun rememberCollapsingTopBarScaffoldState(
  * In most cases, this will be created via [rememberCollapsingTopBarScaffoldState].
  */
 @Stable
-class CollapsingTopBarScaffoldState @RememberInComposition internal constructor(
-    val topBarState: CollapsingTopBarState,
-    val exitState: CollapsingTopBarExitState,
+public class CollapsingTopBarScaffoldState @RememberInComposition internal constructor(
+    public val topBarState: CollapsingTopBarState,
+    public val exitState: CollapsingTopBarExitState,
 ) : CollapsingTopBarControls,
     CollapsingTopBarSnapScope {
 
@@ -73,20 +73,20 @@ class CollapsingTopBarScaffoldState @RememberInComposition internal constructor(
      * The current visual top bar height, either during collapse or exit.
      */
     @get:FrequentlyChangingValue
-    val totalTopBarHeight: Float
+    public val totalTopBarHeight: Float
         get() = topBarState.layoutInfo.height - exitState.exitHeight
 
     /**
      * Whether top bar is fully expanded and entered.
      */
-    val isExpanded: Boolean by derivedStateOf {
+    public val isExpanded: Boolean by derivedStateOf {
         topBarState.isExpanded && exitState.isFullyEntered
     }
 
     /**
      * Whether top bar is fully collapsed and exited (if exit is enabled).
      */
-    val isCollapsed: Boolean by derivedStateOf {
+    public val isCollapsed: Boolean by derivedStateOf {
         topBarState.isCollapsed &&
             (!exitState.isEnabled || exitState.isFullyExited)
     }
@@ -168,12 +168,12 @@ class CollapsingTopBarScaffoldState @RememberInComposition internal constructor(
         action.invoke(this, progress)
     }
 
-    companion object {
+    public companion object {
 
         /**
          * The default [Saver] implementation for [CollapsingTopBarScaffoldState].
          */
-        val Saver: Saver<CollapsingTopBarScaffoldState, *> = listSaver(
+        public val Saver: Saver<CollapsingTopBarScaffoldState, *> = listSaver(
             save = {
                 listOf(
                     with(CollapsingTopBarState.Saver) { save(it.topBarState)!! },

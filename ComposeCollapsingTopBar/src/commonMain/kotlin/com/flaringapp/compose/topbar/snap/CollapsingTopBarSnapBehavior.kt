@@ -30,7 +30,7 @@ import com.flaringapp.compose.topbar.CollapsingTopBarControls.Companion.DefaultA
  * [CollapsingTopBarSnapScope] receiver.
  */
 @Immutable
-interface CollapsingTopBarSnapBehavior {
+public interface CollapsingTopBarSnapBehavior {
 
     /**
      * Performs snapping animation with [CollapsingTopBarSnapScope] receiver.
@@ -38,15 +38,15 @@ interface CollapsingTopBarSnapBehavior {
      * @param wasMovingUp whether a fling motion that preceded snapping was directed upwards
      * (with negative velocity) or not.
      */
-    suspend fun CollapsingTopBarSnapScope.snap(wasMovingUp: Boolean)
+    public suspend fun CollapsingTopBarSnapScope.snap(wasMovingUp: Boolean)
 }
 
 /**
  * A simple implementation of [CollapsingTopBarSnapBehavior] that **does not** perform snapping.
  */
-object CollapsingTopBarNoSnapBehavior : CollapsingTopBarSnapBehavior {
+public object CollapsingTopBarNoSnapBehavior : CollapsingTopBarSnapBehavior {
 
-    override suspend fun CollapsingTopBarSnapScope.snap(wasMovingUp: Boolean) = Unit
+    override suspend fun CollapsingTopBarSnapScope.snap(wasMovingUp: Boolean): Unit = Unit
 }
 
 /**
@@ -59,7 +59,7 @@ object CollapsingTopBarNoSnapBehavior : CollapsingTopBarSnapBehavior {
  * collapse snapping is performed otherwise.
  * @param animationSpec the animation spec of snap animation.
  */
-class CollapsingTopBarThresholdSnapBehavior @RememberInComposition constructor(
+public class CollapsingTopBarThresholdSnapBehavior @RememberInComposition constructor(
     private val threshold: Float = 0.5f,
     private val animationSpec: AnimationSpec<Float> = DefaultAnimationSpec,
 ) : CollapsingTopBarSnapBehavior {
@@ -87,7 +87,7 @@ class CollapsingTopBarThresholdSnapBehavior @RememberInComposition constructor(
  * @see CollapsingTopBarThresholdSnapBehavior
  */
 @Composable
-fun rememberCollapsingTopBarSnapBehavior(
+public fun rememberCollapsingTopBarSnapBehavior(
     threshold: Float = 0.5f,
     animationSpec: AnimationSpec<Float> = DefaultAnimationSpec,
 ): CollapsingTopBarSnapBehavior {

@@ -45,7 +45,7 @@ import kotlin.math.roundToInt
  * @param isExpanded the initial state of top bar height being expanded.
  */
 @Composable
-fun rememberCollapsingTopBarState(
+public fun rememberCollapsingTopBarState(
     isExpanded: Boolean = true,
 ): CollapsingTopBarState {
     return rememberSaveable(saver = CollapsingTopBarState.Saver) {
@@ -61,7 +61,7 @@ fun rememberCollapsingTopBarState(
  * In most cases, this will be created via [rememberCollapsingTopBarState].
  */
 @Stable
-class CollapsingTopBarState @RememberInComposition internal constructor(
+public class CollapsingTopBarState @RememberInComposition internal constructor(
     initialHeight: Float,
 ) : ScrollableState,
     CollapsingTopBarControls,
@@ -71,7 +71,7 @@ class CollapsingTopBarState @RememberInComposition internal constructor(
      * @param isExpanded the initial state of top bar height being expanded.
      */
     @RememberInComposition
-    constructor(
+    public constructor(
         isExpanded: Boolean = true,
     ) : this(
         initialHeight = if (isExpanded) UNKNOWN_EXPANDED_HEIGHT.toFloat() else 0f,
@@ -80,14 +80,14 @@ class CollapsingTopBarState @RememberInComposition internal constructor(
     /**
      * Whether top bar height has reached its minimum height.
      */
-    val isCollapsed: Boolean by derivedStateOf {
+    public val isCollapsed: Boolean by derivedStateOf {
         layoutInfo.isCollapsed
     }
 
     /**
      * Whether top bar height has reached its maximum height.
      */
-    val isExpanded: Boolean by derivedStateOf {
+    public val isExpanded: Boolean by derivedStateOf {
         layoutInfo.isExpanded
     }
 
@@ -100,7 +100,7 @@ class CollapsingTopBarState @RememberInComposition internal constructor(
      * Therefore, avoid using it in the composition.
      */
     @get:FrequentlyChangingValue
-    val layoutInfo: CollapsingTopBarLayoutInfo
+    public val layoutInfo: CollapsingTopBarLayoutInfo
         get() = layoutInfoState.value
 
     private val layoutInfoState = mutableStateOf(
@@ -117,7 +117,7 @@ class CollapsingTopBarState @RememberInComposition internal constructor(
     override suspend fun scroll(
         scrollPriority: MutatePriority,
         block: suspend ScrollScope.() -> Unit,
-    ) = scrollableState.scroll(scrollPriority, block)
+    ): Unit = scrollableState.scroll(scrollPriority, block)
 
     override fun dispatchRawDelta(delta: Float): Float =
         scrollableState.dispatchRawDelta(delta)
@@ -151,7 +151,7 @@ class CollapsingTopBarState @RememberInComposition internal constructor(
     //region Controls
     override suspend fun expand(
         animationSpec: AnimationSpec<Float>,
-    ) = animateHeightTo(
+    ): Unit = animateHeightTo(
         currentHeight = layoutInfo.height,
         targetHeight = layoutInfo.expandedHeight.toFloat(),
         animationSpec = animationSpec,
@@ -159,7 +159,7 @@ class CollapsingTopBarState @RememberInComposition internal constructor(
 
     override suspend fun collapse(
         animationSpec: AnimationSpec<Float>,
-    ) = animateHeightTo(
+    ): Unit = animateHeightTo(
         currentHeight = layoutInfo.height,
         targetHeight = layoutInfo.collapsedHeight.toFloat(),
         animationSpec = animationSpec,
@@ -208,7 +208,7 @@ class CollapsingTopBarState @RememberInComposition internal constructor(
         }
     }
 
-    companion object {
+    public companion object {
 
         // Using int type is important: it guarantees value integrity when converting to float
         private const val UNKNOWN_EXPANDED_HEIGHT = Int.MAX_VALUE
@@ -219,7 +219,7 @@ class CollapsingTopBarState @RememberInComposition internal constructor(
         /**
          * The default [Saver] implementation for [CollapsingTopBarState].
          */
-        val Saver: Saver<CollapsingTopBarState, Float> = Saver(
+        public val Saver: Saver<CollapsingTopBarState, Float> = Saver(
             save = {
                 when {
                     it.layoutInfo.isExpanded -> FULLY_EXPANDED
@@ -241,7 +241,7 @@ class CollapsingTopBarState @RememberInComposition internal constructor(
 /**
  * The current layout measurements state of collapsing top bar.
  */
-data class CollapsingTopBarLayoutInfo(
+public data class CollapsingTopBarLayoutInfo(
     /**
      * The current collapsing height of the top bar.
      */

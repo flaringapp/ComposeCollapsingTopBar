@@ -31,9 +31,9 @@ import androidx.compose.ui.unit.Velocity
  * @see Always
  * @see AtTop
  */
-abstract class CollapsingTopBarNestedScrollExpand : CollapsingTopBarNestedScrollHandler {
+public abstract class CollapsingTopBarNestedScrollExpand : CollapsingTopBarNestedScrollHandler {
 
-    companion object {
+    public companion object {
 
         /**
          * Creates one of [Always], [AtTop] scroll handlers based on [enterAlways] flag.
@@ -42,7 +42,7 @@ abstract class CollapsingTopBarNestedScrollExpand : CollapsingTopBarNestedScroll
          * @param flingBehavior the fling behavior to be used for animating [state] fling.
          * @param enterAlways the flag to create [Always] handler if true, or [AtTop] if false.
          */
-        fun of(
+        public fun of(
             state: ScrollableState,
             flingBehavior: FlingBehavior,
             enterAlways: Boolean,
@@ -61,8 +61,8 @@ abstract class CollapsingTopBarNestedScrollExpand : CollapsingTopBarNestedScroll
         }
     }
 
-    abstract val state: ScrollableState
-    abstract val flingBehavior: FlingBehavior
+    public abstract val state: ScrollableState
+    public abstract val flingBehavior: FlingBehavior
 
     /**
      * Dispatch [available] offset to [state] if it's downward.
@@ -105,7 +105,7 @@ abstract class CollapsingTopBarNestedScrollExpand : CollapsingTopBarNestedScroll
      * @param state the scrollable top bar state that expands.
      * @param flingBehavior the fling behavior to be used for animating [state] fling.
      */
-    class Always(
+    public class Always(
         override val state: ScrollableState,
         override val flingBehavior: FlingBehavior,
     ) : CollapsingTopBarNestedScrollExpand() {
@@ -127,7 +127,7 @@ abstract class CollapsingTopBarNestedScrollExpand : CollapsingTopBarNestedScroll
      * @param state the scrollable top bar state that expands.
      * @param flingBehavior the fling behavior to be used for animating [state] fling.
      */
-    class AtTop(
+    public class AtTop(
         override val state: ScrollableState,
         override val flingBehavior: FlingBehavior,
     ) : CollapsingTopBarNestedScrollExpand() {

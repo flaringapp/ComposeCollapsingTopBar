@@ -71,7 +71,7 @@ import kotlin.math.max
  */
 @Suppress("ComposeParameterOrder")
 @Composable
-fun CollapsingTopBarScaffold(
+public fun CollapsingTopBarScaffold(
     scrollMode: CollapsingTopBarScaffoldScrollMode,
     modifier: Modifier = Modifier,
     state: CollapsingTopBarScaffoldState = rememberCollapsingTopBarScaffoldState(),

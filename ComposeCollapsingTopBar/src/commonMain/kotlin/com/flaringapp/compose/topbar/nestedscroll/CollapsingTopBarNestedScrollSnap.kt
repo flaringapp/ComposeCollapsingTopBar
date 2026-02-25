@@ -27,7 +27,7 @@ import com.flaringapp.compose.topbar.snap.CollapsingTopBarSnapScope
  * @param snapBehavior the snap behavior to be used for snapping with [snapScope] after fling.
  * @param snapScope the receiver scope to be used for executing snap animation with [snapBehavior].
  */
-class CollapsingTopBarNestedScrollSnap(
+public class CollapsingTopBarNestedScrollSnap(
     private val snapBehavior: CollapsingTopBarSnapBehavior,
     private val snapScope: CollapsingTopBarSnapScope,
 ) : CollapsingTopBarNestedScrollHandler {

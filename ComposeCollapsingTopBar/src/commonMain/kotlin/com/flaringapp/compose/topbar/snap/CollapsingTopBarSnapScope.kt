@@ -23,7 +23,7 @@ import com.flaringapp.compose.topbar.CollapsingTopBarControls
  * something that represents top bar state as [CollapsingTopBarControls], which even may be
  * dynamic. Responsible for executing snap action requested in [snapWithProgress].
  */
-fun interface CollapsingTopBarSnapScope {
+public fun interface CollapsingTopBarSnapScope {
 
     /**
      * Executes snap action [action] providing current progress with [CollapsingTopBarControls]
@@ -33,7 +33,7 @@ fun interface CollapsingTopBarSnapScope {
      * help complex snap scopes decide where to snap, i.e. what [CollapsingTopBarControls] to use.
      * @param action the snap action lambda to be executed.
      */
-    suspend fun snapWithProgress(
+    public suspend fun snapWithProgress(
         wasMovingUp: Boolean,
         action: suspend CollapsingTopBarControls.(progress: Float) -> Unit,
     )

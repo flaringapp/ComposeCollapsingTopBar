@@ -47,7 +47,7 @@ import kotlin.math.min
  * @param isExited the initial state of top bar exit height being collapsed (exited).
  */
 @Composable
-fun rememberCollapsingTopBarExitState(
+public fun rememberCollapsingTopBarExitState(
     isExited: Boolean = false,
 ): CollapsingTopBarExitState {
     return rememberSaveable(saver = CollapsingTopBarExitState.Saver) {
@@ -67,7 +67,7 @@ fun rememberCollapsingTopBarExitState(
  *
  * @see [collapsingTopBarDependentStateConnection]
  */
-fun Modifier.collapsingTopBarExitStateConnection(
+public fun Modifier.collapsingTopBarExitStateConnection(
     topBarState: CollapsingTopBarState,
     exitState: CollapsingTopBarExitState,
 ): Modifier = this.collapsingTopBarDependentStateConnection(topBarState) {
@@ -92,7 +92,7 @@ fun Modifier.collapsingTopBarExitStateConnection(
  * In most cases, this will be created via [rememberCollapsingTopBarExitState].
  */
 @Stable
-class CollapsingTopBarExitState @RememberInComposition internal constructor(
+public class CollapsingTopBarExitState @RememberInComposition internal constructor(
     initialExitHeight: Float,
 ) : ScrollableState,
     CollapsingTopBarControls,
@@ -102,7 +102,7 @@ class CollapsingTopBarExitState @RememberInComposition internal constructor(
      * @param isExited the initial state of top bar exit height being collapsed (exited).
      */
     @RememberInComposition
-    constructor(
+    public constructor(
         isExited: Boolean = false,
     ) : this(
         initialExitHeight = if (isExited) INITIALLY_EXITED_HEIGHT else 0f,
@@ -112,7 +112,7 @@ class CollapsingTopBarExitState @RememberInComposition internal constructor(
      * Indicates if state is currently enabled. State becomes enabled upon receiving first
      * measurement update. Disabled state is always entered/expanded.
      */
-    val isEnabled: Boolean
+    public val isEnabled: Boolean
         get() = collapsedHeight > 0
 
     /**
@@ -121,7 +121,7 @@ class CollapsingTopBarExitState @RememberInComposition internal constructor(
      * height is updated in scope of measurement updates.
      */
     @get:FrequentlyChangingValue
-    val exitHeight: Float
+    public val exitHeight: Float
         get() = packedExitHeightState.floatValue.coerceAtMost(collapsedHeight)
 
     /**
@@ -129,7 +129,7 @@ class CollapsingTopBarExitState @RememberInComposition internal constructor(
      * entered.
      */
     @get:FrequentlyChangingValue
-    val exitProgress: Float
+    public val exitProgress: Float
         get() = when {
             exitHeight == 0f -> 1f
             collapsedHeight == 0f -> 0f
@@ -139,21 +139,21 @@ class CollapsingTopBarExitState @RememberInComposition internal constructor(
     /**
      * Whether top bar exit height is fully exited/collapsed. Disabled state is never exited.
      */
-    val isFullyExited: Boolean by derivedStateOf {
+    public val isFullyExited: Boolean by derivedStateOf {
         isEnabled && exitHeight == collapsedHeight
     }
 
     /**
      * Whether top bar exit height is fully entered/expanded. Disabled state is always entered.
      */
-    val isFullyEntered: Boolean by derivedStateOf {
+    public val isFullyEntered: Boolean by derivedStateOf {
         exitHeight == 0f
     }
 
     /**
      * The entered (collapsed) height of the collapsing top bar, highest [exitHeight] can go.
      */
-    val collapsedHeight: Float
+    public val collapsedHeight: Float
         get() = collapsedHeightState.floatValue
 
     /**
@@ -173,7 +173,7 @@ class CollapsingTopBarExitState @RememberInComposition internal constructor(
     override suspend fun scroll(
         scrollPriority: MutatePriority,
         block: suspend ScrollScope.() -> Unit,
-    ) = scrollableState.scroll(scrollPriority, block)
+    ): Unit = scrollableState.scroll(scrollPriority, block)
 
     override fun dispatchRawDelta(delta: Float): Float =
         scrollableState.dispatchRawDelta(delta)
@@ -205,7 +205,7 @@ class CollapsingTopBarExitState @RememberInComposition internal constructor(
     //region Controls
     override suspend fun expand(
         animationSpec: AnimationSpec<Float>,
-    ) = animateHeightTo(
+    ): Unit = animateHeightTo(
         currentHeight = -exitHeight,
         targetHeight = 0f,
         animationSpec = animationSpec,
@@ -213,7 +213,7 @@ class CollapsingTopBarExitState @RememberInComposition internal constructor(
 
     override suspend fun collapse(
         animationSpec: AnimationSpec<Float>,
-    ) = animateHeightTo(
+    ): Unit = animateHeightTo(
         currentHeight = -exitHeight,
         targetHeight = -collapsedHeight,
         animationSpec = animationSpec,
@@ -233,7 +233,7 @@ class CollapsingTopBarExitState @RememberInComposition internal constructor(
     /**
      * Disables this state and resets current exit height to entered/expanded.
      */
-    fun reset() {
+    public fun reset() {
         packedExitHeightState.floatValue = 0f
         collapsedHeightState.floatValue = 0f
     }
@@ -267,7 +267,7 @@ class CollapsingTopBarExitState @RememberInComposition internal constructor(
         collapsedHeightState.floatValue = collapsedHeight.toFloat()
     }
 
-    companion object {
+    public companion object {
 
         /**
          * An exit height state value to indicate fully exited height until first measurement update.
@@ -277,7 +277,7 @@ class CollapsingTopBarExitState @RememberInComposition internal constructor(
         /**
          * The default [Saver] implementation for [CollapsingTopBarExitState].
          */
-        val Saver: Saver<CollapsingTopBarExitState, Float> = Saver(
+        public val Saver: Saver<CollapsingTopBarExitState, Float> = Saver(
             save = {
                 when {
                     it.collapsedHeight == 0f -> it.packedExitHeightState.floatValue

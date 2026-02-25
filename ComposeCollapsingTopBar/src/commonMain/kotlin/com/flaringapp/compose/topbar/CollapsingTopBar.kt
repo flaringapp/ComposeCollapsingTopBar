@@ -67,7 +67,7 @@ import kotlin.math.roundToInt
  * @see com.flaringapp.compose.topbar.nestedcollapse.CollapsingTopBarColumn
  */
 @Composable
-fun CollapsingTopBar(
+public fun CollapsingTopBar(
     modifier: Modifier = Modifier,
     state: CollapsingTopBarState = rememberCollapsingTopBarState(),
     clipToBounds: Boolean = true,
@@ -206,7 +206,7 @@ private fun resolveCollapsedHeight(placeables: List<Placeable>): Int {
  */
 @LayoutScopeMarker
 @Immutable
-interface CollapsingTopBarScope {
+public interface CollapsingTopBarScope {
 
     /**
      * Registers a progress listener to be notified every time top bar collapse height changes.
@@ -216,7 +216,7 @@ interface CollapsingTopBarScope {
      *
      * @see CollapsingTopBarProgressListener
      */
-    fun Modifier.progress(listener: CollapsingTopBarProgressListener): Modifier
+    public fun Modifier.progress(listener: CollapsingTopBarProgressListener): Modifier
 
     /**
      * Position the element dynamically while collapsing by offsetting up by [ratio] as a fraction
@@ -224,13 +224,13 @@ interface CollapsingTopBarScope {
      * place while top bar is collapsing, whereas 1f will make the element follow the collapse
      * motion.
      */
-    fun Modifier.parallax(ratio: Float): Modifier
+    public fun Modifier.parallax(ratio: Float): Modifier
 
     /**
      * Exclude the element from resolving minimum height among all elements. Useful for 'floating'
      * elements with custom motion on collapse.
      */
-    fun Modifier.floating(): Modifier
+    public fun Modifier.floating(): Modifier
 
     /**
      * Define an explicit minimum (collapsed) height nested collapse connection between the top bar
@@ -240,7 +240,7 @@ interface CollapsingTopBarScope {
      *
      * @see [com.flaringapp.compose.topbar.nestedcollapse.CollapsingTopBarColumn]
      */
-    fun Modifier.nestedCollapse(element: CollapsingTopBarNestedCollapseElement): Modifier
+    public fun Modifier.nestedCollapse(element: CollapsingTopBarNestedCollapseElement): Modifier
 }
 
 private object CollapsingTopBarScopeInstance : CollapsingTopBarScope {
