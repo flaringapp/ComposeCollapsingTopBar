@@ -574,7 +574,8 @@ This state exposes current exit offset via `exitHeight`.
 
 ## More examples
 
-Feel free to install a [demo app](/app) and try yourself even more samples!
+Feel free to install a demo [Android](/sample/android) or [iOS](/sample/ios) app and try yourself
+even more samples!
 
 ## Contributing
 
