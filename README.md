@@ -13,11 +13,11 @@
 
 If you like this project, :star: star and :loudspeaker: share it!
 
-ComposeCollapsingTopBar is the ultimate Compose Multiplatform library for creating versatile
+**ComposeCollapsingTopBar** is the ultimate **Compose Multiplatform** library for creating versatile
 collapsing header UIs. It provides the capability to build custom top bars with automatic height
 adjustment, featuring common scroll modes, snapping, and offering plenty of customization options.
 It's designed with ease of use and optimization in mind while providing features similar to
-`CoordinatorLayout`.
+Android `CoordinatorLayout`.
 
 ![](/docs/assets/cover_collapsing_stack.gif)
 &nbsp;&nbsp;
@@ -574,7 +574,8 @@ This state exposes current exit offset via `exitHeight`.
 
 ## More examples
 
-Feel free to install a [demo app](/app) and try yourself even more samples!
+Feel free to install a demo [Android](/sample/android) or [iOS](/sample/ios) app and try yourself
+even more samples!
 
 ## Contributing
 
