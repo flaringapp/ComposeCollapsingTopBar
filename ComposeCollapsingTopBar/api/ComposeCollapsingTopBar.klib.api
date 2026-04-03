@@ -19,6 +19,7 @@ abstract interface <#A: kotlin/Any?> com.flaringapp.compose.topbar.nestedscroll/
 }
 
 abstract interface com.flaringapp.compose.topbar.nestedcollapse/CollapsingTopBarColumnScope { // com.flaringapp.compose.topbar.nestedcollapse/CollapsingTopBarColumnScope|null[0]
+    abstract fun (androidx.compose.ui/Modifier).align(androidx.compose.ui/Alignment.Horizontal): androidx.compose.ui/Modifier // com.flaringapp.compose.topbar.nestedcollapse/CollapsingTopBarColumnScope.align|align@androidx.compose.ui.Modifier(androidx.compose.ui.Alignment.Horizontal){}[0]
     abstract fun (androidx.compose.ui/Modifier).clipToCollapse(): androidx.compose.ui/Modifier // com.flaringapp.compose.topbar.nestedcollapse/CollapsingTopBarColumnScope.clipToCollapse|clipToCollapse@androidx.compose.ui.Modifier(){}[0]
     abstract fun (androidx.compose.ui/Modifier).columnProgress(com.flaringapp.compose.topbar/CollapsingTopBarProgressListener): androidx.compose.ui/Modifier // com.flaringapp.compose.topbar.nestedcollapse/CollapsingTopBarColumnScope.columnProgress|columnProgress@androidx.compose.ui.Modifier(com.flaringapp.compose.topbar.CollapsingTopBarProgressListener){}[0]
     abstract fun (androidx.compose.ui/Modifier).notCollapsible(): androidx.compose.ui/Modifier // com.flaringapp.compose.topbar.nestedcollapse/CollapsingTopBarColumnScope.notCollapsible|notCollapsible@androidx.compose.ui.Modifier(){}[0]

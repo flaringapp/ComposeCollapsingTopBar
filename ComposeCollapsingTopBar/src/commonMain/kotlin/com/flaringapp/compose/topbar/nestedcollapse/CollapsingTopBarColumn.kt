@@ -23,6 +23,7 @@ import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.geometry.toRect
@@ -143,6 +144,8 @@ private class CollapsingTopBarColumnMeasurePolicy(
             with(placer) {
                 place(
                     placeables = placeables,
+                    layoutDirection = layoutDirection,
+                    parentWidth = width,
                     topBarHeight = topBarHeightState,
                     totalHeight = totalHeight,
                     collapsibleHeight = collapsibleHeight,
@@ -155,6 +158,8 @@ private class CollapsingTopBarColumnMeasurePolicy(
 
         fun Placeable.PlacementScope.place(
             placeables: List<Placeable>,
+            layoutDirection: LayoutDirection,
+            parentWidth: Int,
             topBarHeight: Float,
             totalHeight: Int,
             collapsibleHeight: Int,
@@ -165,6 +170,8 @@ private class CollapsingTopBarColumnMeasurePolicy(
 
         override fun Placeable.PlacementScope.place(
             placeables: List<Placeable>,
+            layoutDirection: LayoutDirection,
+            parentWidth: Int,
             topBarHeight: Float,
             totalHeight: Int,
             collapsibleHeight: Int,
@@ -184,6 +191,11 @@ private class CollapsingTopBarColumnMeasurePolicy(
                 placementOffset = itemOffset
 
                 val parentData = placeable.columnParentData
+                val xPosition = (parentData?.alignment ?: Alignment.Start).align(
+                    size = placeable.width,
+                    space = parentWidth,
+                    layoutDirection = layoutDirection,
+                )
 
                 // Pinned element
                 if (parentData?.isNotCollapsible == true) {
@@ -193,7 +205,7 @@ private class CollapsingTopBarColumnMeasurePolicy(
                             totalProgress = expandFraction,
                             itemProgress = 1f,
                         )
-                        placeable.place(0, itemOffset - unhandledCollapseOffset, 1f)
+                        placeable.place(xPosition, itemOffset - unhandledCollapseOffset, 1f)
                         return@forEach
                     }
 
@@ -209,7 +221,7 @@ private class CollapsingTopBarColumnMeasurePolicy(
                     if (parentData?.isNotCollapsible != true) {
                         parentData?.clipToCollapseHeightListener?.invoke(0)
                     }
-                    placeable.place(0, itemOffset)
+                    placeable.place(xPosition, itemOffset)
                     return@forEach
                 }
 
@@ -235,7 +247,7 @@ private class CollapsingTopBarColumnMeasurePolicy(
                     it - unhandledCollapseOffset
                 }
 
-                placeable.place(0, itemPositionWithOptionalPin)
+                placeable.place(xPosition, itemPositionWithOptionalPin)
             }
         }
     }
@@ -244,6 +256,8 @@ private class CollapsingTopBarColumnMeasurePolicy(
 
         override fun Placeable.PlacementScope.place(
             placeables: List<Placeable>,
+            layoutDirection: LayoutDirection,
+            parentWidth: Int,
             topBarHeight: Float,
             totalHeight: Int,
             collapsibleHeight: Int,
@@ -296,8 +310,13 @@ private class CollapsingTopBarColumnMeasurePolicy(
             for (i in placeables.indices.reversed()) {
                 val placeable = placeables[i]
                 val yPosition = yPositions[i]
+                val xPosition = (placeable.columnParentData?.alignment ?: Alignment.Start).align(
+                    size = placeable.width,
+                    space = parentWidth,
+                    layoutDirection = layoutDirection,
+                )
 
-                placeable.place(0, yPosition)
+                placeable.place(xPosition, yPosition)
             }
         }
     }
@@ -316,27 +335,18 @@ public sealed class CollapsingTopBarColumnDirection {
 public interface CollapsingTopBarColumnScope {
 
     /**
-     * Registers a progress listener to be notified every time top bar column collapse height
-     * changes. Only the last modifier in chain takes effect.
+     * Align the element horizontally within the width of [CollapsingTopBarColumn].
+     * Only the last modifier in chain takes effect.
      *
-     * @param listener the listener that gets notified of every collapse progress update.
-     *
-     * @see CollapsingTopBarProgressListener
+     * @param alignment the horizontal alignment of the element inside the column.
      */
-    public fun Modifier.columnProgress(listener: CollapsingTopBarProgressListener): Modifier
+    public fun Modifier.align(alignment: Alignment.Horizontal): Modifier
 
     /**
      * Prevent the element from collapsing and make it pin to the bottom of column as it collapses.
      * The height of all not collapsible elements form a total minimum (collapsed) height of column.
      */
     public fun Modifier.notCollapsible(): Modifier
-
-    /**
-     * Clip element draw area as it collapses so that it does not draw underneath the element above.
-     *
-     * **Has no effect if applied together with [notCollapsible].**
-     */
-    public fun Modifier.clipToCollapse(): Modifier
 
     /**
      * Move element further in the collapse direction after it has collapsed, like 'pinning' to the
@@ -346,38 +356,65 @@ public interface CollapsingTopBarColumnScope {
      * with [clipToCollapse].
      */
     public fun Modifier.pinWhenCollapsed(): Modifier
+
+    /**
+     * Clip element draw area as it collapses so that it does not draw underneath the element above.
+     *
+     * **Has no effect if applied together with [notCollapsible].**
+     */
+    public fun Modifier.clipToCollapse(): Modifier
+
+    /**
+     * Registers a progress listener to be notified every time top bar column collapse height
+     * changes. Only the last modifier in chain takes effect.
+     *
+     * @param listener the listener that gets notified of every collapse progress update.
+     *
+     * @see CollapsingTopBarProgressListener
+     */
+    public fun Modifier.columnProgress(listener: CollapsingTopBarProgressListener): Modifier
 }
 
 private object CollapsingTopBarColumnScopeInstance : CollapsingTopBarColumnScope {
 
-    override fun Modifier.columnProgress(listener: CollapsingTopBarProgressListener): Modifier {
-        return then(ProgressListenerModifier(listener))
+    override fun Modifier.align(alignment: Alignment.Horizontal): Modifier {
+        return then(AlignmentModifier(alignment))
     }
 
     override fun Modifier.notCollapsible(): Modifier {
         return then(NotCollapsibleModifier())
     }
 
+    override fun Modifier.pinWhenCollapsed(): Modifier {
+        return then(PinWhenCollapsedElement)
+    }
+
     override fun Modifier.clipToCollapse(): Modifier {
         return then(ClipToCollapseElement)
     }
 
-    override fun Modifier.pinWhenCollapsed(): Modifier {
-        return then(PinWhenCollapsedElement)
+    override fun Modifier.columnProgress(listener: CollapsingTopBarProgressListener): Modifier {
+        return then(ProgressListenerModifier(listener))
     }
 }
 
-private class ProgressListenerModifier(
-    private val listener: CollapsingTopBarProgressListener,
+private class AlignmentModifier(
+    private val alignment: Alignment.Horizontal,
 ) : CollapsingTopBarColumnParentDataModifier() {
     override fun modifyParentData(parentData: CollapsingTopBarColumnParentData) {
-        parentData.progressListener = listener
+        parentData.alignment = alignment
     }
 }
 
 private class NotCollapsibleModifier : CollapsingTopBarColumnParentDataModifier() {
     override fun modifyParentData(parentData: CollapsingTopBarColumnParentData) {
         parentData.isNotCollapsible = true
+    }
+}
+
+private data object PinWhenCollapsedElement : CollapsingTopBarColumnParentDataModifier() {
+    override fun modifyParentData(parentData: CollapsingTopBarColumnParentData) {
+        parentData.pinWhenCollapsed = true
     }
 }
 
@@ -388,9 +425,11 @@ private data object ClipToCollapseElement : ModifierNodeElement<ClipToCollapseNo
     override fun InspectorInfo.inspectableProperties() = Unit
 }
 
-private data object PinWhenCollapsedElement : CollapsingTopBarColumnParentDataModifier() {
+private class ProgressListenerModifier(
+    private val listener: CollapsingTopBarProgressListener,
+) : CollapsingTopBarColumnParentDataModifier() {
     override fun modifyParentData(parentData: CollapsingTopBarColumnParentData) {
-        parentData.pinWhenCollapsed = true
+        parentData.progressListener = listener
     }
 }
 
@@ -455,10 +494,11 @@ private abstract class CollapsingTopBarColumnParentDataModifier : ParentDataModi
 }
 
 private data class CollapsingTopBarColumnParentData(
-    var progressListener: CollapsingTopBarProgressListener? = null,
+    var alignment: Alignment.Horizontal? = null,
     var isNotCollapsible: Boolean = false,
     var pinWhenCollapsed: Boolean = false,
     var clipToCollapseHeightListener: ((Int) -> Unit)? = null,
+    var progressListener: CollapsingTopBarProgressListener? = null,
 )
 
 private val Placeable.columnParentData: CollapsingTopBarColumnParentData?

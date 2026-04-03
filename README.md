@@ -319,6 +319,40 @@ CollapsingTopBarColumn(
 See all supported placement customization Modifiers:
 
 <details>
+<summary>Align</summary>
+
+#### Align
+
+```kotlin
+Modifier.align(Alignment.Horizontal)
+```
+
+Aligns an element horizontally within the width of `CollapsingTopBarColumn`.
+
+```kotlin
+CollapsingTopBarScaffold(
+    scrollMode = CollapsingTopBarScaffoldScrollMode.collapse(expandAlways = false),
+    topBar = { topBarState ->
+        CollapsingTopBarColumn(topBarState) {
+            SampleTopAppBar(
+                modifier = Modifier.notCollapsible(),
+            )
+            AlignmentElement(
+                modifier = Modifier.align(Alignment.CenterHorizontally),
+            )
+        }
+    },
+    body = {
+        SampleContent()
+    },
+)
+```
+
+> In this example the element is aligned to the center of the column.
+
+</details>
+
+<details>
 <summary>Not collapsible</summary>
 
 #### Not collapsible
