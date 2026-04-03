@@ -30,6 +30,7 @@ import com.flaringapp.compose.topbar.sample.shared.ui.samples.basic.EnterAlwaysC
 import com.flaringapp.compose.topbar.sample.shared.ui.samples.column.AlternatelyCollapsibleColumnSample
 import com.flaringapp.compose.topbar.sample.shared.ui.samples.column.ColumnInStackSample
 import com.flaringapp.compose.topbar.sample.shared.ui.samples.column.ColumnMovingElementSample
+import com.flaringapp.compose.topbar.sample.shared.ui.samples.column.ColumnPinnedElementsSample
 import com.flaringapp.compose.topbar.sample.shared.ui.samples.column.FullyCollapsibleColumnSample
 import com.flaringapp.compose.topbar.sample.shared.ui.samples.column.PartiallyCollapsibleColumnSample
 import com.flaringapp.compose.topbar.sample.shared.ui.samples.column.ReverseCollapsibleColumnSample
@@ -53,6 +54,7 @@ object CollapsingTopBarSampleGroups {
             ReverseCollapsibleColumnSample,
             AlternatelyCollapsibleColumnSample,
             ColumnInStackSample,
+            ColumnPinnedElementsSample,
             ColumnMovingElementSample,
         )
 
