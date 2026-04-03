@@ -6,6 +6,8 @@ captures
 
 /local.properties
 
+.env
+
 # IntelliJ .idea folder
 /.idea/*
 !/.idea/scopes
