@@ -16,8 +16,10 @@
 
 package com.flaringapp.compose.topbar.scaffold
 
+import androidx.compose.foundation.layout.LayoutScopeMarker
 import androidx.compose.foundation.layout.offset
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
@@ -26,6 +28,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.layout.Layout
+import androidx.compose.ui.layout.Measurable
+import androidx.compose.ui.layout.ParentDataModifier
+import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.constrainHeight
 import androidx.compose.ui.unit.constrainWidth
@@ -63,9 +68,12 @@ import kotlin.math.max
  * @param topBarClipToBounds the flag whether or not to automatically clip top bar content [topBar]
  * to the actual collapse height.
  * @param topBar the content of [CollapsingTopBar].
- * @param body the scrollable content under collapsing top bar. If you don't use any by default
- * scrollable container (e.g. [androidx.compose.foundation.lazy.LazyList]), then make sure to
- * apply custom [androidx.compose.foundation.verticalScroll] modifier.
+ * @param body the content under collapsing top bar. By default, direct body children are measured
+ * against collapsed top bar height to minimize remeasurement during collapse. Use
+ * [CollapsingTopBarScaffoldBodyScope.resizeWithCollapse] on direct body children that should
+ * resize with the current top bar height instead. If you don't use any by default scrollable
+ * container (e.g. [androidx.compose.foundation.lazy.LazyList]), then make sure to apply custom
+ * [androidx.compose.foundation.verticalScroll] modifier.
  *
  * @see CollapsingTopBar
  */
@@ -80,7 +88,7 @@ public fun CollapsingTopBarScaffold(
     topBarModifier: Modifier = Modifier,
     topBarClipToBounds: Boolean = true,
     topBar: @Composable CollapsingTopBarScope.(topBarState: CollapsingTopBarState) -> Unit,
-    body: @Composable () -> Unit,
+    body: @Composable CollapsingTopBarScaffoldBodyScope.() -> Unit,
 ) {
     LaunchedEffect(scrollMode.canExit) {
         if (!scrollMode.canExit) {
@@ -125,7 +133,7 @@ public fun CollapsingTopBarScaffold(
                 topBar(state.topBarState)
             }
 
-            body()
+            CollapsingTopBarScaffoldBodyScopeInstance.body()
         },
         modifier = modifier
             .then(
@@ -140,15 +148,26 @@ public fun CollapsingTopBarScaffold(
         val topBarPlaceable = measurables[0].measure(topBarConstraints)
 
         val bodyPlaceables = if (measurables.size > 1) {
-            val bodyHeight = (constraints.maxHeight - topBarMinHeightState).coerceAtLeast(0)
-
-            val bodyConstraints = constraints.copy(
+            val collapsedBodyConstrains = constraints.copy(
                 minWidth = 0,
                 minHeight = 0,
-                maxHeight = bodyHeight,
+                maxHeight = (constraints.maxHeight - topBarMinHeightState).coerceAtLeast(0),
             )
+            val resizedBodyConstrains = collapsedBodyConstrains.copy(
+                maxHeight = (constraints.maxHeight - state.totalTopBarHeight.toInt())
+                    .coerceAtLeast(0),
+            )
+
             val bodyMeasurables = measurables.subList(1, measurables.size)
-            bodyMeasurables.map { it.measure(bodyConstraints) }
+            bodyMeasurables.map { measurable ->
+                val nodeConstraints = if (measurable.bodyParentData?.resizeWithCollapse == true) {
+                    resizedBodyConstrains
+                } else {
+                    collapsedBodyConstrains
+                }
+
+                measurable.measure(nodeConstraints)
+            }
         } else {
             emptyList()
         }
@@ -175,3 +194,49 @@ public fun CollapsingTopBarScaffold(
         }
     }
 }
+
+/**
+ * Scope for direct body children of [CollapsingTopBarScaffold].
+ */
+@LayoutScopeMarker
+@Immutable
+public interface CollapsingTopBarScaffoldBodyScope {
+
+    /**
+     * Opt this direct scaffold body child into measurement against current visible top bar height
+     * instead of collapsed top bar height.
+     */
+    public fun Modifier.resizeWithCollapse(): Modifier
+}
+
+private object CollapsingTopBarScaffoldBodyScopeInstance : CollapsingTopBarScaffoldBodyScope {
+
+    override fun Modifier.resizeWithCollapse(): Modifier {
+        return then(ResizeWithCollapseModifier())
+    }
+}
+
+private class ResizeWithCollapseModifier : CollapsingTopBarScaffoldBodyParentDataModifier() {
+    override fun modifyParentData(parentData: CollapsingTopBarScaffoldBodyParentData) {
+        parentData.resizeWithCollapse = true
+    }
+}
+
+private abstract class CollapsingTopBarScaffoldBodyParentDataModifier : ParentDataModifier {
+
+    override fun Density.modifyParentData(parentData: Any?): Any {
+        val data = parentData as? CollapsingTopBarScaffoldBodyParentData
+            ?: CollapsingTopBarScaffoldBodyParentData()
+        this@CollapsingTopBarScaffoldBodyParentDataModifier.modifyParentData(data)
+        return data
+    }
+
+    protected abstract fun modifyParentData(parentData: CollapsingTopBarScaffoldBodyParentData)
+}
+
+private data class CollapsingTopBarScaffoldBodyParentData(
+    var resizeWithCollapse: Boolean = false,
+)
+
+private val Measurable.bodyParentData: CollapsingTopBarScaffoldBodyParentData?
+    get() = parentData as? CollapsingTopBarScaffoldBodyParentData
