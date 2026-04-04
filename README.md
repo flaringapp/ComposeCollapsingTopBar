@@ -585,8 +585,13 @@ Contains information about the collapsing state up until top bar starts exiting 
 mode supports that). Offers state data similar to scaffold: `state.isExpanded` and
 `state.isCollapsed`, as well as manual controls: `state.expand()` and `state.collapse()`.
 
-This state exposes comprehensive measurement data via `layoutInfo`, such as collapse progress
-`layoutInfo.collapseProgress`, collapsed height `layoutInfo.collapsedHeight` etc.
+This state also exposes `hasMeasured` to indicate whether the top bar has already received
+actual layout measurements.
+
+Comprehensive measurement data is available via `layoutInfo`, such as collapse progress
+`layoutInfo.collapseProgress`, collapsed height `layoutInfo.collapsedHeight` etc. Before
+`hasMeasured` becomes true, `layoutInfo` contains safe placeholder values rather than actual
+measured bounds.
 
 </details>
 
