@@ -45,9 +45,10 @@ dependencyResolutionManagement {
 
 ## Usage
 
-You need a scrollable content for the collapsing header to work. For the sake of optimization, this
-library does something similar to `CoordinatorLayout`: instead of resizing a content as a top bar
-collapses, the content is simply offset downward. That's why you need a `Scaffold`-like wrapper.
+You need scrollable content for the collapsing header to work. For the sake of optimization, this
+library does something similar to `CoordinatorLayout`: by default, body content is measured as if
+the top bar were already collapsed, and then simply offset as the top bar expands and
+collapses. That's why you need a `Scaffold`-like wrapper.
 
 ```kotlin
 CollapsingTopBarScaffold(
@@ -59,6 +60,26 @@ CollapsingTopBarScaffold(
     },
     body = {
         ContentUnderTopBar()
+    },
+)
+```
+
+In some cases you may want a direct body child to resize together with collapse instead of using
+the default fixed measurement strategy. For those cases, `CollapsingTopBarScaffold()` exposes
+`CollapsingTopBarScaffoldBodyScope.resizeWithCollapse()`:
+
+```kotlin
+CollapsingTopBarScaffold(
+    scrollMode = CollapsingTopBarScaffoldScrollMode.collapse(expandAlways = false),
+    topBar = {
+        TopBarImage()
+        TopAppBar()
+    },
+    body = {
+        ScrollableContent()
+        Overlay(
+            modifier = Modifier.resizeWithCollapse(),
+        )
     },
 )
 ```
