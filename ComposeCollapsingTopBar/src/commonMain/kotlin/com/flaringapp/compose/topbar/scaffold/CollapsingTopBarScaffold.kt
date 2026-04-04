@@ -70,10 +70,11 @@ import kotlin.math.max
  * @param topBar the content of [CollapsingTopBar].
  * @param body the content under collapsing top bar. By default, direct body children are measured
  * against collapsed top bar height to minimize remeasurement during collapse. Use
- * [CollapsingTopBarScaffoldBodyScope.resizeWithCollapse] on direct body children that should
- * resize with the current top bar height instead. If you don't use any by default scrollable
- * container (e.g. [androidx.compose.foundation.lazy.LazyList]), then make sure to apply custom
- * [androidx.compose.foundation.verticalScroll] modifier.
+ * [CollapsingTopBarScaffoldBodyScope.resizeWithCollapse] only for direct body children that must
+ * resize with the current top bar height instead, such as lightweight overlays. It may increase
+ * remeasurement cost and is generally not recommended for scrollable content. If you don't use any
+ * by default scrollable container (e.g. [androidx.compose.foundation.lazy.LazyList]), then make
+ * sure to apply custom [androidx.compose.foundation.verticalScroll] modifier.
  *
  * @see CollapsingTopBar
  */
@@ -205,6 +206,10 @@ public interface CollapsingTopBarScaffoldBodyScope {
     /**
      * Opt this direct scaffold body child into measurement against current visible top bar height
      * instead of collapsed top bar height.
+     *
+     * This may increase remeasurement cost during collapse. Prefer the default scaffold body
+     * behavior unless this child must respond to the current visible top bar height, e.g. for a
+     * lightweight overlay.
      */
     public fun Modifier.resizeWithCollapse(): Modifier
 }

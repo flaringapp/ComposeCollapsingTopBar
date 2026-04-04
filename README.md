@@ -84,6 +84,11 @@ CollapsingTopBarScaffold(
 )
 ```
 
+Use `resizeWithCollapse()` as a targeted override, typically for lightweight direct children such
+as overlays or panels that must track the currently visible body height. It may increase
+remeasurement cost during collapse, so the default scaffold behavior remains the preferred choice
+for scrollable content.
+
 `CollapsingTopBarScaffold()` is flexible enough to cover a variety of use cases. However, there's
 some extra room for customization: you can use `CollapsingTopBar()` as the actual collapsing header,
 and implement your own mechanism to control header and content positioning. Feel free to take a
