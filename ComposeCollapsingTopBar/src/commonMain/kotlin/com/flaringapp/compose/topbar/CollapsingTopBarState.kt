@@ -29,6 +29,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshots.Snapshot
 import com.flaringapp.compose.topbar.snap.CollapsingTopBarSnapScope
 import kotlin.math.max
@@ -92,7 +93,23 @@ public class CollapsingTopBarState @RememberInComposition internal constructor(
     }
 
     /**
+     * Whether this state has received actual layout measurements from [CollapsingTopBar].
+     *
+     * Before the first measurement pass, [layoutInfo] contains placeholder values that are safe
+     * for arithmetic but do not yet represent real measured bounds.
+     */
+    public val hasMeasured: Boolean
+        get() = hasMeasuredState
+
+    private var hasMeasuredState by mutableStateOf(false)
+
+    /**
      * The layout info object calculated during the last layout pass.
+     *
+     * Before [hasMeasured] becomes true, this property contains placeholder values rather than
+     * actual measured bounds. These placeholders are intentionally non-zero to remain safe for
+     * arithmetic such as division, but consumers should check [hasMeasured] when exact
+     * measurements are required.
      *
      * Note that this property is observable and is updated after every scroll or remeasure.
      * If you use it in the composable function it will be recomposed on every change causing
@@ -204,6 +221,7 @@ public class CollapsingTopBarState @RememberInComposition internal constructor(
             collapsedHeight = collapsedHeight,
             expandedHeight = expandedHeight,
         ).also {
+            hasMeasuredState = true
             layoutInfoState.value = it
         }
     }

@@ -70,13 +70,6 @@ public class CollapsingTopBarScaffoldState @RememberInComposition internal const
     CollapsingTopBarSnapScope {
 
     /**
-     * The current visual top bar height, either during collapse or exit.
-     */
-    @get:FrequentlyChangingValue
-    public val totalTopBarHeight: Float
-        get() = topBarState.layoutInfo.height - exitState.exitHeight
-
-    /**
      * Whether top bar is fully expanded and entered.
      */
     public val isExpanded: Boolean by derivedStateOf {
@@ -90,6 +83,22 @@ public class CollapsingTopBarScaffoldState @RememberInComposition internal const
         topBarState.isCollapsed &&
             (!exitState.isEnabled || exitState.isFullyExited)
     }
+
+    /**
+     * Whether [topBarState] has received actual layout measurements.
+     */
+    public val hasMeasured: Boolean
+        get() = topBarState.hasMeasured
+
+    /**
+     * The current visual top bar height, either during collapse or exit.
+     *
+     * Before [hasMeasured] becomes true, this property is based on placeholder layout values
+     * rather than actual measured bounds.
+     */
+    @get:FrequentlyChangingValue
+    public val totalTopBarHeight: Float
+        get() = topBarState.layoutInfo.height - exitState.exitHeight
 
     override suspend fun expand(animationSpec: AnimationSpec<Float>) {
         animateHeightTo(animationSpec) {
