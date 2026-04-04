@@ -194,6 +194,8 @@ final class com.flaringapp.compose.topbar.scaffold/CollapsingTopBarScaffoldScrol
 final class com.flaringapp.compose.topbar.scaffold/CollapsingTopBarScaffoldState : com.flaringapp.compose.topbar.snap/CollapsingTopBarSnapScope, com.flaringapp.compose.topbar/CollapsingTopBarControls { // com.flaringapp.compose.topbar.scaffold/CollapsingTopBarScaffoldState|null[0]
     final val exitState // com.flaringapp.compose.topbar.scaffold/CollapsingTopBarScaffoldState.exitState|{}exitState[0]
         final fun <get-exitState>(): com.flaringapp.compose.topbar.dependent/CollapsingTopBarExitState // com.flaringapp.compose.topbar.scaffold/CollapsingTopBarScaffoldState.exitState.<get-exitState>|<get-exitState>(){}[0]
+    final val hasMeasured // com.flaringapp.compose.topbar.scaffold/CollapsingTopBarScaffoldState.hasMeasured|{}hasMeasured[0]
+        final fun <get-hasMeasured>(): kotlin/Boolean // com.flaringapp.compose.topbar.scaffold/CollapsingTopBarScaffoldState.hasMeasured.<get-hasMeasured>|<get-hasMeasured>(){}[0]
     final val isCollapsed // com.flaringapp.compose.topbar.scaffold/CollapsingTopBarScaffoldState.isCollapsed|{}isCollapsed[0]
         final fun <get-isCollapsed>(): kotlin/Boolean // com.flaringapp.compose.topbar.scaffold/CollapsingTopBarScaffoldState.isCollapsed.<get-isCollapsed>|<get-isCollapsed>(){}[0]
     final val isExpanded // com.flaringapp.compose.topbar.scaffold/CollapsingTopBarScaffoldState.isExpanded|{}isExpanded[0]
@@ -253,6 +255,8 @@ final class com.flaringapp.compose.topbar/CollapsingTopBarLayoutInfo { // com.fl
 final class com.flaringapp.compose.topbar/CollapsingTopBarState : androidx.compose.foundation.gestures/ScrollableState, com.flaringapp.compose.topbar.snap/CollapsingTopBarSnapScope, com.flaringapp.compose.topbar/CollapsingTopBarControls { // com.flaringapp.compose.topbar/CollapsingTopBarState|null[0]
     constructor <init>(kotlin/Boolean = ...) // com.flaringapp.compose.topbar/CollapsingTopBarState.<init>|<init>(kotlin.Boolean){}[0]
 
+    final val hasMeasured // com.flaringapp.compose.topbar/CollapsingTopBarState.hasMeasured|{}hasMeasured[0]
+        final fun <get-hasMeasured>(): kotlin/Boolean // com.flaringapp.compose.topbar/CollapsingTopBarState.hasMeasured.<get-hasMeasured>|<get-hasMeasured>(){}[0]
     final val isCollapsed // com.flaringapp.compose.topbar/CollapsingTopBarState.isCollapsed|{}isCollapsed[0]
         final fun <get-isCollapsed>(): kotlin/Boolean // com.flaringapp.compose.topbar/CollapsingTopBarState.isCollapsed.<get-isCollapsed>|<get-isCollapsed>(){}[0]
     final val isExpanded // com.flaringapp.compose.topbar/CollapsingTopBarState.isExpanded|{}isExpanded[0]
