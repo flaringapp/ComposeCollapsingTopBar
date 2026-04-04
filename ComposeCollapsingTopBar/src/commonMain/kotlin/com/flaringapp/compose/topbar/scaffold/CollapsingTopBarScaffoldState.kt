@@ -92,6 +92,9 @@ public class CollapsingTopBarScaffoldState @RememberInComposition internal const
 
     /**
      * The current visual top bar height, either during collapse or exit.
+     *
+     * Before [hasMeasured] becomes true, this property is based on placeholder layout values
+     * rather than actual measured bounds.
      */
     @get:FrequentlyChangingValue
     public val totalTopBarHeight: Float

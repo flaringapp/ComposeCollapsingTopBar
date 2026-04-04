@@ -54,7 +54,8 @@ import kotlin.math.roundToInt
  * Each child may actively participate in collapsing process with [CollapsingTopBarScope] modifiers.
  *
  * Advanced collapsing techniques can be achieved using:
- * - transformations based on [CollapsingTopBarState.layoutInfo]
+ * - transformations based on [CollapsingTopBarState.layoutInfo]. When exact bounds matter, use
+ * [CollapsingTopBarState.hasMeasured] to distinguish placeholder values from actual measurements.
  * - custom layout logic with [CollapsingTopBarNestedCollapseElement]
  *
  * @param modifier the [Modifier] to be applied to this top bar.
