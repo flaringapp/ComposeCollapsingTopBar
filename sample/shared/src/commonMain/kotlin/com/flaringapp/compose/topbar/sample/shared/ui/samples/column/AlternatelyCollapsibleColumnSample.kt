@@ -34,6 +34,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
+import com.flaringapp.compose.topbar.decoration.CollapsingTopBarVerticalFadingEdge
 import com.flaringapp.compose.topbar.nestedcollapse.CollapsingTopBarColumn
 import com.flaringapp.compose.topbar.sample.shared.screen
 import com.flaringapp.compose.topbar.sample.shared.ui.samples.CollapsingTopBarSample
@@ -41,7 +42,6 @@ import com.flaringapp.compose.topbar.sample.shared.ui.samples.common.SampleConte
 import com.flaringapp.compose.topbar.sample.shared.ui.samples.common.SampleFilterChips
 import com.flaringapp.compose.topbar.sample.shared.ui.samples.common.SampleTopAppBar
 import com.flaringapp.compose.topbar.sample.shared.ui.samples.common.SampleTopBarBanner
-import com.flaringapp.compose.topbar.sample.shared.ui.samples.common.SampleVerticalFadingEdge
 import com.flaringapp.compose.topbar.sample.shared.ui.theme.ComposeCollapsingTopBarTheme
 import com.flaringapp.compose.topbar.scaffold.CollapsingTopBarScaffold
 import com.flaringapp.compose.topbar.scaffold.CollapsingTopBarScaffoldScrollMode
@@ -102,7 +102,9 @@ private fun CollapsingContent(
                     ignoreWindowInsets = true,
                 )
 
-                SampleVerticalFadingEdge()
+                CollapsingTopBarVerticalFadingEdge(
+                    color = MaterialTheme.colorScheme.surface,
+                )
                 SampleFilterChips()
 
                 FixedElement(

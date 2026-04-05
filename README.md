@@ -399,7 +399,7 @@ CollapsingTopBarScaffold(
             SampleTopAppBar(
                 modifier = Modifier.notCollapsible(),
             )
-            SampleVerticalFadingEdge()
+            CollapsingTopBarVerticalFadingEdge()
             SampleFilterChips()
         }
     },
@@ -543,6 +543,23 @@ CollapsingTopBarScaffold(
 > In this example the `Text` element keeps track of its collapse progress and fades out on collapse.
 
 </details>
+
+### Decorations
+
+`ComposeCollapsingTopBar` also provides small decoration composables to improve collapsing visuals
+in certain scenarios.
+
+#### Vertical fading edge
+
+```kotlin
+CollapsingTopBarVerticalFadingEdge(
+    color = MaterialTheme.colorScheme.surface,
+)
+```
+
+`CollapsingTopBarVerticalFadingEdge()` draws a vertical fading overlay with zero layout height.
+It's useful for smoothing visible overlap between stacked top bar elements in
+`CollapsingTopBarColumn` and regular top bar layouts.
 
 ### React to state changes
 
