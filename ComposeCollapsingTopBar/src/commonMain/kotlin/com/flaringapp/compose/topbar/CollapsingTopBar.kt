@@ -210,16 +210,6 @@ private fun resolveCollapsedHeight(placeables: List<Placeable>): Int {
 public interface CollapsingTopBarScope {
 
     /**
-     * Registers a progress listener to be notified every time top bar collapse height changes.
-     * Only the last modifier in chain takes effect.
-     *
-     * @param listener The listener that gets notified of every collapse progress update.
-     *
-     * @see CollapsingTopBarProgressListener
-     */
-    public fun Modifier.progress(listener: CollapsingTopBarProgressListener): Modifier
-
-    /**
      * Position the element dynamically while collapsing by offsetting up by [ratio] as a fraction
      * of collapsible height. Value 0f means there is no parallax and the element simply sits in
      * place while top bar is collapsing, whereas 1f will make the element follow the collapse
@@ -234,6 +224,16 @@ public interface CollapsingTopBarScope {
     public fun Modifier.floating(): Modifier
 
     /**
+     * Registers a progress listener to be notified every time top bar collapse height changes.
+     * Only the last modifier in chain takes effect.
+     *
+     * @param listener The listener that gets notified of every collapse progress update.
+     *
+     * @see CollapsingTopBarProgressListener
+     */
+    public fun Modifier.progress(listener: CollapsingTopBarProgressListener): Modifier
+
+    /**
      * Define an explicit minimum (collapsed) height nested collapse connection between the top bar
      * and this element. The element is responsible for dispatching its own minimum height using
      * [element] handle. This value is read by the top bar to calculate total minimum height
@@ -246,10 +246,6 @@ public interface CollapsingTopBarScope {
 
 private object CollapsingTopBarScopeInstance : CollapsingTopBarScope {
 
-    override fun Modifier.progress(listener: CollapsingTopBarProgressListener): Modifier {
-        return then(ProgressListenerModifier(listener))
-    }
-
     override fun Modifier.parallax(ratio: Float): Modifier {
         return then(ParallaxModifier(ratio))
     }
@@ -258,18 +254,14 @@ private object CollapsingTopBarScopeInstance : CollapsingTopBarScope {
         return then(FloatingModifier())
     }
 
+    override fun Modifier.progress(listener: CollapsingTopBarProgressListener): Modifier {
+        return then(ProgressListenerModifier(listener))
+    }
+
     override fun Modifier.nestedCollapse(
         element: CollapsingTopBarNestedCollapseElement,
     ): Modifier {
         return then(NestedCollapseModifier(element))
-    }
-}
-
-private class ProgressListenerModifier(
-    private val listener: CollapsingTopBarProgressListener,
-) : CollapsingTopBarParentDataModifier() {
-    override fun modifyParentData(parentData: CollapsingTopBarParentData) {
-        parentData.progressListener = listener
     }
 }
 
@@ -284,6 +276,14 @@ private class ParallaxModifier(
 private class FloatingModifier : CollapsingTopBarParentDataModifier() {
     override fun modifyParentData(parentData: CollapsingTopBarParentData) {
         parentData.isFloating = true
+    }
+}
+
+private class ProgressListenerModifier(
+    private val listener: CollapsingTopBarProgressListener,
+) : CollapsingTopBarParentDataModifier() {
+    override fun modifyParentData(parentData: CollapsingTopBarParentData) {
+        parentData.progressListener = listener
     }
 }
 
@@ -307,9 +307,9 @@ private abstract class CollapsingTopBarParentDataModifier : ParentDataModifier {
 }
 
 private data class CollapsingTopBarParentData(
-    var progressListener: CollapsingTopBarProgressListener? = null,
     var parallaxRatio: Float? = null,
     var isFloating: Boolean = false,
+    var progressListener: CollapsingTopBarProgressListener? = null,
     var nestedCollapseElement: CollapsingTopBarNestedCollapseElement? = null,
 )
 
