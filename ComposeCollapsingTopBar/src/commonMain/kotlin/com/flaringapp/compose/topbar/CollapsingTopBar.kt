@@ -133,37 +133,33 @@ private class CollapsingTopBarMeasurePolicy(
 
         return layout(width, measuredLayoutInfo.expandedHeight) {
             val layoutInfo = state.layoutInfo
-            val progress = layoutInfo.collapseProgress
-            val collapsibleDistance = layoutInfo.collapsibleDistance
 
             placeables.forEach { placeable ->
                 val parentData = placeable.topBarParentData
+
+                var placeableY = 0
+
+                parentData?.parallaxRatio?.let { parallaxRatio ->
+                    placeableY -= (layoutInfo.collapseHeightDelta * parallaxRatio).roundToInt()
+                }
 
                 val placeableCollapsibleDistance =
                     (placeable.height - layoutInfo.collapsedHeight).coerceAtLeast(0)
                 val placeableProgress = if (placeableCollapsibleDistance == 0) {
                     1f
                 } else {
-                    val placeableCollapseHeight = with(layoutInfo) {
-                        height.coerceAtMost(placeable.height.toFloat()) - collapsedHeight
-                    }
-                    placeableCollapseHeight / placeableCollapsibleDistance
+                    val placeableYetToCollapseHeight = (placeableCollapsibleDistance + placeableY)
+                        .coerceIn(0, layoutInfo.expandHeightDelta.toInt())
+
+                    placeableYetToCollapseHeight.toFloat() / placeableCollapsibleDistance
                 }
 
                 parentData?.progressListener?.onProgressUpdate(
-                    totalProgress = progress,
+                    totalProgress = layoutInfo.collapseProgress,
                     itemProgress = placeableProgress,
                 )
 
-                parentData?.parallaxRatio?.let { parallaxRatio ->
-                    placeable.placeRelative(
-                        x = 0,
-                        y = -(collapsibleDistance * (1 - progress) * parallaxRatio).roundToInt(),
-                    )
-                    return@forEach
-                }
-
-                placeable.placeRelative(0, 0)
+                placeable.placeRelative(0, placeableY)
             }
         }
     }
