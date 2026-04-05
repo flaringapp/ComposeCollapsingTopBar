@@ -46,6 +46,7 @@ Use the Gradle wrapper from the repo root:
 
 Minimum expectation for most code changes:
 - Run `./gradlew :sample:android:assembleDebug ktlintCheck checkLegacyAbi` when feasible.
+- For Compose API or implementation changes, also run the relevant Compose lint task for each changed module, for example `./gradlew :ComposeCollapsingTopBar:compileLint` or the corresponding sample-module lint task when changes are made there.
 - For public API changes, pay special attention to `checkLegacyAbi` and the `.klib.api` snapshot.
 - For behavior changes, validate through the sample app, especially `sample/shared/` and the Android sample shell.
 
