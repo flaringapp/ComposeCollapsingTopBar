@@ -37,6 +37,7 @@ import androidx.compose.ui.layout.Placeable
 import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.IntOffset
+import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.constrainHeight
 import androidx.compose.ui.unit.constrainWidth
@@ -133,15 +134,19 @@ private class CollapsingTopBarMeasurePolicy(
         val width = placeables.maxOf { it.width }
             .let { constraints.constrainWidth(it) }
 
-        return layout(width, measuredLayoutInfo.expandedHeight) {
+        val topBarSize = IntSize(width, measuredLayoutInfo.expandedHeight)
+
+        return layout(topBarSize.width, topBarSize.height) {
             val layoutInfo = state.layoutInfo
 
             placeables.forEach { placeable ->
                 val offset = processPlaceable(
                     placeable = placeable,
                     layoutInfo = layoutInfo,
+                    topBarSize = topBarSize,
+                    layoutDirection = layoutDirection,
                 )
-                placeable.placeRelative(offset)
+                placeable.place(offset)
             }
         }
     }
@@ -183,24 +188,37 @@ private fun resolveCollapsedHeight(placeables: List<Placeable>): Int {
 private fun processPlaceable(
     placeable: Placeable,
     layoutInfo: CollapsingTopBarLayoutInfo,
+    topBarSize: IntSize,
+    layoutDirection: LayoutDirection,
 ): IntOffset {
     val parentData = placeable.topBarParentData
 
-    var placeableY = 0
+    val alignmentOffset = (parentData?.alignment ?: Alignment.TopStart).align(
+        size = IntSize(placeable.width, placeable.height),
+        space = topBarSize,
+        layoutDirection = layoutDirection,
+    )
 
-    parentData?.parallaxRatio?.let { parallaxRatio ->
-        placeableY -= (layoutInfo.collapseHeightDelta * parallaxRatio).roundToInt()
-    }
+    val parallaxY = parentData?.parallaxRatio?.let { parallaxRatio ->
+        -(layoutInfo.collapseHeightDelta * parallaxRatio).roundToInt()
+    } ?: 0
 
+    val collapsibleSegmentStart = alignmentOffset.y.coerceAtLeast(layoutInfo.collapsedHeight)
+    val collapsibleSegmentEnd = alignmentOffset.y + placeable.height
     val placeableCollapsibleDistance =
-        (placeable.height - layoutInfo.collapsedHeight).coerceAtLeast(0)
+        (collapsibleSegmentEnd - collapsibleSegmentStart).coerceAtLeast(0)
+
     val placeableProgress = if (placeableCollapsibleDistance == 0) {
         1f
     } else {
-        val placeableYetToCollapseHeight = (placeableCollapsibleDistance + placeableY)
-            .coerceIn(0, layoutInfo.expandHeightDelta.toInt())
+        val visibleCollapsibleSegmentStart = (collapsibleSegmentStart + parallaxY)
+            .coerceIn(layoutInfo.collapsedHeight, layoutInfo.height.toInt())
+        val visibleCollapsibleSegmentEnd = (collapsibleSegmentEnd + parallaxY)
+            .coerceIn(layoutInfo.collapsedHeight, layoutInfo.height.toInt())
+        val visibleCollapsibleDistance =
+            (visibleCollapsibleSegmentEnd - visibleCollapsibleSegmentStart).coerceAtLeast(0)
 
-        placeableYetToCollapseHeight.toFloat() / placeableCollapsibleDistance
+        visibleCollapsibleDistance.toFloat() / placeableCollapsibleDistance
     }
 
     parentData?.progressListener?.onProgressUpdate(
@@ -208,7 +226,7 @@ private fun processPlaceable(
         itemProgress = placeableProgress,
     )
 
-    return IntOffset(0, placeableY)
+    return IntOffset(alignmentOffset.x, alignmentOffset.y + parallaxY)
 }
 
 /**

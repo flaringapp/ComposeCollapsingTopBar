@@ -12,27 +12,36 @@ This note defines how `CollapsingTopBarProgressListener.itemProgress` should beh
 
 ## What counts as collapsible portion
 
-The child's collapsible portion is the part of the child outside the collapsed-height baseline area.
+The child's collapsible portion is the part of the child outside the collapsed-height baseline area,
+measured from its aligned bounds before parallax translation is applied.
 
-The portion of the child that already lies within the top bar's collapsed-height area is treated as non-collapsible baseline content and is excluded from `itemProgress`.
+The portion of the child that already lies within the top bar's collapsed-height area is treated as
+non-collapsible baseline content and is excluded from `itemProgress`.
 
 Because of that:
 
 - a child may still be partially visible when `itemProgress == 0f`
-- a child whose height is less than or equal to the collapsed height has no collapsible portion, so its `itemProgress` is always `1f`
+- a child whose height is less than or equal to the collapsed height may still have a collapsible
+  portion if alignment places part of it outside the baseline area
+- zero collapsible portion returns `1f`
 
 ## Layout-aware measurement
 
-`itemProgress` must be measured from final placed bounds, after layout placement effects are applied:
+`itemProgress` must be measured from layout-aware bounds:
 
 - alignment
 - parallax
 
 Visibility is measured against the current visible top bar viewport.
 
+The total collapsible portion is defined from aligned bounds and stays stable as parallax changes.
+Parallax affects how much of that portion remains visible, but does not redefine how much of the
+child is collapsible.
+
 This means:
 
-- alignment changes when collapse starts affecting the child
+- alignment changes what part of the child is considered collapsible and when collapse starts
+  affecting it
 - parallax can reduce `itemProgress` by moving the collapsible portion out of view, even before full top bar collapse
 
 ## Examples
@@ -46,13 +55,22 @@ This means:
 The child's lower `50dp` is the collapsible portion.
 `itemProgress` stays `1f` until top bar height goes below `100dp`, then decreases to `0f` at `50dp`.
 
-### Child height equals collapsed height
+### Top-aligned child height equals collapsed height
 
 - Child height: `50`
 - Collapsed height: `50`
 
 The child has no collapsible portion.
 `itemProgress` is always `1f`.
+
+### Child height equals collapsed height, center-aligned
+
+- Top bar height: `200 -> 50`
+- Child height: `50`
+- Collapsed height: `50`
+
+If alignment places part of the child below the baseline area, that part is collapsible even though
+the child's height equals the collapsed height.
 
 ### Center-aligned child
 
@@ -62,10 +80,14 @@ If a center-aligned child already overlaps the collapsed-height area in expanded
 
 If the child's collapsible portion slides upward and leaves the viewport due to parallax, `itemProgress` should decrease accordingly and may reach `0f` before the top bar is fully collapsed.
 
+This requires the total collapsible portion to remain stable while parallax changes only the visible
+part of that portion.
+
 ## Invariants for future implementation
 
 - `itemProgress` must remain within `0f..1f`
 - `itemProgress` direction must match `CollapsingTopBarColumn`: larger value means more visible and less collapsed
 - baseline collapsed-height content is excluded from the metric
-- `align` and `parallax` affect measurement through final placed bounds
+- `align` defines the collapsible portion through aligned bounds
+- `parallax` affects visibility of that portion without changing its total size
 - zero collapsible portion returns `1f`
