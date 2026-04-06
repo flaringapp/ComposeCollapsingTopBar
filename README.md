@@ -185,6 +185,37 @@ block. It offers a few predefined Modifiers to customize element placement and m
 See all supported placement customization Modifiers:
 
 <details>
+<summary>Align</summary>
+
+#### Align
+
+```kotlin
+Modifier.align(Alignment)
+```
+
+Aligns an element within the bounds of `CollapsingTopBar`.
+
+```kotlin
+CollapsingTopBarScaffold(
+    scrollMode = CollapsingTopBarScaffoldScrollMode.collapse(expandAlways = false),
+    topBar = {
+        SampleTopBarImage()
+        AlignmentElement(
+            modifier = Modifier.align(Alignment.BottomEnd),
+            text = "Nebula",
+        )
+    },
+    body = {
+        SampleContent()
+    },
+)
+```
+
+> In this example the "Nebula" element is aligned to the bottom end of the top bar.
+
+</details>
+
+<details>
 <summary>Parallax</summary>
 
 #### Parallax
