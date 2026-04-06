@@ -115,7 +115,7 @@ private fun SlidingDot(
                         stop = 0,
                         fraction = layoutInfo.collapseProgress,
                     )
-                    placeable.place(x, 0)
+                    placeable.placeRelative(x, 0)
                 }
             }
             .size(40.dp)
