@@ -238,6 +238,9 @@ public interface CollapsingTopBarScope {
 
     /**
      * Align the element within the bounds of [CollapsingTopBar].
+     * Aligned elements still contribute to resolving minimum (collapsed) height among all
+     * elements. To exclude an aligned element from minimum height resolution and keep overlay-like
+     * behavior, also apply [floating].
      * Only the last modifier in chain takes effect.
      *
      * @param alignment the alignment of the element inside the top bar.

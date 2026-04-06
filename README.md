@@ -195,13 +195,19 @@ Modifier.align(Alignment)
 
 Aligns an element within the bounds of `CollapsingTopBar`.
 
+Aligned elements still contribute to minimum height resolution. If you want an aligned element to
+behave like an overlay and not affect the collapsed height, combine `align(...)` with
+`floating()`.
+
 ```kotlin
 CollapsingTopBarScaffold(
     scrollMode = CollapsingTopBarScaffoldScrollMode.collapse(expandAlways = false),
     topBar = {
         SampleTopBarImage()
         AlignmentElement(
-            modifier = Modifier.align(Alignment.BottomEnd),
+            modifier = Modifier
+                .align(Alignment.BottomEnd)
+                .floating(),
             text = "Nebula",
         )
     },
@@ -211,7 +217,8 @@ CollapsingTopBarScaffold(
 )
 ```
 
-> In this example the "Nebula" element is aligned to the bottom end of the top bar.
+> In this example the "Nebula" element is aligned to the bottom end of the top bar and kept out of
+> minimum height resolution, so it behaves like an overlay.
 
 </details>
 
