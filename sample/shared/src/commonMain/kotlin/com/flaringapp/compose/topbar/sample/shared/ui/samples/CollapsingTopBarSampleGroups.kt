@@ -16,6 +16,7 @@
 
 package com.flaringapp.compose.topbar.sample.shared.ui.samples
 
+import com.flaringapp.compose.topbar.sample.shared.ui.samples.advanced.AlignmentSample
 import com.flaringapp.compose.topbar.sample.shared.ui.samples.advanced.AppBarScrimSample
 import com.flaringapp.compose.topbar.sample.shared.ui.samples.advanced.AppBarShadowSample
 import com.flaringapp.compose.topbar.sample.shared.ui.samples.advanced.BodyResizeSample
@@ -63,6 +64,7 @@ object CollapsingTopBarSampleGroups {
 
     val Advanced: List<CollapsingTopBarSample>
         get() = listOf(
+            AlignmentSample,
             ParallaxCollapsingSample,
             SnapCollapsingSample,
             AppBarShadowSample,

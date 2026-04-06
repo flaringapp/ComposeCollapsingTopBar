@@ -20,6 +20,7 @@ import androidx.compose.foundation.layout.LayoutScopeMarker
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.geometry.toRect
@@ -35,6 +36,8 @@ import androidx.compose.ui.layout.ParentDataModifier
 import androidx.compose.ui.layout.Placeable
 import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.Density
+import androidx.compose.ui.unit.IntOffset
+import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.constrainHeight
 import androidx.compose.ui.unit.constrainWidth
@@ -131,39 +134,19 @@ private class CollapsingTopBarMeasurePolicy(
         val width = placeables.maxOf { it.width }
             .let { constraints.constrainWidth(it) }
 
-        return layout(width, measuredLayoutInfo.expandedHeight) {
+        val topBarSize = IntSize(width, measuredLayoutInfo.expandedHeight)
+
+        return layout(topBarSize.width, topBarSize.height) {
             val layoutInfo = state.layoutInfo
-            val progress = layoutInfo.collapseProgress
-            val collapsibleDistance = layoutInfo.collapsibleDistance
 
             placeables.forEach { placeable ->
-                val parentData = placeable.topBarParentData
-
-                val placeableCollapsibleDistance =
-                    (placeable.height - layoutInfo.collapsedHeight).coerceAtLeast(0)
-                val placeableProgress = if (placeableCollapsibleDistance == 0) {
-                    1f
-                } else {
-                    val placeableCollapseHeight = with(layoutInfo) {
-                        height.coerceAtMost(placeable.height.toFloat()) - collapsedHeight
-                    }
-                    placeableCollapseHeight / placeableCollapsibleDistance
-                }
-
-                parentData?.progressListener?.onProgressUpdate(
-                    totalProgress = progress,
-                    itemProgress = placeableProgress,
+                val offset = processPlaceable(
+                    placeable = placeable,
+                    layoutInfo = layoutInfo,
+                    topBarSize = topBarSize,
+                    layoutDirection = layoutDirection,
                 )
-
-                parentData?.parallaxRatio?.let { parallaxRatio ->
-                    placeable.placeRelative(
-                        x = 0,
-                        y = -(collapsibleDistance * (1 - progress) * parallaxRatio).roundToInt(),
-                    )
-                    return@forEach
-                }
-
-                placeable.placeRelative(0, 0)
+                placeable.place(offset)
             }
         }
     }
@@ -202,6 +185,50 @@ private fun resolveCollapsedHeight(placeables: List<Placeable>): Int {
     return regularCollapseMinHeight
 }
 
+private fun processPlaceable(
+    placeable: Placeable,
+    layoutInfo: CollapsingTopBarLayoutInfo,
+    topBarSize: IntSize,
+    layoutDirection: LayoutDirection,
+): IntOffset {
+    val parentData = placeable.topBarParentData
+
+    val alignmentOffset = (parentData?.alignment ?: Alignment.TopStart).align(
+        size = IntSize(placeable.width, placeable.height),
+        space = topBarSize,
+        layoutDirection = layoutDirection,
+    )
+
+    val parallaxY = parentData?.parallaxRatio?.let { parallaxRatio ->
+        -(layoutInfo.collapseHeightDelta * parallaxRatio).roundToInt()
+    } ?: 0
+
+    val collapsibleSegmentStart = alignmentOffset.y.coerceAtLeast(layoutInfo.collapsedHeight)
+    val collapsibleSegmentEnd = alignmentOffset.y + placeable.height
+    val placeableCollapsibleDistance =
+        (collapsibleSegmentEnd - collapsibleSegmentStart).coerceAtLeast(0)
+
+    val placeableProgress = if (placeableCollapsibleDistance == 0) {
+        1f
+    } else {
+        val visibleCollapsibleSegmentStart = (collapsibleSegmentStart + parallaxY)
+            .coerceIn(layoutInfo.collapsedHeight, layoutInfo.height.roundToInt())
+        val visibleCollapsibleSegmentEnd = (collapsibleSegmentEnd + parallaxY)
+            .coerceIn(layoutInfo.collapsedHeight, layoutInfo.height.roundToInt())
+        val visibleCollapsibleDistance =
+            (visibleCollapsibleSegmentEnd - visibleCollapsibleSegmentStart).coerceAtLeast(0)
+
+        visibleCollapsibleDistance.toFloat() / placeableCollapsibleDistance
+    }
+
+    parentData?.progressListener?.onProgressUpdate(
+        totalProgress = layoutInfo.collapseProgress,
+        itemProgress = placeableProgress,
+    )
+
+    return IntOffset(alignmentOffset.x, alignmentOffset.y + parallaxY)
+}
+
 /**
  * Scope for the children of [CollapsingTopBar].
  */
@@ -210,14 +237,15 @@ private fun resolveCollapsedHeight(placeables: List<Placeable>): Int {
 public interface CollapsingTopBarScope {
 
     /**
-     * Registers a progress listener to be notified every time top bar collapse height changes.
+     * Align the element within the bounds of [CollapsingTopBar].
+     * Aligned elements still contribute to resolving minimum (collapsed) height among all
+     * elements. To exclude an aligned element from minimum height resolution and keep overlay-like
+     * behavior, also apply [floating].
      * Only the last modifier in chain takes effect.
      *
-     * @param listener The listener that gets notified of every collapse progress update.
-     *
-     * @see CollapsingTopBarProgressListener
+     * @param alignment the alignment of the element inside the top bar.
      */
-    public fun Modifier.progress(listener: CollapsingTopBarProgressListener): Modifier
+    public fun Modifier.align(alignment: Alignment): Modifier
 
     /**
      * Position the element dynamically while collapsing by offsetting up by [ratio] as a fraction
@@ -234,6 +262,16 @@ public interface CollapsingTopBarScope {
     public fun Modifier.floating(): Modifier
 
     /**
+     * Registers a progress listener to be notified every time top bar collapse height changes.
+     * Only the last modifier in chain takes effect.
+     *
+     * @param listener The listener that gets notified of every collapse progress update.
+     *
+     * @see CollapsingTopBarProgressListener
+     */
+    public fun Modifier.progress(listener: CollapsingTopBarProgressListener): Modifier
+
+    /**
      * Define an explicit minimum (collapsed) height nested collapse connection between the top bar
      * and this element. The element is responsible for dispatching its own minimum height using
      * [element] handle. This value is read by the top bar to calculate total minimum height
@@ -246,8 +284,8 @@ public interface CollapsingTopBarScope {
 
 private object CollapsingTopBarScopeInstance : CollapsingTopBarScope {
 
-    override fun Modifier.progress(listener: CollapsingTopBarProgressListener): Modifier {
-        return then(ProgressListenerModifier(listener))
+    override fun Modifier.align(alignment: Alignment): Modifier {
+        return then(AlignmentModifier(alignment))
     }
 
     override fun Modifier.parallax(ratio: Float): Modifier {
@@ -258,6 +296,10 @@ private object CollapsingTopBarScopeInstance : CollapsingTopBarScope {
         return then(FloatingModifier())
     }
 
+    override fun Modifier.progress(listener: CollapsingTopBarProgressListener): Modifier {
+        return then(ProgressListenerModifier(listener))
+    }
+
     override fun Modifier.nestedCollapse(
         element: CollapsingTopBarNestedCollapseElement,
     ): Modifier {
@@ -265,11 +307,11 @@ private object CollapsingTopBarScopeInstance : CollapsingTopBarScope {
     }
 }
 
-private class ProgressListenerModifier(
-    private val listener: CollapsingTopBarProgressListener,
+private class AlignmentModifier(
+    private val alignment: Alignment,
 ) : CollapsingTopBarParentDataModifier() {
     override fun modifyParentData(parentData: CollapsingTopBarParentData) {
-        parentData.progressListener = listener
+        parentData.alignment = alignment
     }
 }
 
@@ -284,6 +326,14 @@ private class ParallaxModifier(
 private class FloatingModifier : CollapsingTopBarParentDataModifier() {
     override fun modifyParentData(parentData: CollapsingTopBarParentData) {
         parentData.isFloating = true
+    }
+}
+
+private class ProgressListenerModifier(
+    private val listener: CollapsingTopBarProgressListener,
+) : CollapsingTopBarParentDataModifier() {
+    override fun modifyParentData(parentData: CollapsingTopBarParentData) {
+        parentData.progressListener = listener
     }
 }
 
@@ -307,9 +357,10 @@ private abstract class CollapsingTopBarParentDataModifier : ParentDataModifier {
 }
 
 private data class CollapsingTopBarParentData(
-    var progressListener: CollapsingTopBarProgressListener? = null,
+    var alignment: Alignment? = null,
     var parallaxRatio: Float? = null,
     var isFloating: Boolean = false,
+    var progressListener: CollapsingTopBarProgressListener? = null,
     var nestedCollapseElement: CollapsingTopBarNestedCollapseElement? = null,
 )
 
