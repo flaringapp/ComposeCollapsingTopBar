@@ -19,10 +19,12 @@ package com.flaringapp.compose.topbar.sample.shared.ui.samples.advanced
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.layout
@@ -83,7 +85,11 @@ private fun CollapsingContent(
             )
 
             SlidingDot(
-                modifier = Modifier.floating(),
+                modifier = Modifier
+                    .floating()
+                    .align(Alignment.BottomStart)
+                    .parallax(1f)
+                    .padding(bottom = 16.dp, start = 16.dp, end = 16.dp),
                 state = topBarState,
             )
         },
@@ -105,12 +111,11 @@ private fun SlidingDot(
                 layout(placeable.width, placeable.height) {
                     val layoutInfo = state.layoutInfo
                     val x = lerp(
-                        start = constraints.maxWidth - placeable.width - 16.dp.roundToPx(),
-                        stop = 16.dp.roundToPx(),
+                        start = constraints.maxWidth - placeable.width,
+                        stop = 0,
                         fraction = layoutInfo.collapseProgress,
                     )
-                    val y = layoutInfo.height.toInt() - placeable.height - 16.dp.roundToPx()
-                    placeable.place(x, y)
+                    placeable.place(x, 0)
                 }
             }
             .size(40.dp)
