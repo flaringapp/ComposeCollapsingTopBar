@@ -56,6 +56,7 @@ abstract interface com.flaringapp.compose.topbar/CollapsingTopBarControls { // c
 }
 
 abstract interface com.flaringapp.compose.topbar/CollapsingTopBarScope { // com.flaringapp.compose.topbar/CollapsingTopBarScope|null[0]
+    abstract fun (androidx.compose.ui/Modifier).align(androidx.compose.ui/Alignment): androidx.compose.ui/Modifier // com.flaringapp.compose.topbar/CollapsingTopBarScope.align|align@androidx.compose.ui.Modifier(androidx.compose.ui.Alignment){}[0]
     abstract fun (androidx.compose.ui/Modifier).floating(): androidx.compose.ui/Modifier // com.flaringapp.compose.topbar/CollapsingTopBarScope.floating|floating@androidx.compose.ui.Modifier(){}[0]
     abstract fun (androidx.compose.ui/Modifier).nestedCollapse(com.flaringapp.compose.topbar.nestedcollapse/CollapsingTopBarNestedCollapseElement): androidx.compose.ui/Modifier // com.flaringapp.compose.topbar/CollapsingTopBarScope.nestedCollapse|nestedCollapse@androidx.compose.ui.Modifier(com.flaringapp.compose.topbar.nestedcollapse.CollapsingTopBarNestedCollapseElement){}[0]
     abstract fun (androidx.compose.ui/Modifier).parallax(kotlin/Float): androidx.compose.ui/Modifier // com.flaringapp.compose.topbar/CollapsingTopBarScope.parallax|parallax@androidx.compose.ui.Modifier(kotlin.Float){}[0]

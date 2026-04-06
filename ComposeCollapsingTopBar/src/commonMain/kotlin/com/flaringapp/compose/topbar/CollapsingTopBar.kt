@@ -20,6 +20,7 @@ import androidx.compose.foundation.layout.LayoutScopeMarker
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.geometry.toRect
@@ -218,6 +219,14 @@ private fun processPlaceable(
 public interface CollapsingTopBarScope {
 
     /**
+     * Align the element within the bounds of [CollapsingTopBar].
+     * Only the last modifier in chain takes effect.
+     *
+     * @param alignment the alignment of the element inside the top bar.
+     */
+    public fun Modifier.align(alignment: Alignment): Modifier
+
+    /**
      * Position the element dynamically while collapsing by offsetting up by [ratio] as a fraction
      * of collapsible height. Value 0f means there is no parallax and the element simply sits in
      * place while top bar is collapsing, whereas 1f will make the element follow the collapse
@@ -254,6 +263,10 @@ public interface CollapsingTopBarScope {
 
 private object CollapsingTopBarScopeInstance : CollapsingTopBarScope {
 
+    override fun Modifier.align(alignment: Alignment): Modifier {
+        return then(AlignmentModifier(alignment))
+    }
+
     override fun Modifier.parallax(ratio: Float): Modifier {
         return then(ParallaxModifier(ratio))
     }
@@ -270,6 +283,14 @@ private object CollapsingTopBarScopeInstance : CollapsingTopBarScope {
         element: CollapsingTopBarNestedCollapseElement,
     ): Modifier {
         return then(NestedCollapseModifier(element))
+    }
+}
+
+private class AlignmentModifier(
+    private val alignment: Alignment,
+) : CollapsingTopBarParentDataModifier() {
+    override fun modifyParentData(parentData: CollapsingTopBarParentData) {
+        parentData.alignment = alignment
     }
 }
 
@@ -315,6 +336,7 @@ private abstract class CollapsingTopBarParentDataModifier : ParentDataModifier {
 }
 
 private data class CollapsingTopBarParentData(
+    var alignment: Alignment? = null,
     var parallaxRatio: Float? = null,
     var isFloating: Boolean = false,
     var progressListener: CollapsingTopBarProgressListener? = null,
