@@ -22,6 +22,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
@@ -38,6 +39,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.lerp
 import androidx.compose.ui.zIndex
@@ -133,8 +135,9 @@ private fun CollapsingTopBarColumnScope.CollapsibleSlidingAction(
         Box(
             modifier = Modifier
                 .size(40.dp)
-                .graphicsLayer {
-                    translationX = lerp(56.dp, 0.dp, twiceAsFastCollapseProgress).toPx()
+                .offset {
+                    val x = lerp(56.dp, 0.dp, twiceAsFastCollapseProgress).roundToPx()
+                    IntOffset(x, 0)
                 }
                 .background(color = Color.Red, shape = CircleShape),
         )
