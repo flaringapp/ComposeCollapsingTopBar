@@ -212,9 +212,9 @@ private fun processPlaceable(
         1f
     } else {
         val visibleCollapsibleSegmentStart = (collapsibleSegmentStart + parallaxY)
-            .coerceIn(layoutInfo.collapsedHeight, layoutInfo.height.toInt())
+            .coerceIn(layoutInfo.collapsedHeight, layoutInfo.height.roundToInt())
         val visibleCollapsibleSegmentEnd = (collapsibleSegmentEnd + parallaxY)
-            .coerceIn(layoutInfo.collapsedHeight, layoutInfo.height.toInt())
+            .coerceIn(layoutInfo.collapsedHeight, layoutInfo.height.roundToInt())
         val visibleCollapsibleDistance =
             (visibleCollapsibleSegmentEnd - visibleCollapsibleSegmentStart).coerceAtLeast(0)
 
