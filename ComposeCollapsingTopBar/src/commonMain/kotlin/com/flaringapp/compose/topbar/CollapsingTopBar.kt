@@ -191,6 +191,8 @@ private fun processPlaceable(
     topBarSize: IntSize,
     layoutDirection: LayoutDirection,
 ): IntOffset {
+    val currentTopBarHeight = layoutInfo.height.roundToInt()
+
     val parentData = placeable.topBarParentData
 
     val alignmentOffset = (parentData?.alignment ?: Alignment.TopStart).align(
@@ -205,7 +207,7 @@ private fun processPlaceable(
 
     val pinOffsetY = parentData?.pin?.let { pin ->
         val baseY = alignmentOffset.y + parallaxOffsetY
-        val maxAllowedY = layoutInfo.height.roundToInt() - placeable.height
+        val maxAllowedY = currentTopBarHeight - placeable.height
 
         var pinnedY = baseY.coerceAtMost(maxAllowedY)
         if (pin.stopAtTop) {
@@ -226,9 +228,9 @@ private fun processPlaceable(
         1f
     } else {
         val visibleCollapsibleSegmentStart = (collapsibleSegmentStart + placementOffsetY)
-            .coerceIn(layoutInfo.collapsedHeight, layoutInfo.height.roundToInt())
+            .coerceIn(layoutInfo.collapsedHeight, currentTopBarHeight)
         val visibleCollapsibleSegmentEnd = (collapsibleSegmentEnd + placementOffsetY)
-            .coerceIn(layoutInfo.collapsedHeight, layoutInfo.height.roundToInt())
+            .coerceIn(layoutInfo.collapsedHeight, currentTopBarHeight)
         val visibleCollapsibleDistance =
             (visibleCollapsibleSegmentEnd - visibleCollapsibleSegmentStart).coerceAtLeast(0)
 
