@@ -199,9 +199,23 @@ private fun processPlaceable(
         layoutDirection = layoutDirection,
     )
 
-    val parallaxY = parentData?.parallaxRatio?.let { parallaxRatio ->
+    val parallaxOffsetY = parentData?.parallaxRatio?.let { parallaxRatio ->
         -(layoutInfo.collapseHeightDelta * parallaxRatio).roundToInt()
     } ?: 0
+
+    val pinOffsetY = parentData?.pin?.let { pin ->
+        val baseY = alignmentOffset.y + parallaxOffsetY
+        val maxAllowedY = layoutInfo.height.roundToInt() - placeable.height
+
+        var pinnedY = baseY.coerceAtMost(maxAllowedY)
+        if (pin.stopAtTop) {
+            pinnedY = pinnedY.coerceAtLeast(0)
+        }
+
+        pinnedY - baseY
+    } ?: 0
+
+    val placementOffsetY = parallaxOffsetY + pinOffsetY
 
     val collapsibleSegmentStart = alignmentOffset.y.coerceAtLeast(layoutInfo.collapsedHeight)
     val collapsibleSegmentEnd = alignmentOffset.y + placeable.height
@@ -211,9 +225,9 @@ private fun processPlaceable(
     val placeableProgress = if (placeableCollapsibleDistance == 0) {
         1f
     } else {
-        val visibleCollapsibleSegmentStart = (collapsibleSegmentStart + parallaxY)
+        val visibleCollapsibleSegmentStart = (collapsibleSegmentStart + placementOffsetY)
             .coerceIn(layoutInfo.collapsedHeight, layoutInfo.height.roundToInt())
-        val visibleCollapsibleSegmentEnd = (collapsibleSegmentEnd + parallaxY)
+        val visibleCollapsibleSegmentEnd = (collapsibleSegmentEnd + placementOffsetY)
             .coerceIn(layoutInfo.collapsedHeight, layoutInfo.height.roundToInt())
         val visibleCollapsibleDistance =
             (visibleCollapsibleSegmentEnd - visibleCollapsibleSegmentStart).coerceAtLeast(0)
@@ -226,7 +240,7 @@ private fun processPlaceable(
         itemProgress = placeableProgress,
     )
 
-    return IntOffset(alignmentOffset.x, alignmentOffset.y + parallaxY)
+    return IntOffset(alignmentOffset.x, alignmentOffset.y + placementOffsetY)
 }
 
 /**
