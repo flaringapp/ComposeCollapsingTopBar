@@ -60,6 +60,7 @@ abstract interface com.flaringapp.compose.topbar/CollapsingTopBarScope { // com.
     abstract fun (androidx.compose.ui/Modifier).floating(): androidx.compose.ui/Modifier // com.flaringapp.compose.topbar/CollapsingTopBarScope.floating|floating@androidx.compose.ui.Modifier(){}[0]
     abstract fun (androidx.compose.ui/Modifier).nestedCollapse(com.flaringapp.compose.topbar.nestedcollapse/CollapsingTopBarNestedCollapseElement): androidx.compose.ui/Modifier // com.flaringapp.compose.topbar/CollapsingTopBarScope.nestedCollapse|nestedCollapse@androidx.compose.ui.Modifier(com.flaringapp.compose.topbar.nestedcollapse.CollapsingTopBarNestedCollapseElement){}[0]
     abstract fun (androidx.compose.ui/Modifier).parallax(kotlin/Float): androidx.compose.ui/Modifier // com.flaringapp.compose.topbar/CollapsingTopBarScope.parallax|parallax@androidx.compose.ui.Modifier(kotlin.Float){}[0]
+    abstract fun (androidx.compose.ui/Modifier).pin(kotlin/Boolean = ...): androidx.compose.ui/Modifier // com.flaringapp.compose.topbar/CollapsingTopBarScope.pin|pin@androidx.compose.ui.Modifier(kotlin.Boolean){}[0]
     abstract fun (androidx.compose.ui/Modifier).progress(com.flaringapp.compose.topbar/CollapsingTopBarProgressListener): androidx.compose.ui/Modifier // com.flaringapp.compose.topbar/CollapsingTopBarScope.progress|progress@androidx.compose.ui.Modifier(com.flaringapp.compose.topbar.CollapsingTopBarProgressListener){}[0]
 }
 

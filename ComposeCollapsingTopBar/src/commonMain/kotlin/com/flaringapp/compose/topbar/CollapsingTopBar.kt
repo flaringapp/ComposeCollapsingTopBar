@@ -256,6 +256,17 @@ public interface CollapsingTopBarScope {
     public fun Modifier.parallax(ratio: Float): Modifier
 
     /**
+     * Make the element ride with top bar collapse after its bottom touches current top bar bottom.
+     *
+     * By default, pinned content continues riding even after crossing the top edge. Set
+     * [stopAtTop] to true to stop the element at y = 0 instead.
+     *
+     * This modifier affects item placement only and does not participate in resolving minimum
+     * (collapsed) height.
+     */
+    public fun Modifier.pin(stopAtTop: Boolean = false): Modifier
+
+    /**
      * Exclude the element from resolving minimum height among all elements. Useful for 'floating'
      * elements with custom motion on collapse.
      */
@@ -292,6 +303,10 @@ private object CollapsingTopBarScopeInstance : CollapsingTopBarScope {
         return then(ParallaxModifier(ratio))
     }
 
+    override fun Modifier.pin(stopAtTop: Boolean): Modifier {
+        return then(PinModifier(stopAtTop))
+    }
+
     override fun Modifier.floating(): Modifier {
         return then(FloatingModifier())
     }
@@ -320,6 +335,16 @@ private class ParallaxModifier(
 ) : CollapsingTopBarParentDataModifier() {
     override fun modifyParentData(parentData: CollapsingTopBarParentData) {
         parentData.parallaxRatio = ratio
+    }
+}
+
+private class PinModifier(
+    private val stopAtTop: Boolean,
+) : CollapsingTopBarParentDataModifier() {
+    override fun modifyParentData(parentData: CollapsingTopBarParentData) {
+        parentData.pin = CollapsingTopBarParentData.Pin(
+            stopAtTop = stopAtTop,
+        )
     }
 }
 
@@ -359,10 +384,16 @@ private abstract class CollapsingTopBarParentDataModifier : ParentDataModifier {
 private data class CollapsingTopBarParentData(
     var alignment: Alignment? = null,
     var parallaxRatio: Float? = null,
+    var pin: Pin? = null,
     var isFloating: Boolean = false,
     var progressListener: CollapsingTopBarProgressListener? = null,
     var nestedCollapseElement: CollapsingTopBarNestedCollapseElement? = null,
-)
+) {
+
+    data class Pin(
+        val stopAtTop: Boolean,
+    )
+}
 
 private val Placeable.topBarParentData: CollapsingTopBarParentData?
     get() = parentData as? CollapsingTopBarParentData
