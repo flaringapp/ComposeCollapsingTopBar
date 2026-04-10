@@ -256,6 +256,51 @@ CollapsingTopBarScaffold(
 </details>
 
 <details>
+<summary>Pin</summary>
+
+#### Pin
+
+```kotlin
+Modifier.pin(stopAtTop = false)
+```
+
+Keeps an element at its regular position until its bottom edge reaches the visible bottom of
+`CollapsingTopBar`, then makes it ride upward with the collapsing top bar.
+
+By default, a pinned element continues riding past the top edge. Set `stopAtTop = true` to stop
+it at `y = 0`.
+
+`pin(...)` affects placement only and does not change minimum height resolution. Combine it with
+`floating()` when the pinned element should behave like an overlay and stay out of collapsed height
+calculation.
+
+```kotlin
+CollapsingTopBarScaffold(
+    scrollMode = CollapsingTopBarScaffoldScrollMode.collapse(expandAlways = false),
+    topBar = {
+        SampleTopBarImage()
+        PinnedElement(
+            modifier = Modifier
+                .floating()
+                .align(Alignment.BottomEnd)
+                .pin(),
+        )
+        SampleTopAppBar(
+            containerColor = Color.Transparent,
+        )
+    },
+    body = {
+        SampleContent()
+    },
+)
+```
+
+> In this example the bottom-end element is pinned and keeps riding with the top bar, excluded from
+> collapsed height calculation.
+
+</details>
+
+<details>
 <summary>Floating</summary>
 
 #### Floating

@@ -23,6 +23,7 @@ import com.flaringapp.compose.topbar.sample.shared.ui.samples.advanced.BodyResiz
 import com.flaringapp.compose.topbar.sample.shared.ui.samples.advanced.FloatingElementSample
 import com.flaringapp.compose.topbar.sample.shared.ui.samples.advanced.ManualCollapsingControlsSample
 import com.flaringapp.compose.topbar.sample.shared.ui.samples.advanced.ParallaxCollapsingSample
+import com.flaringapp.compose.topbar.sample.shared.ui.samples.advanced.PinSample
 import com.flaringapp.compose.topbar.sample.shared.ui.samples.advanced.SnapCollapsingSample
 import com.flaringapp.compose.topbar.sample.shared.ui.samples.basic.CollapsingExitExpandAlwaysSample
 import com.flaringapp.compose.topbar.sample.shared.ui.samples.basic.CollapsingExitExpandAtTopSample
@@ -66,6 +67,7 @@ object CollapsingTopBarSampleGroups {
         get() = listOf(
             AlignmentSample,
             ParallaxCollapsingSample,
+            PinSample,
             SnapCollapsingSample,
             AppBarShadowSample,
             AppBarScrimSample,

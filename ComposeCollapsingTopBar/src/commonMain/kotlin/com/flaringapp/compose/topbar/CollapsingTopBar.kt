@@ -191,6 +191,8 @@ private fun processPlaceable(
     topBarSize: IntSize,
     layoutDirection: LayoutDirection,
 ): IntOffset {
+    val currentTopBarHeight = layoutInfo.height.roundToInt()
+
     val parentData = placeable.topBarParentData
 
     val alignmentOffset = (parentData?.alignment ?: Alignment.TopStart).align(
@@ -199,9 +201,23 @@ private fun processPlaceable(
         layoutDirection = layoutDirection,
     )
 
-    val parallaxY = parentData?.parallaxRatio?.let { parallaxRatio ->
+    val parallaxOffsetY = parentData?.parallaxRatio?.let { parallaxRatio ->
         -(layoutInfo.collapseHeightDelta * parallaxRatio).roundToInt()
     } ?: 0
+
+    val pinOffsetY = parentData?.pin?.let { pin ->
+        val baseY = alignmentOffset.y + parallaxOffsetY
+        val maxAllowedY = currentTopBarHeight - placeable.height
+
+        var pinnedY = baseY.coerceAtMost(maxAllowedY)
+        if (pin.stopAtTop) {
+            pinnedY = pinnedY.coerceAtLeast(0)
+        }
+
+        pinnedY - baseY
+    } ?: 0
+
+    val placementOffsetY = parallaxOffsetY + pinOffsetY
 
     val collapsibleSegmentStart = alignmentOffset.y.coerceAtLeast(layoutInfo.collapsedHeight)
     val collapsibleSegmentEnd = alignmentOffset.y + placeable.height
@@ -211,10 +227,10 @@ private fun processPlaceable(
     val placeableProgress = if (placeableCollapsibleDistance == 0) {
         1f
     } else {
-        val visibleCollapsibleSegmentStart = (collapsibleSegmentStart + parallaxY)
-            .coerceIn(layoutInfo.collapsedHeight, layoutInfo.height.roundToInt())
-        val visibleCollapsibleSegmentEnd = (collapsibleSegmentEnd + parallaxY)
-            .coerceIn(layoutInfo.collapsedHeight, layoutInfo.height.roundToInt())
+        val visibleCollapsibleSegmentStart = (collapsibleSegmentStart + placementOffsetY)
+            .coerceIn(layoutInfo.collapsedHeight, currentTopBarHeight)
+        val visibleCollapsibleSegmentEnd = (collapsibleSegmentEnd + placementOffsetY)
+            .coerceIn(layoutInfo.collapsedHeight, currentTopBarHeight)
         val visibleCollapsibleDistance =
             (visibleCollapsibleSegmentEnd - visibleCollapsibleSegmentStart).coerceAtLeast(0)
 
@@ -226,7 +242,7 @@ private fun processPlaceable(
         itemProgress = placeableProgress,
     )
 
-    return IntOffset(alignmentOffset.x, alignmentOffset.y + parallaxY)
+    return IntOffset(alignmentOffset.x, alignmentOffset.y + placementOffsetY)
 }
 
 /**
@@ -254,6 +270,17 @@ public interface CollapsingTopBarScope {
      * motion.
      */
     public fun Modifier.parallax(ratio: Float): Modifier
+
+    /**
+     * Make the element ride with top bar collapse after its bottom touches current top bar bottom.
+     *
+     * By default, pinned content continues riding even after crossing the top edge. Set
+     * [stopAtTop] to true to stop the element at y = 0 instead.
+     *
+     * This modifier affects item placement only and does not participate in resolving minimum
+     * (collapsed) height.
+     */
+    public fun Modifier.pin(stopAtTop: Boolean = false): Modifier
 
     /**
      * Exclude the element from resolving minimum height among all elements. Useful for 'floating'
@@ -292,6 +319,10 @@ private object CollapsingTopBarScopeInstance : CollapsingTopBarScope {
         return then(ParallaxModifier(ratio))
     }
 
+    override fun Modifier.pin(stopAtTop: Boolean): Modifier {
+        return then(PinModifier(stopAtTop))
+    }
+
     override fun Modifier.floating(): Modifier {
         return then(FloatingModifier())
     }
@@ -320,6 +351,16 @@ private class ParallaxModifier(
 ) : CollapsingTopBarParentDataModifier() {
     override fun modifyParentData(parentData: CollapsingTopBarParentData) {
         parentData.parallaxRatio = ratio
+    }
+}
+
+private class PinModifier(
+    private val stopAtTop: Boolean,
+) : CollapsingTopBarParentDataModifier() {
+    override fun modifyParentData(parentData: CollapsingTopBarParentData) {
+        parentData.pin = CollapsingTopBarParentData.Pin(
+            stopAtTop = stopAtTop,
+        )
     }
 }
 
@@ -359,10 +400,16 @@ private abstract class CollapsingTopBarParentDataModifier : ParentDataModifier {
 private data class CollapsingTopBarParentData(
     var alignment: Alignment? = null,
     var parallaxRatio: Float? = null,
+    var pin: Pin? = null,
     var isFloating: Boolean = false,
     var progressListener: CollapsingTopBarProgressListener? = null,
     var nestedCollapseElement: CollapsingTopBarNestedCollapseElement? = null,
-)
+) {
+
+    data class Pin(
+        val stopAtTop: Boolean,
+    )
+}
 
 private val Placeable.topBarParentData: CollapsingTopBarParentData?
     get() = parentData as? CollapsingTopBarParentData
