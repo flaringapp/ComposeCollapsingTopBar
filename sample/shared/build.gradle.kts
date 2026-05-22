@@ -28,6 +28,8 @@ kotlin {
         }
     }
 
+    jvm()
+
     sourceSets {
         commonMain.dependencies {
             implementation(project(":ComposeCollapsingTopBar"))
