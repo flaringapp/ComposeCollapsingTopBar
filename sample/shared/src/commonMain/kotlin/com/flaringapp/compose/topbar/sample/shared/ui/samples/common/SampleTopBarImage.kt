@@ -17,6 +17,7 @@
 package com.flaringapp.compose.topbar.sample.shared.ui.samples.common
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -47,10 +48,12 @@ fun SampleTopBarImage(
     height: Dp = 300.dp,
 ) {
     Image(
-        modifier = modifier.height(height),
+        modifier = modifier
+            .fillMaxWidth()
+            .height(height),
         painter = painterResource(dog.imageRes),
         contentDescription = null,
-        contentScale = ContentScale.FillHeight,
+        contentScale = ContentScale.Crop,
     )
 }
 
