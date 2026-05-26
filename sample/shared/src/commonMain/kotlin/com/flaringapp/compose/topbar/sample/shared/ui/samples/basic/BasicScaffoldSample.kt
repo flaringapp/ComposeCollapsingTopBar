@@ -16,6 +16,7 @@
 
 package com.flaringapp.compose.topbar.sample.shared.ui.samples.basic
 
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -29,9 +30,11 @@ import com.flaringapp.compose.topbar.sample.shared.ui.samples.CollapsingTopBarSa
 import com.flaringapp.compose.topbar.sample.shared.ui.samples.common.SampleContent
 import com.flaringapp.compose.topbar.sample.shared.ui.samples.common.SampleTopAppBar
 import com.flaringapp.compose.topbar.sample.shared.ui.samples.common.SampleTopBarImage
+import com.flaringapp.compose.topbar.sample.shared.ui.samples.desktopfix.desktopScrollBoundsNestedScrollFix
 import com.flaringapp.compose.topbar.sample.shared.ui.theme.ComposeCollapsingTopBarTheme
 import com.flaringapp.compose.topbar.scaffold.CollapsingTopBarScaffold
 import com.flaringapp.compose.topbar.scaffold.CollapsingTopBarScaffoldScrollMode
+import com.flaringapp.compose.topbar.scaffold.rememberCollapsingTopBarScaffoldState
 
 private const val SCRIM_START_FRACTION = 0.25f
 
@@ -42,8 +45,15 @@ fun BasicScaffoldSampleContent(
     scrollMode: CollapsingTopBarScaffoldScrollMode,
     modifier: Modifier = Modifier,
 ) {
+    val scaffoldState = rememberCollapsingTopBarScaffoldState()
+    val contentScrollState = rememberScrollState()
+
     CollapsingTopBarScaffold(
-        modifier = modifier,
+        modifier = modifier.desktopScrollBoundsNestedScrollFix(
+            state = scaffoldState,
+            isContentAtTop = { contentScrollState.value == 0 },
+        ),
+        state = scaffoldState,
         scrollMode = scrollMode,
         topBar = {
             var topBarColorProgress by remember { mutableFloatStateOf(1f) }
@@ -66,7 +76,9 @@ fun BasicScaffoldSampleContent(
             )
         },
         body = {
-            SampleContent()
+            SampleContent(
+                scrollState = contentScrollState,
+            )
         },
     )
 }

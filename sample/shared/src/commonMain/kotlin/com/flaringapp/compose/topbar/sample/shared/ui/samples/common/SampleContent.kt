@@ -16,6 +16,7 @@
 
 package com.flaringapp.compose.topbar.sample.shared.ui.samples.common
 
+import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
@@ -39,12 +40,13 @@ import com.flaringapp.compose.topbar.sample.shared.ui.theme.ComposeCollapsingTop
 @Composable
 inline fun SampleContent(
     modifier: Modifier = Modifier,
+    scrollState: ScrollState = rememberScrollState(),
     before: ColumnScope.() -> Unit = {},
 ) {
     Column(
         modifier = modifier
             .fillMaxSize()
-            .verticalScroll(rememberScrollState()),
+            .verticalScroll(scrollState),
     ) {
         before()
 

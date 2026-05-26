@@ -1,0 +1,362 @@
+public abstract interface class com/flaringapp/compose/topbar/CollapsingTopBarControls {
+	public static final field Companion Lcom/flaringapp/compose/topbar/CollapsingTopBarControls$Companion;
+	public fun animateHeightTo (Landroidx/compose/foundation/gestures/ScrollScope;FFLandroidx/compose/animation/core/AnimationSpec;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun animateHeightTo (Landroidx/compose/foundation/gestures/ScrollableState;FFLandroidx/compose/animation/core/AnimationSpec;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun collapse (Landroidx/compose/animation/core/AnimationSpec;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static synthetic fun collapse$default (Lcom/flaringapp/compose/topbar/CollapsingTopBarControls;Landroidx/compose/animation/core/AnimationSpec;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+	public abstract fun expand (Landroidx/compose/animation/core/AnimationSpec;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static synthetic fun expand$default (Lcom/flaringapp/compose/topbar/CollapsingTopBarControls;Landroidx/compose/animation/core/AnimationSpec;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+}
+
+public final class com/flaringapp/compose/topbar/CollapsingTopBarControls$Companion {
+	public final fun getDefaultAnimationSpec ()Landroidx/compose/animation/core/AnimationSpec;
+}
+
+public final class com/flaringapp/compose/topbar/CollapsingTopBarControls$DefaultImpls {
+	public static fun animateHeightTo (Lcom/flaringapp/compose/topbar/CollapsingTopBarControls;Landroidx/compose/foundation/gestures/ScrollScope;FFLandroidx/compose/animation/core/AnimationSpec;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static fun animateHeightTo (Lcom/flaringapp/compose/topbar/CollapsingTopBarControls;Landroidx/compose/foundation/gestures/ScrollableState;FFLandroidx/compose/animation/core/AnimationSpec;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static synthetic fun collapse$default (Lcom/flaringapp/compose/topbar/CollapsingTopBarControls;Landroidx/compose/animation/core/AnimationSpec;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+	public static synthetic fun expand$default (Lcom/flaringapp/compose/topbar/CollapsingTopBarControls;Landroidx/compose/animation/core/AnimationSpec;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+}
+
+public final class com/flaringapp/compose/topbar/CollapsingTopBarKt {
+	public static final fun CollapsingTopBar (Landroidx/compose/ui/Modifier;Lcom/flaringapp/compose/topbar/CollapsingTopBarState;ZLkotlin/jvm/functions/Function3;Landroidx/compose/runtime/Composer;II)V
+}
+
+public final class com/flaringapp/compose/topbar/CollapsingTopBarLayoutInfo {
+	public static final field $stable I
+	public fun <init> (FII)V
+	public final fun component1 ()F
+	public final fun component2 ()I
+	public final fun component3 ()I
+	public final fun copy (FII)Lcom/flaringapp/compose/topbar/CollapsingTopBarLayoutInfo;
+	public static synthetic fun copy$default (Lcom/flaringapp/compose/topbar/CollapsingTopBarLayoutInfo;FIIILjava/lang/Object;)Lcom/flaringapp/compose/topbar/CollapsingTopBarLayoutInfo;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getCollapseHeightDelta ()F
+	public final fun getCollapseProgress ()F
+	public final fun getCollapsedHeight ()I
+	public final fun getCollapsibleDistance ()I
+	public final fun getExpandHeightDelta ()F
+	public final fun getExpandedHeight ()I
+	public final fun getHeight ()F
+	public fun hashCode ()I
+	public final fun isCollapsed ()Z
+	public final fun isExpanded ()Z
+	public fun toString ()Ljava/lang/String;
+}
+
+public abstract interface class com/flaringapp/compose/topbar/CollapsingTopBarProgressListener {
+	public abstract fun onProgressUpdate (FF)V
+}
+
+public abstract interface class com/flaringapp/compose/topbar/CollapsingTopBarScope {
+	public abstract fun align (Landroidx/compose/ui/Modifier;Landroidx/compose/ui/Alignment;)Landroidx/compose/ui/Modifier;
+	public abstract fun floating (Landroidx/compose/ui/Modifier;)Landroidx/compose/ui/Modifier;
+	public abstract fun nestedCollapse (Landroidx/compose/ui/Modifier;Lcom/flaringapp/compose/topbar/nestedcollapse/CollapsingTopBarNestedCollapseElement;)Landroidx/compose/ui/Modifier;
+	public abstract fun parallax (Landroidx/compose/ui/Modifier;F)Landroidx/compose/ui/Modifier;
+	public abstract fun pin (Landroidx/compose/ui/Modifier;Z)Landroidx/compose/ui/Modifier;
+	public static synthetic fun pin$default (Lcom/flaringapp/compose/topbar/CollapsingTopBarScope;Landroidx/compose/ui/Modifier;ZILjava/lang/Object;)Landroidx/compose/ui/Modifier;
+	public abstract fun progress (Landroidx/compose/ui/Modifier;Lcom/flaringapp/compose/topbar/CollapsingTopBarProgressListener;)Landroidx/compose/ui/Modifier;
+}
+
+public final class com/flaringapp/compose/topbar/CollapsingTopBarScope$DefaultImpls {
+	public static synthetic fun pin$default (Lcom/flaringapp/compose/topbar/CollapsingTopBarScope;Landroidx/compose/ui/Modifier;ZILjava/lang/Object;)Landroidx/compose/ui/Modifier;
+}
+
+public final class com/flaringapp/compose/topbar/CollapsingTopBarState : androidx/compose/foundation/gestures/ScrollableState, com/flaringapp/compose/topbar/CollapsingTopBarControls, com/flaringapp/compose/topbar/snap/CollapsingTopBarSnapScope {
+	public static final field $stable I
+	public static final field Companion Lcom/flaringapp/compose/topbar/CollapsingTopBarState$Companion;
+	public fun <init> (Z)V
+	public synthetic fun <init> (ZILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun animateHeightTo (Landroidx/compose/foundation/gestures/ScrollScope;FFLandroidx/compose/animation/core/AnimationSpec;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun animateHeightTo (Landroidx/compose/foundation/gestures/ScrollableState;FFLandroidx/compose/animation/core/AnimationSpec;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun collapse (Landroidx/compose/animation/core/AnimationSpec;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun dispatchRawDelta (F)F
+	public fun expand (Landroidx/compose/animation/core/AnimationSpec;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getCanScrollBackward ()Z
+	public fun getCanScrollForward ()Z
+	public final fun getHasMeasured ()Z
+	public fun getLastScrolledBackward ()Z
+	public fun getLastScrolledForward ()Z
+	public final fun getLayoutInfo ()Lcom/flaringapp/compose/topbar/CollapsingTopBarLayoutInfo;
+	public fun getScrollIndicatorState ()Landroidx/compose/foundation/ScrollIndicatorState;
+	public final fun isCollapsed ()Z
+	public final fun isExpanded ()Z
+	public fun isScrollInProgress ()Z
+	public fun scroll (Landroidx/compose/foundation/MutatePriority;Lkotlin/jvm/functions/Function2;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun snapWithProgress (ZLkotlin/jvm/functions/Function3;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class com/flaringapp/compose/topbar/CollapsingTopBarState$Companion {
+	public final fun getSaver ()Landroidx/compose/runtime/saveable/Saver;
+}
+
+public final class com/flaringapp/compose/topbar/CollapsingTopBarStateKt {
+	public static final fun rememberCollapsingTopBarState (ZLandroidx/compose/runtime/Composer;II)Lcom/flaringapp/compose/topbar/CollapsingTopBarState;
+}
+
+public final class com/flaringapp/compose/topbar/decoration/CollapsingTopBarVerticalFadingEdgeKt {
+	public static final fun CollapsingTopBarVerticalFadingEdge-YJYuY3k (JLandroidx/compose/ui/Modifier;FZLandroidx/compose/runtime/Composer;II)V
+}
+
+public final class com/flaringapp/compose/topbar/dependent/CollapsingTopBarDependentStateConnectionKt {
+	public static final fun collapsingTopBarDependentStateConnection (Landroidx/compose/ui/Modifier;Lcom/flaringapp/compose/topbar/CollapsingTopBarState;Lkotlin/jvm/functions/Function1;)Landroidx/compose/ui/Modifier;
+}
+
+public final class com/flaringapp/compose/topbar/dependent/CollapsingTopBarExitState : androidx/compose/foundation/gestures/ScrollableState, com/flaringapp/compose/topbar/CollapsingTopBarControls, com/flaringapp/compose/topbar/snap/CollapsingTopBarSnapScope {
+	public static final field $stable I
+	public static final field Companion Lcom/flaringapp/compose/topbar/dependent/CollapsingTopBarExitState$Companion;
+	public fun <init> (Z)V
+	public synthetic fun <init> (ZILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun animateHeightTo (Landroidx/compose/foundation/gestures/ScrollScope;FFLandroidx/compose/animation/core/AnimationSpec;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun animateHeightTo (Landroidx/compose/foundation/gestures/ScrollableState;FFLandroidx/compose/animation/core/AnimationSpec;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun collapse (Landroidx/compose/animation/core/AnimationSpec;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun dispatchRawDelta (F)F
+	public fun expand (Landroidx/compose/animation/core/AnimationSpec;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getCanScrollBackward ()Z
+	public fun getCanScrollForward ()Z
+	public final fun getCollapsedHeight ()F
+	public final fun getExitHeight ()F
+	public final fun getExitProgress ()F
+	public fun getLastScrolledBackward ()Z
+	public fun getLastScrolledForward ()Z
+	public fun getScrollIndicatorState ()Landroidx/compose/foundation/ScrollIndicatorState;
+	public final fun isEnabled ()Z
+	public final fun isFullyEntered ()Z
+	public final fun isFullyExited ()Z
+	public fun isScrollInProgress ()Z
+	public final fun reset ()V
+	public fun scroll (Landroidx/compose/foundation/MutatePriority;Lkotlin/jvm/functions/Function2;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun snapWithProgress (ZLkotlin/jvm/functions/Function3;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class com/flaringapp/compose/topbar/dependent/CollapsingTopBarExitState$Companion {
+	public final fun getSaver ()Landroidx/compose/runtime/saveable/Saver;
+}
+
+public final class com/flaringapp/compose/topbar/dependent/CollapsingTopBarExitStateKt {
+	public static final fun collapsingTopBarExitStateConnection (Landroidx/compose/ui/Modifier;Lcom/flaringapp/compose/topbar/CollapsingTopBarState;Lcom/flaringapp/compose/topbar/dependent/CollapsingTopBarExitState;)Landroidx/compose/ui/Modifier;
+	public static final fun rememberCollapsingTopBarExitState (ZLandroidx/compose/runtime/Composer;II)Lcom/flaringapp/compose/topbar/dependent/CollapsingTopBarExitState;
+}
+
+public abstract class com/flaringapp/compose/topbar/nestedcollapse/CollapsingTopBarColumnDirection {
+	public static final field $stable I
+}
+
+public final class com/flaringapp/compose/topbar/nestedcollapse/CollapsingTopBarColumnDirection$BottomUp : com/flaringapp/compose/topbar/nestedcollapse/CollapsingTopBarColumnDirection {
+	public static final field $stable I
+	public static final field INSTANCE Lcom/flaringapp/compose/topbar/nestedcollapse/CollapsingTopBarColumnDirection$BottomUp;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/flaringapp/compose/topbar/nestedcollapse/CollapsingTopBarColumnDirection$TopToBottom : com/flaringapp/compose/topbar/nestedcollapse/CollapsingTopBarColumnDirection {
+	public static final field $stable I
+	public static final field INSTANCE Lcom/flaringapp/compose/topbar/nestedcollapse/CollapsingTopBarColumnDirection$TopToBottom;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/flaringapp/compose/topbar/nestedcollapse/CollapsingTopBarColumnKt {
+	public static final fun CollapsingTopBarColumn (Lcom/flaringapp/compose/topbar/CollapsingTopBarScope;Lcom/flaringapp/compose/topbar/CollapsingTopBarState;Landroidx/compose/ui/Modifier;Lcom/flaringapp/compose/topbar/nestedcollapse/CollapsingTopBarColumnDirection;Lkotlin/jvm/functions/Function3;Landroidx/compose/runtime/Composer;II)V
+}
+
+public abstract interface class com/flaringapp/compose/topbar/nestedcollapse/CollapsingTopBarColumnScope {
+	public abstract fun align (Landroidx/compose/ui/Modifier;Landroidx/compose/ui/Alignment$Horizontal;)Landroidx/compose/ui/Modifier;
+	public abstract fun clipToCollapse (Landroidx/compose/ui/Modifier;)Landroidx/compose/ui/Modifier;
+	public abstract fun columnProgress (Landroidx/compose/ui/Modifier;Lcom/flaringapp/compose/topbar/CollapsingTopBarProgressListener;)Landroidx/compose/ui/Modifier;
+	public abstract fun notCollapsible (Landroidx/compose/ui/Modifier;)Landroidx/compose/ui/Modifier;
+	public abstract fun pinWhenCollapsed (Landroidx/compose/ui/Modifier;)Landroidx/compose/ui/Modifier;
+}
+
+public abstract interface class com/flaringapp/compose/topbar/nestedcollapse/CollapsingTopBarNestedCollapseElement {
+	public abstract fun getMinHeight ()I
+}
+
+public final class com/flaringapp/compose/topbar/nestedcollapse/CollapsingTopBarNestedCollapseState : com/flaringapp/compose/topbar/nestedcollapse/CollapsingTopBarNestedCollapseElement {
+	public static final field $stable I
+	public fun <init> ()V
+	public fun getMinHeight ()I
+	public fun setMinHeight (I)V
+}
+
+public final class com/flaringapp/compose/topbar/nestedcollapse/CollapsingTopBarNestedCollapseStateKt {
+	public static final fun rememberCollapsingTopBarNestedCollapseState (Landroidx/compose/runtime/Composer;I)Lcom/flaringapp/compose/topbar/nestedcollapse/CollapsingTopBarNestedCollapseState;
+}
+
+public final class com/flaringapp/compose/topbar/nestedscroll/CollapsingTopBarNestedScrollCollapse : com/flaringapp/compose/topbar/nestedscroll/CollapsingTopBarNestedScrollHandler {
+	public static final field $stable I
+	public fun <init> (Landroidx/compose/foundation/gestures/ScrollableState;Landroidx/compose/foundation/gestures/FlingBehavior;)V
+	public fun fling (Landroidx/compose/foundation/gestures/ScrollableState;Landroidx/compose/foundation/gestures/FlingBehavior;FLkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun onPostFling-RZ2iAVY (JJLkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun onPostScroll-DzOQY0M (JJI)J
+	public fun onPreFling-QWom1Mo (JLkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun onPreScroll-OzD1aCk (JI)J
+}
+
+public abstract class com/flaringapp/compose/topbar/nestedscroll/CollapsingTopBarNestedScrollExpand : com/flaringapp/compose/topbar/nestedscroll/CollapsingTopBarNestedScrollHandler {
+	public static final field $stable I
+	public static final field Companion Lcom/flaringapp/compose/topbar/nestedscroll/CollapsingTopBarNestedScrollExpand$Companion;
+	public fun <init> ()V
+	protected final fun expand-MK-Hz9U (J)J
+	protected final fun expand-QWom1Mo (JLkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun fling (Landroidx/compose/foundation/gestures/ScrollableState;Landroidx/compose/foundation/gestures/FlingBehavior;FLkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun getFlingBehavior ()Landroidx/compose/foundation/gestures/FlingBehavior;
+	public abstract fun getState ()Landroidx/compose/foundation/gestures/ScrollableState;
+	public fun onPostFling-RZ2iAVY (JJLkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun onPostScroll-DzOQY0M (JJI)J
+	public fun onPreFling-QWom1Mo (JLkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun onPreScroll-OzD1aCk (JI)J
+}
+
+public final class com/flaringapp/compose/topbar/nestedscroll/CollapsingTopBarNestedScrollExpand$Always : com/flaringapp/compose/topbar/nestedscroll/CollapsingTopBarNestedScrollExpand {
+	public static final field $stable I
+	public fun <init> (Landroidx/compose/foundation/gestures/ScrollableState;Landroidx/compose/foundation/gestures/FlingBehavior;)V
+	public fun getFlingBehavior ()Landroidx/compose/foundation/gestures/FlingBehavior;
+	public fun getState ()Landroidx/compose/foundation/gestures/ScrollableState;
+	public fun onPreFling-QWom1Mo (JLkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun onPreScroll-OzD1aCk (JI)J
+}
+
+public final class com/flaringapp/compose/topbar/nestedscroll/CollapsingTopBarNestedScrollExpand$AtTop : com/flaringapp/compose/topbar/nestedscroll/CollapsingTopBarNestedScrollExpand {
+	public static final field $stable I
+	public fun <init> (Landroidx/compose/foundation/gestures/ScrollableState;Landroidx/compose/foundation/gestures/FlingBehavior;)V
+	public fun getFlingBehavior ()Landroidx/compose/foundation/gestures/FlingBehavior;
+	public fun getState ()Landroidx/compose/foundation/gestures/ScrollableState;
+	public fun onPostFling-RZ2iAVY (JJLkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun onPostScroll-DzOQY0M (JJI)J
+}
+
+public final class com/flaringapp/compose/topbar/nestedscroll/CollapsingTopBarNestedScrollExpand$Companion {
+	public final fun of (Landroidx/compose/foundation/gestures/ScrollableState;Landroidx/compose/foundation/gestures/FlingBehavior;Z)Lcom/flaringapp/compose/topbar/nestedscroll/CollapsingTopBarNestedScrollHandler;
+}
+
+public abstract interface class com/flaringapp/compose/topbar/nestedscroll/CollapsingTopBarNestedScrollHandler : androidx/compose/ui/input/nestedscroll/NestedScrollConnection {
+	public fun fling (Landroidx/compose/foundation/gestures/ScrollableState;Landroidx/compose/foundation/gestures/FlingBehavior;FLkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class com/flaringapp/compose/topbar/nestedscroll/CollapsingTopBarNestedScrollHandler$DefaultImpls {
+	public static fun fling (Lcom/flaringapp/compose/topbar/nestedscroll/CollapsingTopBarNestedScrollHandler;Landroidx/compose/foundation/gestures/ScrollableState;Landroidx/compose/foundation/gestures/FlingBehavior;FLkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static fun onPostFling-RZ2iAVY (Lcom/flaringapp/compose/topbar/nestedscroll/CollapsingTopBarNestedScrollHandler;JJLkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static fun onPostScroll-DzOQY0M (Lcom/flaringapp/compose/topbar/nestedscroll/CollapsingTopBarNestedScrollHandler;JJI)J
+	public static fun onPreFling-QWom1Mo (Lcom/flaringapp/compose/topbar/nestedscroll/CollapsingTopBarNestedScrollHandler;JLkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static fun onPreScroll-OzD1aCk (Lcom/flaringapp/compose/topbar/nestedscroll/CollapsingTopBarNestedScrollHandler;JI)J
+}
+
+public final class com/flaringapp/compose/topbar/nestedscroll/CollapsingTopBarNestedScrollSnap : com/flaringapp/compose/topbar/nestedscroll/CollapsingTopBarNestedScrollHandler {
+	public static final field $stable I
+	public fun <init> (Lcom/flaringapp/compose/topbar/snap/CollapsingTopBarSnapBehavior;Lcom/flaringapp/compose/topbar/snap/CollapsingTopBarSnapScope;)V
+	public fun fling (Landroidx/compose/foundation/gestures/ScrollableState;Landroidx/compose/foundation/gestures/FlingBehavior;FLkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun onPostFling-RZ2iAVY (JJLkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun onPostScroll-DzOQY0M (JJI)J
+	public fun onPreFling-QWom1Mo (JLkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun onPreScroll-OzD1aCk (JI)J
+}
+
+public abstract interface class com/flaringapp/compose/topbar/nestedscroll/CollapsingTopBarNestedScrollStrategy {
+	public abstract fun createHandlers (Ljava/lang/Object;Landroidx/compose/foundation/gestures/FlingBehavior;Lcom/flaringapp/compose/topbar/snap/CollapsingTopBarSnapBehavior;)Ljava/util/List;
+}
+
+public final class com/flaringapp/compose/topbar/nestedscroll/CollapsingTopBarNestedScrollStrategyKt {
+	public static final fun rememberNestedScrollConnection (Lcom/flaringapp/compose/topbar/nestedscroll/CollapsingTopBarNestedScrollStrategy;Ljava/lang/Object;Landroidx/compose/foundation/gestures/FlingBehavior;Lcom/flaringapp/compose/topbar/snap/CollapsingTopBarSnapBehavior;Landroidx/compose/runtime/Composer;II)Landroidx/compose/ui/input/nestedscroll/NestedScrollConnection;
+}
+
+public final class com/flaringapp/compose/topbar/nestedscroll/MultiNestedScrollConnection : androidx/compose/ui/input/nestedscroll/NestedScrollConnection {
+	public static final field $stable I
+	public fun <init> (Ljava/util/List;)V
+	public fun onPostFling-RZ2iAVY (JJLkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun onPostScroll-DzOQY0M (JJI)J
+	public fun onPreFling-QWom1Mo (JLkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun onPreScroll-OzD1aCk (JI)J
+}
+
+public abstract interface class com/flaringapp/compose/topbar/scaffold/CollapsingTopBarScaffoldBodyScope {
+	public abstract fun resizeWithCollapse (Landroidx/compose/ui/Modifier;)Landroidx/compose/ui/Modifier;
+}
+
+public final class com/flaringapp/compose/topbar/scaffold/CollapsingTopBarScaffoldKt {
+	public static final fun CollapsingTopBarScaffold (Lcom/flaringapp/compose/topbar/scaffold/CollapsingTopBarScaffoldScrollMode;Landroidx/compose/ui/Modifier;Lcom/flaringapp/compose/topbar/scaffold/CollapsingTopBarScaffoldState;ZLcom/flaringapp/compose/topbar/snap/CollapsingTopBarSnapBehavior;Landroidx/compose/ui/Modifier;ZLkotlin/jvm/functions/Function4;Lkotlin/jvm/functions/Function3;Landroidx/compose/runtime/Composer;II)V
+}
+
+public final class com/flaringapp/compose/topbar/scaffold/CollapsingTopBarScaffoldScrollMode : com/flaringapp/compose/topbar/nestedscroll/CollapsingTopBarNestedScrollStrategy {
+	public static final field $stable I
+	public static final field Companion Lcom/flaringapp/compose/topbar/scaffold/CollapsingTopBarScaffoldScrollMode$Companion;
+	public final fun component1 ()Z
+	public final fun component2 ()Lcom/flaringapp/compose/topbar/scaffold/CollapsingTopBarScaffoldScrollMode$Exit;
+	public fun createHandlers (Lcom/flaringapp/compose/topbar/scaffold/CollapsingTopBarScaffoldState;Landroidx/compose/foundation/gestures/FlingBehavior;Lcom/flaringapp/compose/topbar/snap/CollapsingTopBarSnapBehavior;)Ljava/util/List;
+	public synthetic fun createHandlers (Ljava/lang/Object;Landroidx/compose/foundation/gestures/FlingBehavior;Lcom/flaringapp/compose/topbar/snap/CollapsingTopBarSnapBehavior;)Ljava/util/List;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getCanExit ()Z
+	public final fun getExit ()Lcom/flaringapp/compose/topbar/scaffold/CollapsingTopBarScaffoldScrollMode$Exit;
+	public final fun getExpandAlways ()Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/flaringapp/compose/topbar/scaffold/CollapsingTopBarScaffoldScrollMode$Companion {
+	public final fun collapse (ZLandroidx/compose/runtime/Composer;I)Lcom/flaringapp/compose/topbar/scaffold/CollapsingTopBarScaffoldScrollMode;
+	public final fun collapseAndExit (ZLandroidx/compose/runtime/Composer;I)Lcom/flaringapp/compose/topbar/scaffold/CollapsingTopBarScaffoldScrollMode;
+	public final fun enterAlwaysCollapsed (Landroidx/compose/runtime/Composer;I)Lcom/flaringapp/compose/topbar/scaffold/CollapsingTopBarScaffoldScrollMode;
+}
+
+public final class com/flaringapp/compose/topbar/scaffold/CollapsingTopBarScaffoldScrollMode$Exit {
+	public static final field $stable I
+	public final fun component1 ()Z
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getEnterAlways ()Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/flaringapp/compose/topbar/scaffold/CollapsingTopBarScaffoldState : com/flaringapp/compose/topbar/CollapsingTopBarControls, com/flaringapp/compose/topbar/snap/CollapsingTopBarSnapScope {
+	public static final field $stable I
+	public static final field Companion Lcom/flaringapp/compose/topbar/scaffold/CollapsingTopBarScaffoldState$Companion;
+	public fun animateHeightTo (Landroidx/compose/foundation/gestures/ScrollScope;FFLandroidx/compose/animation/core/AnimationSpec;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun animateHeightTo (Landroidx/compose/foundation/gestures/ScrollableState;FFLandroidx/compose/animation/core/AnimationSpec;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun collapse (Landroidx/compose/animation/core/AnimationSpec;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun expand (Landroidx/compose/animation/core/AnimationSpec;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun getExitState ()Lcom/flaringapp/compose/topbar/dependent/CollapsingTopBarExitState;
+	public final fun getHasMeasured ()Z
+	public final fun getTopBarState ()Lcom/flaringapp/compose/topbar/CollapsingTopBarState;
+	public final fun getTotalTopBarHeight ()F
+	public final fun isCollapsed ()Z
+	public final fun isExpanded ()Z
+	public fun snapWithProgress (ZLkotlin/jvm/functions/Function3;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class com/flaringapp/compose/topbar/scaffold/CollapsingTopBarScaffoldState$Companion {
+	public final fun getSaver ()Landroidx/compose/runtime/saveable/Saver;
+}
+
+public final class com/flaringapp/compose/topbar/scaffold/CollapsingTopBarScaffoldStateKt {
+	public static final fun rememberCollapsingTopBarScaffoldState (ZLandroidx/compose/runtime/Composer;II)Lcom/flaringapp/compose/topbar/scaffold/CollapsingTopBarScaffoldState;
+}
+
+public final class com/flaringapp/compose/topbar/snap/CollapsingTopBarNoSnapBehavior : com/flaringapp/compose/topbar/snap/CollapsingTopBarSnapBehavior {
+	public static final field $stable I
+	public static final field INSTANCE Lcom/flaringapp/compose/topbar/snap/CollapsingTopBarNoSnapBehavior;
+	public fun snap (Lcom/flaringapp/compose/topbar/snap/CollapsingTopBarSnapScope;ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public abstract interface class com/flaringapp/compose/topbar/snap/CollapsingTopBarSnapBehavior {
+	public abstract fun snap (Lcom/flaringapp/compose/topbar/snap/CollapsingTopBarSnapScope;ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class com/flaringapp/compose/topbar/snap/CollapsingTopBarSnapBehaviorKt {
+	public static final fun rememberCollapsingTopBarSnapBehavior (FLandroidx/compose/animation/core/AnimationSpec;Landroidx/compose/runtime/Composer;II)Lcom/flaringapp/compose/topbar/snap/CollapsingTopBarSnapBehavior;
+}
+
+public abstract interface class com/flaringapp/compose/topbar/snap/CollapsingTopBarSnapScope {
+	public abstract fun snapWithProgress (ZLkotlin/jvm/functions/Function3;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class com/flaringapp/compose/topbar/snap/CollapsingTopBarThresholdSnapBehavior : com/flaringapp/compose/topbar/snap/CollapsingTopBarSnapBehavior {
+	public static final field $stable I
+	public fun <init> ()V
+	public fun <init> (FLandroidx/compose/animation/core/AnimationSpec;)V
+	public synthetic fun <init> (FLandroidx/compose/animation/core/AnimationSpec;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun snap (Lcom/flaringapp/compose/topbar/snap/CollapsingTopBarSnapScope;ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+

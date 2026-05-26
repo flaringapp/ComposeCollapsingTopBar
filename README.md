@@ -10,6 +10,7 @@
 
 ![badge-Android](https://img.shields.io/badge/Platform-Android-forestgreen)
 ![badge-iOS](https://img.shields.io/badge/Platform-iOS-silver)
+![badge-Desktop](https://img.shields.io/badge/Platform-Desktop-dodgerblue)
 
 If you like this project, :star: star and :loudspeaker: share it!
 
@@ -739,8 +740,16 @@ This state exposes current exit offset via `exitHeight`.
 
 ## More examples
 
-Feel free to install a demo [Android](/sample/android) or [iOS](/sample/ios) app and try yourself
-even more samples!
+Feel free to install a demo [Android](/sample/android), [iOS](/sample/ios), or
+[Desktop](/sample/desktop) app and try yourself even more samples!
+
+## Known issues
+
+- On Desktop, a Compose Multiplatform nested scroll bug can prevent the top bar from expanding
+  with mouse wheel scrolling when using scroll modes with `expandAlways = false`. See
+  [CMP-10236](https://youtrack.jetbrains.com/issue/CMP-10236). The sample app includes a
+  [temporary workaround](/sample/shared/src/jvmMain/kotlin/com/flaringapp/compose/topbar/sample/shared/ui/samples/desktopfix/DesktopScrollBoundsNestedScrollFix.jvm.kt)
+  that can be copied until Compose fixes the issue.
 
 ## Contributing
 
