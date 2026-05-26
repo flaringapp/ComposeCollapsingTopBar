@@ -10,6 +10,7 @@
 
 ![badge-Android](https://img.shields.io/badge/Platform-Android-forestgreen)
 ![badge-iOS](https://img.shields.io/badge/Platform-iOS-silver)
+![badge-Desktop](https://img.shields.io/badge/Platform-Desktop-dodgerblue)
 
 If you like this project, :star: star and :loudspeaker: share it!
 
@@ -739,8 +740,8 @@ This state exposes current exit offset via `exitHeight`.
 
 ## More examples
 
-Feel free to install a demo [Android](/sample/android) or [iOS](/sample/ios) app and try yourself
-even more samples!
+Feel free to install a demo [Android](/sample/android), [iOS](/sample/ios), or
+[Desktop](/sample/desktop) app and try yourself even more samples!
 
 ## Contributing
 
