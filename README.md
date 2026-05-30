@@ -65,9 +65,15 @@ CollapsingTopBarScaffold(
 )
 ```
 
-In some cases you may want a direct body child to resize together with collapse instead of using
-the default fixed measurement strategy. For those cases, `CollapsingTopBarScaffold()` exposes
-`CollapsingTopBarScaffoldBodyScope.resizeWithCollapse()`:
+If a direct body child must resize together with collapse, `CollapsingTopBarScaffold()` has
+`Modifier.resizeWithCollapse()`. Use it only as a targeted override: it causes body remeasurement
+during collapse, so the default fixed measurement strategy remains preferred for scrollable content.
+
+<details>
+<summary>Resize a body child with collapse</summary>
+
+Use `resizeWithCollapse()` for lightweight direct body children such as overlays or panels that
+must track the currently visible body height.
 
 ```kotlin
 CollapsingTopBarScaffold(
@@ -85,10 +91,7 @@ CollapsingTopBarScaffold(
 )
 ```
 
-Use `resizeWithCollapse()` as a targeted override, typically for lightweight direct children such
-as overlays or panels that must track the currently visible body height. It may increase
-remeasurement cost during collapse, so the default scaffold behavior remains the preferred choice
-for scrollable content.
+</details>
 
 `CollapsingTopBarScaffold()` is flexible enough to cover a variety of use cases. However, there's
 some extra room for customization: you can use `CollapsingTopBar()` as the actual collapsing header,
